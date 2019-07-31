@@ -1,12 +1,16 @@
 import React from 'react'
 import AppBar from './containers/app-bar'
-import SideBar from './SideBar'
-import Dashboard from './Dashboard'
+import View from './containers/view'
 
 function App() {
   return (
     <div className="App">
    <AppBar></AppBar>
+   <div>
+   <View/>
+
+   </div>
+
     </div>
   )
 }
