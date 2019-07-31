@@ -9,7 +9,7 @@ class View extends React.Component {
     <Router>
         <div>
             <Route path={'/'} component={AppBar} />
-            <Route path={'/search-form'} component={SearchForm} />
+            <Route path={'search-form'} component={SearchForm} />
         </div>
     </Router>
         )
