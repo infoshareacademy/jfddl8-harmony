@@ -1,18 +1,14 @@
-import React from 'react'
-import AppBar from './containers/app-bar'
-import View from './containers/view'
+import React from 'react';
+import Router from './router/Router'
+import './index.css'
+import Navigation from './router/Navigation'
 
-function App() {
-  return (
-    <div className="App">
-   <AppBar></AppBar>
-   <div>
-    <View/>
-
-   </div>
-
-    </div>
-  )
-}
+const App = (props) => (
+  <div>
+    <Router>
+      <Navigation />
+    </Router>
+  </div >
+)
 
 export default App
