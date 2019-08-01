@@ -7,7 +7,7 @@ function App() {
     <div className="App">
    <AppBar></AppBar>
    <div>
-   <View/>
+    <View/>
 
    </div>
 
