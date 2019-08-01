@@ -7,15 +7,14 @@ class SearchForm extends React.Component {
   render() {
     return (
       <div>
-        <h1>SEARCH FORM HERE</h1>
+        <p>Wyszukiwanie</p>
         <TextField
           label="Szukaj"
-          fullWidth
           multiline
-          rows="4"
           defaultValue="Czego szukasz?"
           margin="dense"
         />
+        <br />
         <Button variant="contained" color="primary">
           Szukaj
         </Button>
