@@ -10,7 +10,10 @@ const AppBar = (props) => (
     <div>
          <AppBarMUI position="static">
         <Toolbar>
-          <IconButton edge="start" color="inherit" aria-label="menu">
+          <IconButton onClick={props.toggleSideBar}
+          edge="start" 
+          color="inherit" 
+          aria-label="menu">
             <MenuIcon />
           </IconButton>
           <Typography variant="h6">

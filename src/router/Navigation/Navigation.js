@@ -1,5 +1,5 @@
-  
 import React from 'react'
+
 import AppBar from '../AppBar'
 import SideBar from '../SideBar'
 
@@ -11,14 +11,14 @@ class Navigation extends React.Component {
   toggleSideBar = () => this.setState({
     isSideBarOpen: !this.state.isSideBarOpen
   })
-
-  render() {
-    return (
+  
+  render(){
+    return(
       <div>
-        <AppBar
+         <AppBar 
           toggleSideBar={this.toggleSideBar}
         />
-        <SideBar
+        <SideBar 
           isSideBarOpen={this.state.isSideBarOpen}
           toggleSideBar={this.toggleSideBar}
         />
@@ -26,5 +26,4 @@ class Navigation extends React.Component {
     )
   }
 }
-
 export default Navigation

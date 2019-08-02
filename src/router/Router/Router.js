@@ -9,6 +9,7 @@ import Diary from '../../containers/Menu/Diary'
 
 const Router = (props) => (
   <BrowserRouter>
+  {props.children}
     <div>
       <Route path={'/home'} component={Home} />
       <Route path={'/my-profile'} component={MyProfile} />
