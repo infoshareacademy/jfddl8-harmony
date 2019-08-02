@@ -1,6 +1,6 @@
 import React from 'react'
 import Drawer from '@material-ui/core/Drawer'
-import SideBarItem from '../SideBar/SideBarItem'
+import { Link } from 'react-router-dom'
 
 
 const styles = {
@@ -17,8 +17,11 @@ class SideBar extends React.Component {
         onClose={this.props.toggleSideBar}
       >
         <div style={styles.innerDrawer}>
-          <SideBarItem to={'/fetch-users'} label={'Fetch Users'} />
-          <SideBarItem to={'/contact-list'} label={'ContactList'} />
+          <Link to={'/home'} label={'Home'} />
+          <Link to={'/my-profile'} label={'Moj profil'} />
+          <Link to={'/my-diet'} label={'Moja dieta'} />
+          <Link to={'/recipes'} label={'Przepisy'} />
+          <Link to={'/diary'} label={'Dziennik postępów'} />
         </div>
       </Drawer>
     )
