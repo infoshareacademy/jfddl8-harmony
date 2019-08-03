@@ -1,6 +1,7 @@
 import React from 'react'
 
 
+
 class AddRecipeContainer extends React.Component {
   state = {
     title: '',
@@ -15,6 +16,12 @@ class AddRecipeContainer extends React.Component {
 
     this.setState(newState)
   }
+
+  onSaveClicker = (props) => {
+    const newRecipe = this.state
+    const newRecipeString = JSON.stringify(newRecipe)
+    localStorage.setItem('recipe', newRecipeString)
+  }
   
   render() {
     return (
@@ -22,6 +29,7 @@ class AddRecipeContainer extends React.Component {
         <h1>Dodaj swój przepis</h1>
 
         <h3>Wpisz tytuł przepisu</h3>
+       
         <input
           type={'text'}
           value={this.state.name}
@@ -56,7 +64,9 @@ class AddRecipeContainer extends React.Component {
         />
 
         <br />
-        <button>Zapisz</button>
+        <button
+        onClick={this.onSaveClicker}
+        >Zapisz</button>
       </div>
     )
   }
