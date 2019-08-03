@@ -9,30 +9,12 @@ class AddRecipeContainer extends React.Component {
     nutritiveValue: '',
 
   }
+  onInputChangeHandler = (property) => (event) =>{
+    const newState = {}
+    newState[property] = event.target.value
 
-  onTitleOfRecipeChangeHandler = (event) => {
-    this.setState({
-      title: event.target.value
-    })
+    this.setState(newState)
   }
-
-  onIngredientsChangeHandler = (event) => {
-    this.setState({
-      ingredients: event.target.value
-    })
-  }
-
-  onDescriptionChangeHandler = (event) => {
-    this.setState({
-      description: event.target.value
-    })
-  }
-
-  onNutritiveValueChangeHandler = (event) => {
-      this.setState({
-        nutritiveValue: event.target.value
-      })
-    }
   
   render() {
     return (
@@ -43,7 +25,7 @@ class AddRecipeContainer extends React.Component {
         <input
           type={'text'}
           value={this.state.name}
-          onChange={this.onTitleOfRecipeChangeHandler}
+          onChange={this.onInputChangeHandler('name')}
         />
 
         <br />
@@ -52,7 +34,7 @@ class AddRecipeContainer extends React.Component {
         <input
           type={'text'}
           value={this.state.ingredients}
-          onChange={this.onIngredientsChangeHandler}
+          onChange={this.onInputChangeHandler('ingredients')}
         />
 
         <br />
@@ -61,7 +43,7 @@ class AddRecipeContainer extends React.Component {
         <input
           type={'text'}
           value={this.state.description}
-          onChange={this.onDescriptionChangeHandler}
+          onChange={this.onInputChangeHandler('description')}
         />
 
         <br />
@@ -70,7 +52,7 @@ class AddRecipeContainer extends React.Component {
         <input
           type={'text'}
           value={this.state.nutritiveValue}
-          onChange={this.onNutritiveValueChangeHandler}
+          onChange={this.onInputChangeHandler('nutritiveValue')}
         />
 
         <br />
