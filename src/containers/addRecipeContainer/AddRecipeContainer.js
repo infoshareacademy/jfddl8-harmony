@@ -1,5 +1,11 @@
 import React from 'react'
 
+import TitleOfRecipe from './title-of-recipe/TitleOfRecipe'
+import Ingredients from './ingredients/Ingredients'
+import Description from './description/Description'
+import NutritiveValue from './nutritive-value/NutritiveValue'
+import Label from './label/Label'
+import Button from '@material-ui/core/Button'
 
 
 class AddRecipeContainer extends React.Component {
@@ -8,13 +14,15 @@ class AddRecipeContainer extends React.Component {
     ingredients: '',
     description: '',
     nutritiveValue: '',
+    label: '',
 
   }
-  onInputChangeHandler = (property) => (event) =>{
-    const newState = {}
-    newState[property] = event.target.value
-
-    this.setState(newState)
+  onInputChangeHandler = (property) => {
+    return (event) => {
+      const newState = {}
+      newState[property] = event.target.value
+      this.setState(newState)
+    }
   }
 
   onSaveClicker = (props) => {
@@ -22,51 +30,37 @@ class AddRecipeContainer extends React.Component {
     const newRecipeString = JSON.stringify(newRecipe)
     localStorage.setItem('recipe', newRecipeString)
   }
-  
+
   render() {
     return (
       <div>
         <h1>Dodaj swój przepis</h1>
-
         <h3>Wpisz tytuł przepisu</h3>
-       
-        <input
-          type={'text'}
-          value={this.state.name}
-          onChange={this.onInputChangeHandler('name')}
+        <TitleOfRecipe
+          onInputChangeHandler={this.onInputChangeHandler('title')}
+          title={this.state.title}
         />
-
         <br />
-
         <h3>Składniki</h3>
-        <input
-          type={'text'}
-          value={this.state.ingredients}
-          onChange={this.onInputChangeHandler('ingredients')}
+        <Ingredients
+          onInputChangeHandler={this.onInputChangeHandler('ingredients')}
+          ingredients={this.state.ingredients}
         />
-
-        <br />
-
         <h3>Przygotowanie</h3>
-        <input
-          type={'text'}
-          value={this.state.description}
-          onChange={this.onInputChangeHandler('description')}
+        <Description
+          onInputChangeHandler={this.onInputChangeHandler('description')}
+          description={this.state.description}
         />
-
-        <br />
-
         <h3>Wartość energetyczna</h3>
-        <input
-          type={'text'}
-          value={this.state.nutritiveValue}
-          onChange={this.onInputChangeHandler('nutritiveValue')}
+        <NutritiveValue
+          nutritiveValue={this.state.nutritiveValue}
+          onInputChangeHandler={this.onInputChangeHandler('nutritiveValue')}
         />
-
         <br />
-        <button
-        onClick={this.onSaveClicker}
-        >Zapisz</button>
+        <Label />
+        <Button color="secondary"  onClick={this.onSaveClicker}>
+          Zapisz
+      </Button>
       </div>
     )
   }
