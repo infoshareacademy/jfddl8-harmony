@@ -1,8 +1,20 @@
 import React from 'react'
-const Home = (props) => (
+
+import Paper from '@material-ui/core/Paper'
+const Home = (props) =>{
+    
+    return (
+        <Paper style={{height: '100vh'}}>
+
     <div>
-        Home
+sfdaf
     </div>
+    <div>
+fasdf
+    </div>
+        </Paper>
+
 )
+    }
 
 export default Home 

@@ -1,31 +1,31 @@
 import React from 'react'
-
-import Drawer from '@material-ui/core/Drawer'
-
-import SideBarItem from './SideBarItem'
-
 import PropTypes from 'prop-types'
 
-const styles = {
-  innerDrawer: {
-    width: 200
-  }
-}
+// import Drawer from '@material-ui/core/Drawer'
+import { Drawer, InnerDrawer} from './SideBar.styled'
+import SideBarItem from './SideBarItem'
+
+
 
 class SideBar extends React.Component {
   render() {
     return (
       <Drawer
-        open={this.props.isSideBarOpen}
+        variant="persistent"
+        open //={this.props.isSideBarOpen}
+        // style={{position: 'fixed'}}
         onClose={this.props.toggleSideBar}
+        isOpen = {this.props.isSideBarOpen}
+        // style={this.props.isSideBarOpen ? styles.drawerOpen : styles.drawerClose}
+        // PaperProps={{style: this.props.isSideBarOpen ? styles.drawerOpen : styles.drawerClose}}
       >
-        <div style={styles.innerDrawer}  onClick={this.props.handlerOnClick}>
+        <InnerDrawer  onClick={this.props.handlerOnClick}>
           <SideBarItem onClick={this.props.handlerOnClick} to={'/home'} label={'Home'} />
           <SideBarItem to={'/my-profile'} label={'Moj profil'} />
           <SideBarItem to={'/my-diet'} label={'Moja dieta'} />
           <SideBarItem to={'/recipes'} label={'Przepisy'} />
           <SideBarItem to={'/diary'} label={'Dziennik postępów'} />
-        </div>
+        </InnerDrawer>
       </Drawer>
     )
   }
@@ -33,11 +33,13 @@ class SideBar extends React.Component {
 }
 
 SideBar.propTypes = { 
+  isSideBarOpen: PropTypes.bool,
   handlerOnClick: PropTypes.func
 }
 
 SideBar.defaultProps = {
-  handlerOnClick: () => {}
+  handlerOnClick: () => {},
+  isSideBarOpen: true
 }
 
 export default SideBar
