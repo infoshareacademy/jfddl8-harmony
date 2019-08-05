@@ -1,7 +1,7 @@
 import React from 'react'
 import AppBar from './containers/app-bar'
 import View from './containers/view'
-import FilteredListContainer from './containers/filtered-list-container'
+import ListContainer from './containers/list-container'
 
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
 
       </div>
       <div>
-      <FilteredListContainer />
+      <ListContainer />
       </div>
     </div>
   )
