@@ -5,28 +5,27 @@ import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
-import Button from '@material-ui/core/Button'
 
 
 
 const useStyles = makeStyles(theme => ({
   button: {
     display: 'block',
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(5),
   },
   formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
+    margin: theme.spacing(2),
+    minWidth: 200,
   },
 }))
 
-export default function L() {
+export default function ControlledOpenSelect() {
   const classes = useStyles();
-  const [age, setAge] = React.useState('')
-  const [open, setOpen] = React.useState(false)
+  const [label, setLabel] = React.useState('');
+  const [open, setOpen] = React.useState(false);
 
   function handleChange(event) {
-    setAge(event.target.value);
+    setLabel(event.target.value)
   }
 
   function handleClose() {
@@ -39,27 +38,26 @@ export default function L() {
 
   return (
     <form autoComplete="off">
-      <Button onClick={handleOpen}>
-        Open the select
-      </Button>
-      <FormControl >
-        <InputLabel htmlFor="demo-controlled-open-select">Age</InputLabel>
+      <FormControl className={classes.formControl}>
+        <InputLabel htmlFor="demo-controlled-open-select">Rodzaj posiłku</InputLabel>
         <Select
           open={open}
           onClose={handleClose}
           onOpen={handleOpen}
-          value={age}
+          value={label}
           onChange={handleChange}
           inputProps={{
-            name: 'age',
+            name: 'label',
           }}
         >
           <MenuItem value="">
-            <em>None</em>
+            <em>Brak klasyfikacji</em>
           </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          <MenuItem value={'śniadanie'}>śniadanie</MenuItem>
+          <MenuItem value={'lunch'}>lunch</MenuItem>
+          <MenuItem value={'kolacja'}>kolacja</MenuItem>
+          <MenuItem value={'deser'}>deser</MenuItem>
+          <MenuItem value={'przekąska'}>przekąska</MenuItem>
         </Select>
       </FormControl>
     </form>

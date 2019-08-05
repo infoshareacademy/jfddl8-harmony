@@ -33,7 +33,7 @@ class AddRecipeContainer extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="addRecipeContainer">
         <h1>Dodaj swój przepis</h1>
         <h3>Wpisz tytuł przepisu</h3>
         <TitleOfRecipe

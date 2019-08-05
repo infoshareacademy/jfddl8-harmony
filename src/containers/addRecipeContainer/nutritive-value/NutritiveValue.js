@@ -8,7 +8,7 @@ const NutritiveValue = (props) => (
     value={props.NutritiveValue}
     onChange={props.onInputChangeHandler}
     variant="outlined"
-    label="kalorie"
+    label="kcal/100g"
     InputProps={{
       startAdornment: <InputAdornment position="start">kcal</InputAdornment>,
     }}
