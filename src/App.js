@@ -2,6 +2,7 @@ import React from 'react'
 import AppBar from './containers/app-bar'
 import View from './containers/view'
 import AddRecipeContainer from './containers/addRecipeContainer'
+import RecipesTable from './containers/recipesTable/RecipesTable'
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <AppBar />
       <View />
       <AddRecipeContainer/>
+      <RecipesTable/>
     </div>
   )
 }
