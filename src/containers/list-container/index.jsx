@@ -15,15 +15,15 @@ class ListContainer extends React.Component {
     })
   )
   
-  componentDidMount() {
-    fetch('https://randomuser.me/api?results=10')
-      .then(result => result.json())
-      .then(users => {
-        this.setState({
-          users: users.results
-        })
-      })
-  }
+  // componentDidMount() {
+  //   fetch('https://randomuser.me/api?results=10')
+  //     .then(result => result.json())
+  //     .then(users => {
+  //       this.setState({
+  //         users: users.results
+  //       })
+  //     })
+  // }
 
   render() {
 
