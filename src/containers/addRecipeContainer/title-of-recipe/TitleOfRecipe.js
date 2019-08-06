@@ -8,6 +8,7 @@ const TitleOfRecipe = (props) => (
     margin="normal"
     label="Tytuł przepisu"
     value={props.title}
+    fullWidth
     onChange={props.onInputChangeHandler}
   />
 )

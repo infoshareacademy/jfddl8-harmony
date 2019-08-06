@@ -20,53 +20,51 @@ const styles = {
     marginTop: 50
   }
 }
-const labels = ["Breakfast", "Lunch", "Supper", "Dessert", "Snack"]
+//const labels = ["Breakfast", "Lunch", "Supper", "Dessert", "Snack"]
 
-const initialState = {
-  title: '',
-  ingredients: '',
-  description: '',
-  nutritiveValue: '',
-  label: '',
-  url: '',
-  isFavorite: false
-}
 
 class AddRecipeContainer extends React.Component {
   state = {
-    state: initialState
-  }
-
-  reset() {
-    this.setState(initialState)
-  }
-  makeTextFieldHandler = fieldName => event => this.setState({ [fieldName]: event.target.value })
-
-  handleClick = (event) => {
-    if (this.state.name !== '' && this.state.name.length < 30 && this.state.kcal !== '' && this.state.category !== '') {
-      this.props.toggleStatement('Product was added successfully!')
-      this.sendToFirebase()
-      this.reset()
-    } else {
-      this.props.toggleStatement('Something went wrong! Please try again! :)')
+    recipeState: {
+      title: '',
+      ingredients: '',
+      description: '',
+      nutritiveValue: '',
+      label: '',
+      url: '',
+      isFavorite: false
     }
   }
 
-  onInputChangeHandler = (property) => {
-    return (event) => {
-      const newState = {}
-      newState[property] = event.target.value
-      this.setState(newState)
-    }
-  }
-
-
-  // onSaveClicker = (props) => {
-  //   const newRecipe = this.state
-  //   const newRecipeString = JSON.stringify(newRecipe)
-  //   localStorage.setItem('recipe', newRecipeString)
+  // reset() {
+  //   this.setState(initialState)
   // }
 
+  onInputChangeHandler(event, input) {
+    const text = event.target.value
+    this.setState({
+      recipeState: {
+        ...this.state.recipeState,
+        [input]: text
+      }
+    })
+  }
+
+  onSendData = (event) => {
+    event.preventDefault()
+    addRecipeToFireBase(this.state.recipeState)
+    this.setState({
+      recipeState: {
+        title: '',
+        ingredients: '',
+        description: '',
+        nutritiveValue: '',
+        label: '',
+        url: '',
+        isFavorite: false
+      }
+    })
+  }
   render() {
     return (
       <Paper style={styles.paper}>
@@ -74,6 +72,7 @@ class AddRecipeContainer extends React.Component {
           <h1>Dodaj swój przepis</h1>
           <br />
           <TitleOfRecipe
+            hintText="Tytuł przepisu"
             onInputChangeHandler={this.onInputChangeHandler('title')}
             title={this.state.title}
           />
