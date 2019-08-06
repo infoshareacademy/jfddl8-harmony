@@ -11,7 +11,7 @@ export const deleteRecipe = (recipeKey) => {
   )
 }
 
-export const addRecipe = (newRecipe) => {
+export const addRecipeToFireBase = (newRecipe) => {
   return fetch(
     URL + '.json',
     {

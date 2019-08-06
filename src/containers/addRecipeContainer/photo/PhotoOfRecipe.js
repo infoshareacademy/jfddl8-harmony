@@ -2,14 +2,16 @@ import React from 'react'
 
 import TextField from '@material-ui/core/TextField'
 
-const TitleOfRecipe = (props) => (
+
+const PhotoOfRecipe = (props) => (
   <TextField
-  required
+    label="Dodaj link do zdjęcia"
+    rowsMax="20"
+    rows="12"
     margin="normal"
-    label="Tytuł przepisu"
-    value={props.title}
+    value={props.url}
     onChange={props.onInputChangeHandler}
   />
 )
 
-export default TitleOfRecipe
+export default PhotoOfRecipe
