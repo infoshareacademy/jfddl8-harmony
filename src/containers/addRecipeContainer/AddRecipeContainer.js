@@ -10,19 +10,31 @@ import Paper from '@material-ui/core/Paper'
 
 const styles = {
   paper: {
-    margin: 20,
-    padding: 30
+    margin: 12,
+    padding: 50
+  },
+  button: {
+    marginTop: 50
   }
+}
+
+const initialState = {
+  title: '',
+  ingredients: '',
+  description: '',
+  nutritiveValue: '',
+  label: '',
+  url: '',
+  isFavorite: false
 }
 
 class AddRecipeContainer extends React.Component {
   state = {
-    title: '',
-    ingredients: '',
-    description: '',
-    nutritiveValue: '',
-    label: '',
+    state: initialState
+  }
 
+  reset() {
+    this.setState(initialState)
   }
   onInputChangeHandler = (property) => {
     return (event) => {
@@ -66,9 +78,7 @@ class AddRecipeContainer extends React.Component {
           />
           <br />
           <Label />
-          <Button color="secondary" onClick={this.onSaveClicker}>
-            Zapisz
-      </Button>
+          <Button color="blue" style={styles.button} fullWidth={true} onClick={this.onSaveClicker}>Zapisz</Button>
         </div>
       </Paper>
     )

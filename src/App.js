@@ -5,14 +5,12 @@ import View from './containers/view'
 
 import AddRecipeContainer from './containers/addRecipeContainer/AddRecipeContainer'
 
-
-
 function App() {
   return (
     <div className="App">
       <AppBar />
       <View />
-      <AddRecipeContainer/>
+      <AddRecipeContainer />
     </div>
   )
 }
