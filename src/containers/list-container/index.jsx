@@ -9,21 +9,27 @@ class ListContainer extends React.Component {
     items: [{}]
   };
 
+  mapObjectToArray = (obj) => (
+    Object.entries(obj || {})
+      .map(([key, value]) => (
+        typeof value === 'object' ?
+          {...value, key}
+          :
+          {key, value}
+      ))
+  )
+
   filterHandler = (event) => (
     this.setState({
       searchPhrase: event.target.value
     })
   )
   
-  // componentDidMount() {
-  //   fetch('https://randomuser.me/api?results=10')
-  //     .then(result => result.json())
-  //     .then(users => {
-  //       this.setState({
-  //         users: users.results
-  //       })
-  //     })
-  // }
+  componentDidMount() {
+    fetch('https://jfddl8-harmonylublin.firebaseio.com/recipes.json')
+      .then(result => result.json())
+      .then((data) => console.log(this.mapObjectToArray(data)))
+  }
 
   render() {
 
