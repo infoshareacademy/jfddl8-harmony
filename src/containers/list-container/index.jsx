@@ -4,9 +4,8 @@ import SearchForm from "../../components/search-form"
 
 class ListContainer extends React.Component {
   state = {
-    recipe: {},
+    recipes: [],
     searchPhrase: '',
-    items: [{}]
   };
 
   mapObjectToArray = (obj) => (
@@ -28,7 +27,11 @@ class ListContainer extends React.Component {
   componentDidMount() {
     fetch('https://jfddl8-harmonylublin.firebaseio.com/recipes.json')
       .then(result => result.json())
-      .then((data) => console.log(this.mapObjectToArray(data)))
+      .then((data) =>(
+        this.setState({
+          recipes: this.mapObjectToArray(data)
+        })
+      ))
   }
 
   render() {
@@ -39,7 +42,7 @@ class ListContainer extends React.Component {
           searchPhrase={this.state.searchPhrase}
           onChange={this.filterHandler}
         />
-        <ItemsList />
+        <ItemsList recipes={this.state.recipes}/>
       </div>
     );
   }

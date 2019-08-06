@@ -1,24 +1,35 @@
-import React from 'react'
-import GridListTile from '@material-ui/core/GridListTile'
-import GridListTileBar from '@material-ui/core/GridListTileBar'
-import IconButton from '@material-ui/core/IconButton'
-import InfoIcon from '@material-ui/icons/Info';
+import React from "react";
+import GridListTile from "@material-ui/core/GridListTile";
+import GridListTileBar from "@material-ui/core/GridListTileBar";
+import IconButton from "@material-ui/core/IconButton";
+import InfoIcon from "@material-ui/icons/Info";
 
-const ListItem = (props) => (
-  <div>
-    <GridListTile>
-      <img src={'http://lorempixel.com/400/200'} alt={"http://lorempixel.com/400/200"} />
-      <GridListTileBar
-        title={'jakis tytuł'}
-        subtitle={<span>by: Adam</span>}
-        actionIcon={
-          <IconButton>
-            <InfoIcon />
-          </IconButton>
-        }
-      />
-    </GridListTile>
-  </div>
-)
+const ListItem = props => {
+  const recipes = props.recipes;
 
-export default ListItem
+  console.log(recipes);
+
+  return recipes.map(el => {
+    return (
+      <div key={el.key}>
+        <GridListTile>
+          <img
+            src={el.photo}
+            alt={el.photo}
+          />
+          <GridListTileBar
+            title={el.title}
+            subtitle={<span>{el.nutritionValue} kcal</span>}
+            actionIcon={
+              <IconButton>
+                <InfoIcon />
+              </IconButton>
+            }
+          />
+        </GridListTile>
+      </div>
+    );
+  });
+};
+
+export default ListItem;
