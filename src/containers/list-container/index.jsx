@@ -6,7 +6,7 @@ class ListContainer extends React.Component {
   state = {
     recipe: {},
     searchPhrase: '',
-    items: {}
+    items: [{}]
   };
 
   filterHandler = (event) => (

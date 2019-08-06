@@ -2,6 +2,8 @@ import React from "react"
 
 import SearchRangeSlider from './search-range-slider'
 import TextField from "@material-ui/core/TextField"
+import LabelSelect from './label-select'
+
 
 const SearchForm = (props) => {
 
@@ -14,6 +16,7 @@ const SearchForm = (props) => {
         onChange={props.onChange}
         margin="dense"
       />
+      <LabelSelect />
       <SearchRangeSlider />
     </div>
   )

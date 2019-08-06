@@ -19,6 +19,7 @@ const SearchRangeSlider = (props) => {
         getAriaValueText={props.valueText}
         max={1000}
         min={0}
+        style={{width: 300}}
       />
     </div>
   );
