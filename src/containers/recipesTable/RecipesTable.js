@@ -6,7 +6,7 @@ class RecipesTable extends React.Component {
     recipes : null
   }
   componentDidMount(){
-    fetch('https://jfddl8-harmonylublin.firebaseio.com/')
+    fetch('https://jfddl8-harmonylublin.firebaseio.com/recipes')
     .then(r => r.json())
     .then(data =>{
       this.setState({
@@ -16,6 +16,7 @@ class RecipesTable extends React.Component {
     
   }
   render(){
+
     const items = this.state.recipes && this.state.recipes.map(
       recipe => ({
         key: recipe.key,
@@ -29,7 +30,7 @@ class RecipesTable extends React.Component {
     )
     return(
       <div>
-      items={items}
+      
       </div>
     
     )
