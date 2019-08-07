@@ -5,6 +5,7 @@ import SearchForm from "../../components/search-form"
 class ListContainer extends React.Component {
   state = {
     recipes: [],
+    label: '',
     searchPhrase: '',
   };
 
@@ -12,9 +13,9 @@ class ListContainer extends React.Component {
     Object.entries(obj || {})
       .map(([key, value]) => (
         typeof value === 'object' ?
-          {...value, key}
+          { ...value, key }
           :
-          {key, value}
+          { key, value }
       ))
   )
 
@@ -23,11 +24,11 @@ class ListContainer extends React.Component {
       searchPhrase: event.target.value
     })
   )
-  
+
   componentDidMount() {
     fetch('https://jfddl8-harmonylublin.firebaseio.com/recipes.json')
       .then(result => result.json())
-      .then((data) =>(
+      .then((data) => (
         this.setState({
           recipes: this.mapObjectToArray(data)
         })
@@ -35,6 +36,14 @@ class ListContainer extends React.Component {
   }
 
   render() {
+    const inputFilter = this.state.recipes.filter((el) => {
+      const searchPhrase = this.state.searchPhrase.toLocaleLowerCase()
+      const filteredBySearchPhrase = el.title
+        .toLowerCase()
+        .includes(searchPhrase)
+
+      return filteredBySearchPhrase
+    })
 
     return (
       <div>
@@ -42,7 +51,7 @@ class ListContainer extends React.Component {
           searchPhrase={this.state.searchPhrase}
           onChange={this.filterHandler}
         />
-        <ItemsList recipes={this.state.recipes}/>
+        <ItemsList recipes={inputFilter} />
       </div>
     );
   }

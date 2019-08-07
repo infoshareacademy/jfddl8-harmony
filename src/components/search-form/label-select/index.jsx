@@ -19,11 +19,11 @@ const LabelSelect = (props) => {
           input={<Input name="age" id="age-native-helper" />}
         >
           <option value="" />
-          <option value={10}>Śniadanie</option>
-          <option value={20}>Obiad</option>
-          <option value={30}>Kolacja</option>
-          <option value={40}>Deser</option>
-          <option value={50}>Przekąska</option>
+          <option value={'breakfast'}>Śniadanie</option>
+          <option value={'dinner'}>Obiad</option>
+          <option value={'supper'}>Kolacja</option>
+          <option value={'dessert'}>Deser</option>
+          <option value={'snack'}>Przekąska</option>
         </NativeSelect>
         <FormHelperText>Jaki posiłek Cię interesuje?</FormHelperText>
       </FormControl>

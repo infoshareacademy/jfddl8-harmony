@@ -11,8 +11,7 @@ const ListItem = props => {
 
   return recipes.map(el => {
     return (
-      <div key={el.key}>
-        <GridListTile>
+        <GridListTile key={el.key}>
           <img
             src={el.photo}
             alt={el.photo}
@@ -27,7 +26,6 @@ const ListItem = props => {
             }
           />
         </GridListTile>
-      </div>
     );
   });
 };
