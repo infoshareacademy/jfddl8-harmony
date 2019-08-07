@@ -6,6 +6,7 @@ import Description from './description/Description'
 import NutritiveValue from './nutritive-value/NutritiveValue'
 import PhotoOfRecipe from './photo/PhotoOfRecipe'
 import Label from './label/Label'
+
 import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
 
@@ -14,24 +15,27 @@ import { addRecipeToFireBase } from './recipesService'
 const styles = {
   paper: {
     margin: 12,
-    padding: 50
   },
   button: {
-    marginTop: 50
+    marginTop: 50,
+  },
+  header: {
+    margin: '0 auto',
+    textAlign: 'center'
   }
 }
-//const labels = ["Breakfast", "Lunch", "Supper", "Dessert", "Snack"]
+
 
 
 class AddRecipeContainer extends React.Component {
   state = {
     recipeState: {
       title: '',
-      ingredients: '',
+      ingredients: [],
       description: '',
       nutritiveValue: '',
       label: '',
-      url: '',
+      photo: '',
       isFavorite: false
     }
   }
@@ -40,14 +44,18 @@ class AddRecipeContainer extends React.Component {
   //   this.setState(initialState)
   // }
 
-  onInputChangeHandler(event, input) {
-    const text = event.target.value
-    this.setState({
-      recipeState: {
-        ...this.state.recipeState,
-        [input]: text
-      }
-    })
+  onInputChangeHandler(input) {
+
+    return (event) => {
+      const text = event.target.value
+      this.setState({
+        recipeState: {
+          ...this.state.recipeState,
+          [input]: text
+        }
+      })
+
+    }
   }
 
   onSendData = (event) => {
@@ -60,7 +68,7 @@ class AddRecipeContainer extends React.Component {
         description: '',
         nutritiveValue: '',
         label: '',
-        url: '',
+        photo: '',
         isFavorite: false
       }
     })
@@ -69,46 +77,48 @@ class AddRecipeContainer extends React.Component {
     return (
       <Paper style={styles.paper}>
         <div className="addRecipeContainer">
-          <h1>Dodaj swój przepis</h1>
+          <h1 style={styles.header}
+          >Dodaj swój przepis</h1>
           <br />
           <TitleOfRecipe
-            hintText="Tytuł przepisu"
-            onInputChangeHandler={this.onInputChangeHandler('title')}
             title={this.state.title}
+            onInputChangeHandler={this.onInputChangeHandler('title')}
           />
-          <h3>Wpisz tytuł przepisu</h3>
+          <h5>Wpisz tytuł przepisu</h5>
         </div>
         <div>
           <Ingredients
-            onInputChangeHandler={this.onInputChangeHandler('ingredients')}
             ingredients={this.state.ingredients}
+            onInputChangeHandler={this.onInputChangeHandler('ingredients')}
           />
-          <h3>Składniki</h3>
+          <h5>Składniki</h5>
         </div>
         <Description
-          onInputChangeHandler={this.onInputChangeHandler('description')}
           description={this.state.description}
+          onInputChangeHandler={this.onInputChangeHandler('description')}
         />
-        <h3>Przygotowanie</h3>
+        <h5>Przygotowanie</h5>
         <div>
           <NutritiveValue
             nutritiveValue={this.state.nutritiveValue}
             onInputChangeHandler={this.onInputChangeHandler('nutritiveValue')}
           />
-          <h3>Wartość energetyczna</h3>
+          <h5>Wartość energetyczna</h5>
         </div>
         <div>
           <PhotoOfRecipe
-            onInputChangeHandler={this.onInputChangeHandler('url')}
-            url={this.state.url}
+            photo={this.state.photo}
+            onInputChangeHandler={this.onInputChangeHandler('photo')}
           />
-          <h3>Dodaj link do zdjęcia</h3>
+          <h5>Dodaj link do zdjęcia</h5>
         </div>
         <div>
-          <Label />
+          <Label
+            label={this.state.label}
+            onInputChangeHandler={this.onInputChangeHandler('label')} />
         </div>
         <div>
-          <Button color="blue" style={styles.button} fullWidth={true} onClick={this.onSaveClicker}>Zapisz</Button>
+          <Button style={styles.button} variant='outlined' onClick={this.onSendData}>Zapisz</Button>
         </div>
       </Paper>
     )

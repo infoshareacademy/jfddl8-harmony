@@ -9,6 +9,7 @@ const Ingredients = (props) => (
     rows="12"
     margin="normal"
     value={props.Ingredients}
+    fullWidth
     onChange={props.onInputChangeHandler}
   />
 )
