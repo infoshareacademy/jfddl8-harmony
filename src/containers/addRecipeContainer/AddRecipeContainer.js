@@ -7,7 +7,7 @@ import NutritiveValue from './nutritive-value/NutritiveValue'
 import PhotoOfRecipe from './photo/PhotoOfRecipe'
 import Label from './label/Label'
 
-import Button from '@material-ui/core/Button'
+import Button from '../../components/button'
 import Paper from '@material-ui/core/Paper'
 
 import { addRecipeToFireBase } from './recipesService'
@@ -15,16 +15,13 @@ import { addRecipeToFireBase } from './recipesService'
 const styles = {
   paper: {
     margin: 12,
-  },
-  button: {
-    marginTop: 50,
+    padding: 50
   },
   header: {
     margin: '0 auto',
     textAlign: 'center'
   }
 }
-
 
 
 class AddRecipeContainer extends React.Component {
@@ -40,18 +37,19 @@ class AddRecipeContainer extends React.Component {
     }
   }
 
-  // reset() {
-  //   this.setState(initialState)
-  // }
+  // reset() {nextParam
+  //   this.senextParamtState(initialState)
 
   onInputChangeHandler(input) {
 
     return (event) => {
-      const text = event.target.value
+      console.log(event.target.value,)
+      const selectValue = event.value 
+      const valueToSave = selectValue || (event.target && event.target.value) || ''
       this.setState({
         recipeState: {
           ...this.state.recipeState,
-          [input]: text
+          [input]: valueToSave
         }
       })
 
@@ -74,6 +72,7 @@ class AddRecipeContainer extends React.Component {
     })
   }
   render() {
+    const { recipeState={} } = this.state
     return (
       <Paper style={styles.paper}>
         <div className="addRecipeContainer">
@@ -81,44 +80,44 @@ class AddRecipeContainer extends React.Component {
           >Dodaj swój przepis</h1>
           <br />
           <TitleOfRecipe
-            title={this.state.title}
+            title={recipeState.title}
             onInputChangeHandler={this.onInputChangeHandler('title')}
           />
           <h5>Wpisz tytuł przepisu</h5>
         </div>
         <div>
           <Ingredients
-            ingredients={this.state.ingredients}
+            ingredients={recipeState.ingredients}
             onInputChangeHandler={this.onInputChangeHandler('ingredients')}
           />
           <h5>Składniki</h5>
-        </div>
+        </div>value
         <Description
-          description={this.state.description}
+          description={recipeState.description}
           onInputChangeHandler={this.onInputChangeHandler('description')}
         />
         <h5>Przygotowanie</h5>
         <div>
           <NutritiveValue
-            nutritiveValue={this.state.nutritiveValue}
+            nutritiveValue={recipeState.nutritiveValue}
             onInputChangeHandler={this.onInputChangeHandler('nutritiveValue')}
           />
           <h5>Wartość energetyczna</h5>
         </div>
         <div>
           <PhotoOfRecipe
-            photo={this.state.photo}
+            photo={recipeState.photo}
             onInputChangeHandler={this.onInputChangeHandler('photo')}
           />
           <h5>Dodaj link do zdjęcia</h5>
         </div>
         <div>
           <Label
-            label={this.state.label}
-            onInputChangeHandler={this.onInputChangeHandler('label')} />
+            label={recipeState.label}
+            handleChange={this.onInputChangeHandler('label')} />
         </div>
         <div>
-          <Button style={styles.button} variant='outlined' onClick={this.onSendData}>Zapisz</Button>
+          <Button onClick={this.onSendData}>ZAPISZ</Button>
         </div>
       </Paper>
     )
