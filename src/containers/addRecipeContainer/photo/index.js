@@ -1,0 +1,1 @@
+import PhotoOfRecipe from './PhotoOfRecipe'

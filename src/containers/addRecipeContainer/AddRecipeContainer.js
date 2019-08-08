@@ -4,71 +4,121 @@ import TitleOfRecipe from './title-of-recipe/TitleOfRecipe'
 import Ingredients from './ingredients/Ingredients'
 import Description from './description/Description'
 import NutritiveValue from './nutritive-value/NutritiveValue'
+import PhotoOfRecipe from './photo/PhotoOfRecipe'
 import Label from './label/Label'
+
 import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
 
+import { addRecipeToFireBase } from './recipesService'
+
 const styles = {
   paper: {
-    margin: 20,
-    padding: 30
+    margin: 12,
+  },
+  button: {
+    marginTop: 50,
+  },
+  header: {
+    margin: '0 auto',
+    textAlign: 'center'
   }
 }
 
+
+
 class AddRecipeContainer extends React.Component {
   state = {
-    title: '',
-    ingredients: '',
-    description: '',
-    nutritiveValue: '',
-    label: '',
-
-  }
-  onInputChangeHandler = (property) => {
-    return (event) => {
-      const newState = {}
-      newState[property] = event.target.value
-      this.setState(newState)
+    recipeState: {
+      title: '',
+      ingredients: [],
+      description: '',
+      nutritiveValue: '',
+      label: '',
+      photo: '',
+      isFavorite: false
     }
   }
 
-  onSaveClicker = (props) => {
-    const newRecipe = this.state
-    const newRecipeString = JSON.stringify(newRecipe)
-    localStorage.setItem('recipe', newRecipeString)
+  // reset() {
+  //   this.setState(initialState)
+  // }
+
+  onInputChangeHandler(input) {
+
+    return (event) => {
+      const text = event.target.value
+      this.setState({
+        recipeState: {
+          ...this.state.recipeState,
+          [input]: text
+        }
+      })
+
+    }
   }
 
+  onSendData = (event) => {
+    event.preventDefault()
+    addRecipeToFireBase(this.state.recipeState)
+    this.setState({
+      recipeState: {
+        title: '',
+        ingredients: '',
+        description: '',
+        nutritiveValue: '',
+        label: '',
+        photo: '',
+        isFavorite: false
+      }
+    })
+  }
   render() {
     return (
       <Paper style={styles.paper}>
         <div className="addRecipeContainer">
-          <h1>Dodaj swój przepis</h1>
-          <h3>Wpisz tytuł przepisu</h3>
-          <TitleOfRecipe
-            onInputChangeHandler={this.onInputChangeHandler('title')}
-            title={this.state.title}
-          />
+          <h1 style={styles.header}
+          >Dodaj swój przepis</h1>
           <br />
-          <h3>Składniki</h3>
+          <TitleOfRecipe
+            title={this.state.title}
+            onInputChangeHandler={this.onInputChangeHandler('title')}
+          />
+          <h5>Wpisz tytuł przepisu</h5>
+        </div>
+        <div>
           <Ingredients
-            onInputChangeHandler={this.onInputChangeHandler('ingredients')}
             ingredients={this.state.ingredients}
+            onInputChangeHandler={this.onInputChangeHandler('ingredients')}
           />
-          <h3>Przygotowanie</h3>
-          <Description
-            onInputChangeHandler={this.onInputChangeHandler('description')}
-            description={this.state.description}
-          />
-          <h3>Wartość energetyczna</h3>
+          <h5>Składniki</h5>
+        </div>
+        <Description
+          description={this.state.description}
+          onInputChangeHandler={this.onInputChangeHandler('description')}
+        />
+        <h5>Przygotowanie</h5>
+        <div>
           <NutritiveValue
             nutritiveValue={this.state.nutritiveValue}
             onInputChangeHandler={this.onInputChangeHandler('nutritiveValue')}
           />
-          <br />
-          <Label />
-          <Button color="secondary" onClick={this.onSaveClicker}>
-            Zapisz
-      </Button>
+          <h5>Wartość energetyczna</h5>
+        </div>
+        <div>
+          <PhotoOfRecipe
+            photo={this.state.photo}
+            onInputChangeHandler={this.onInputChangeHandler('photo')}
+          />
+          <h5>Dodaj link do zdjęcia</h5>
+        </div>
+        <div>
+          <Label
+            label={this.state.label}
+            onInputChangeHandler={this.onInputChangeHandler('label')} />
+        </div>
+        <div>
+          <Button style={styles.button} variant='outlined' onClick={this.onSendData}>Zapisz</Button>
         </div>
       </Paper>
     )

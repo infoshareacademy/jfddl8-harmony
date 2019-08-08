@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField'
 const Description = (props) => (
   <div>
     <TextField
-  style={{ margin: 8 }}
+  style={{ margin: 10 }}
   fullWidth
   margin="normal"
   InputLabelProps={{
