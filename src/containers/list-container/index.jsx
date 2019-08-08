@@ -7,6 +7,7 @@ class ListContainer extends React.Component {
     recipes: [],
     label: '',
     searchPhrase: '',
+    sliderValue: 0,
   };
 
   mapObjectToArray = (obj) => (
@@ -19,14 +20,21 @@ class ListContainer extends React.Component {
       ))
   )
 
-  filterHandler = (event) => (
+  inputHandler = (event) => (
     this.setState({
       searchPhrase: event.target.value
     })
   )
+
   labelHandler = (event) =>(
     this.setState({
       label: event.target.value
+    })
+  )
+
+  sliderHandler = (event, value) =>(
+    this.setState({
+      sliderValue: value
     })
   )
 
@@ -40,24 +48,36 @@ class ListContainer extends React.Component {
       ))
   }
 
+
   render() {
-    const inputFilter = this.state.recipes.filter((el) => {
-      const searchPhrase = this.state.searchPhrase.toLocaleLowerCase()
-      const filteredBySearchPhrase = el.title
+    console.log(this.state.recipes)
+    const showedList = this.state.recipes.filter(({title='', label='', nutritiveValue=0}) => {
+
+
+      const searchPhrase = this.state.searchPhrase.toLowerCase()
+      const includeTextFilter = title
         .toLowerCase()
         .includes(searchPhrase)
 
-      return filteredBySearchPhrase
+      const selectedLabel = this.state.label
+      const includeLabel= label.includes(selectedLabel)
+
+      const sliderValue = this.state.sliderValue
+      const includeSliderValue = nutritiveValue<=sliderValue
+
+      //dodac sefault value do slidera
+      return includeTextFilter && includeLabel && includeSliderValue
     })
 
     return (
       <div>
         <SearchForm
           searchPhrase={this.state.searchPhrase}
-          onInputChange={this.filterHandler}
+          onInputChange={this.inputHandler}
           onSelectChange={this.labelHandler}
+          onSliderChange={this.sliderHandler}
         />
-        <ItemsList recipes={inputFilter} />
+        <ItemsList recipes={showedList} />
       </div>
     );
   }

@@ -13,10 +13,8 @@ const SearchRangeSlider = (props) => {
         Kalorie
       </Typography>
       <Slider
-        value={props.value}
-        onChange={props.handleChange}
+        onChangeCommitted={props.onSliderChange}
         valueLabelDisplay="auto"
-        getAriaValueText={props.valueText}
         max={1000}
         min={0}
         style={{width: 300}}
