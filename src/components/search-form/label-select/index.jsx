@@ -5,29 +5,22 @@ import FormHelperText from '@material-ui/core/FormHelperText'
 import FormControl from '@material-ui/core/FormControl'
 import NativeSelect from '@material-ui/core/NativeSelect'
 
-const LabelSelect = (props) => {
-
-
-  return (
-    <div>
-       <FormControl>
-        <InputLabel>Kategoria posiłku</InputLabel>
-        <NativeSelect
-          value={props.type}
-          onChange={props.onSelectChange}
-        >
-          <option value="" />
-          <option value={'breakfast'}>Śniadanie</option>
-          <option value={'dinner'}>Obiad</option>
-          <option value={'supper'}>Kolacja</option>
-          <option value={'dessert'}>Deser</option>
-          <option value={'snack'}>Przekąska</option>
-        </NativeSelect>
-        <FormHelperText>Jaki posiłek Cię interesuje?</FormHelperText>
-      </FormControl>
-    </div>
-  )
-
-}
+const LabelSelect = (props) => (
+  <FormControl>
+    <InputLabel>Kategoria posiłku</InputLabel>
+    <NativeSelect
+      value={props.type}
+      onChange={props.onSelectChange}
+    >
+      <option value="" />
+      <option value={'breakfast'}>Śniadanie</option>
+      <option value={'dinner'}>Obiad</option>
+      <option value={'supper'}>Kolacja</option>
+      <option value={'dessert'}>Deser</option>
+      <option value={'snack'}>Przekąska</option>
+    </NativeSelect>
+    <FormHelperText>Jaki posiłek Cię interesuje?</FormHelperText>
+  </FormControl>
+)
 
 export default LabelSelect

@@ -54,8 +54,8 @@ class ListContainer extends React.Component {
       <div>
         <SearchForm
           searchPhrase={this.state.searchPhrase}
-          onChange={this.filterHandler}
-          label={this.labelHandler}
+          onInputChange={this.filterHandler}
+          onSelectChange={this.labelHandler}
         />
         <ItemsList recipes={inputFilter} />
       </div>
