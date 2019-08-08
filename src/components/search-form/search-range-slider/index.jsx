@@ -15,6 +15,7 @@ const SearchRangeSlider = (props) => {
       <Slider
         onChangeCommitted={props.onSliderChange}
         valueLabelDisplay="auto"
+        // defaultValue={[0,1000]}
         max={1000}
         min={0}
         style={{width: 300}}

@@ -11,14 +11,14 @@ const ListItem = props => {
 
   return recipes.map(el => {
     return (
-        <GridListTile key={el.key}>
+      <GridListTile key={el.key} style={{width: 33 + "%"}}>
           <img
             src={el.photo}
             alt={el.photo}
           />
           <GridListTileBar
             title={el.title}
-            subtitle={<span>{el.nutritionValue} kcal</span>}
+            subtitle={<span>{el.nutritiveValue} kcal</span>}
             actionIcon={
               <IconButton>
                 <InfoIcon />

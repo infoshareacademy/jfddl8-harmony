@@ -7,7 +7,7 @@ class ListContainer extends React.Component {
     recipes: [],
     label: '',
     searchPhrase: '',
-    sliderValue: 0,
+    sliderValue: 1000,
   };
 
   mapObjectToArray = (obj) => (
@@ -50,6 +50,7 @@ class ListContainer extends React.Component {
 
 
   render() {
+    console.log(this.state.sliderValue)
     console.log(this.state.recipes)
     const showedList = this.state.recipes.filter(({title='', label='', nutritiveValue=0}) => {
 
@@ -65,7 +66,6 @@ class ListContainer extends React.Component {
       const sliderValue = this.state.sliderValue
       const includeSliderValue = nutritiveValue<=sliderValue
 
-      //dodac sefault value do slidera
       return includeTextFilter && includeLabel && includeSliderValue
     })
 
