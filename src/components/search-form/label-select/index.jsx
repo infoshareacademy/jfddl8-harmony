@@ -1,7 +1,6 @@
 import React from 'react'
 
 import InputLabel from '@material-ui/core/InputLabel'
-import Input from '@material-ui/core/Input'
 import FormHelperText from '@material-ui/core/FormHelperText'
 import FormControl from '@material-ui/core/FormControl'
 import NativeSelect from '@material-ui/core/NativeSelect'
@@ -15,8 +14,7 @@ const LabelSelect = (props) => {
         <InputLabel>Kategoria posiłku</InputLabel>
         <NativeSelect
           value={props.type}
-          onChange={props.handleChange}
-          input={<Input name="age" id="age-native-helper" />}
+          onChange={props.onSelectChange}
         >
           <option value="" />
           <option value={'breakfast'}>Śniadanie</option>

@@ -16,7 +16,9 @@ const SearchForm = (props) => {
         onChange={props.onChange}
         margin="dense"
       />
-      <LabelSelect />
+      <LabelSelect 
+      onSelectChange={props.label}
+      />
       <SearchRangeSlider />
     </div>
   )

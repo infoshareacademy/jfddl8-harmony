@@ -24,6 +24,11 @@ class ListContainer extends React.Component {
       searchPhrase: event.target.value
     })
   )
+  labelHandler = (event) =>(
+    this.setState({
+      label: event.target.value
+    })
+  )
 
   componentDidMount() {
     fetch('https://jfddl8-harmonylublin.firebaseio.com/recipes.json')
@@ -50,6 +55,7 @@ class ListContainer extends React.Component {
         <SearchForm
           searchPhrase={this.state.searchPhrase}
           onChange={this.filterHandler}
+          label={this.labelHandler}
         />
         <ItemsList recipes={inputFilter} />
       </div>
