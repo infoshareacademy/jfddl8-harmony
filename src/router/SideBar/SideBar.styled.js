@@ -1,35 +1,51 @@
-import styled , {css} from 'styled-components'
+import styled from 'styled-components'
+import ListItemMUI from '@material-ui/core/ListItem'
 
 import DrawerMUI from '@material-ui/core/Drawer'
 
-export const Drawer = styled(DrawerMUI)`
+const Drawer = styled(DrawerMUI)`
   && {
-    width: ${ props => {
-      console.log(props)
-      return props.isOpen ? 200 : 80;
-    }}px; 
-    .MuiPape-root {
-      ${someStyle}
-    }
-    div {
-      width: ${ props => {
-        console.log(props)
-        return props.isOpen ? 200 : 80;
-      }}px;
-      
-      background: green;
-      &:hover {
-        background: red;
-      }
+    position: relative;
+    display: flex;
+    height: 100%;
+      width: ${ props => props.isOpen ? 260 : 60}px; 
+     & >  div {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: ${ props => props.isOpen ? 260 : 60}px;
+        background: #eee;
+            &:hover {
+              background: #eee;
+            }
     }
   }
+  `
+
+const InnerDrawer = styled.div`
+    width: 260px;
+    `
+
+const ListItem = styled(ListItemMUI)`
+  &&{
+    display: flex;
+    flex-direction: row;
+    width: 260px;
+    text-transform: uppercase;
+    line-height: 30px;
+    letter-spacing: 2px;
+    span {
+      font-size: 12px;
+      letter-spacing: 2px;
+    }
+  }
+
 `
 
-export const InnerDrawer = styled.div`
-    width: 200px;
-`
 
-const someStyle = css`
-background: lightblue
-`
+export {
+  Drawer, InnerDrawer, ListItem
+}
+
 

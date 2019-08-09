@@ -6,17 +6,22 @@ import MyProfile from '../../containers/Menu/MyProfile'
 import MyDiet from '../../containers/Menu/MyDiet'
 import Recipes from '../../containers/Menu/Recipes'
 import Diary from '../../containers/Menu/Diary'
+import AppBar  from '../AppBar'
+import { RouteWrapper, RouterContainer } from './Router.styled'
 
 const Router = (props) => (
   <BrowserRouter>
-  {props.children}
-    <div>
-      <Route path={'/home'} component={Home} />
-      <Route path={'/my-profile'} component={MyProfile} />
-      <Route path={'/my-diet'} component={MyDiet} />
-      <Route path={'/recipes'} component={Recipes} />
-      <Route path={'/diary'} component={Diary} />
-    </div>
+     <AppBar /> 
+    <RouterContainer>
+    {props.children}
+      <RouteWrapper>
+        <Route path={'/home'} component={Home} />
+        <Route path={'/my-profile'} component={MyProfile} />
+        <Route path={'/my-diet'} component={MyDiet} />
+        <Route path={'/recipes'} component={Recipes} />
+        <Route path={'/diary'} component={Diary} />
+      </RouteWrapper>
+    </RouterContainer>
   </BrowserRouter>
 )
 

@@ -1,6 +1,5 @@
 import React from 'react'
 
-import AppBar from '../AppBar'
 import SideBar from '../SideBar'
 
 class Navigation extends React.Component {
@@ -17,16 +16,10 @@ class Navigation extends React.Component {
 
   render() {
     return (
-      <div>
-        <AppBar
-          toggleSideBar={this.toggleSideBar}
-        />
         <SideBar
           handlerOnClick={this.toggleSideBar}
           isSideBarOpen={this.state.isSideBarOpen}
-          toggleSideBar={this.toggleSideBar}
-        />
-      </div>
+          toggleSideBar={this.toggleSideBar}/>
     )
   }
 }
