@@ -2,7 +2,7 @@ import React from 'react'
 
 import AppBar from './containers/app-bar'
 import View from './containers/view'
-import AddRecipeContainer from './containers/addRecipeContainer/AddRecipeContainer'
+
 
 
 function App() {
@@ -10,7 +10,6 @@ function App() {
     <div className="App">
       <AppBar />
       <View />
-      <AddRecipeContainer/>
     </div>
   )
 }
