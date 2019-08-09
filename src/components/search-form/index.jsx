@@ -9,15 +9,17 @@ const SearchForm = (props) => {
 
   return (
     <div>
-      <SearchInput 
-      searchPhrase={props.searchPhrase}
-      onInputChange={props.onInputChange}
+      <SearchInput
+        searchPhrase={props.searchPhrase}
+        onInputChange={props.onInputChange}
       />
-      <LabelSelect 
-      onSelectChange={props.onSelectChange}
+      <LabelSelect
+        selectValue={props.selectValue}
+        onSelectChange={props.onSelectChange}
       />
-      <SearchRangeSlider 
-      onSliderChange={props.onSliderChange}
+      <SearchRangeSlider
+        sliderValue={props.sliderValue}
+        onSliderChange={props.onSliderChange}
       />
     </div>
   )

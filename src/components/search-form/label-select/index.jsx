@@ -9,7 +9,7 @@ const LabelSelect = (props) => (
   <FormControl>
     <InputLabel>Kategoria posiłku</InputLabel>
     <NativeSelect
-      value={props.type}
+      value={props.selectValue}
       onChange={props.onSelectChange}
     >
       <option value="" />

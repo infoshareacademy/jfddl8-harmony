@@ -13,9 +13,9 @@ const SearchRangeSlider = (props) => {
         Kalorie
       </Typography>
       <Slider
-        onChangeCommitted={props.onSliderChange}
+        onChange={props.onSliderChange}
         valueLabelDisplay="auto"
-        // defaultValue={[0,1000]}
+        value={props.sliderValue}
         max={1000}
         min={0}
         style={{width: 300}}
