@@ -5,7 +5,9 @@ import GridList from "@material-ui/core/GridList";
 const ItemsList = props => (
   <div>
     <GridList cellHeight={180}>
-      <ListItem recipes={props.recipes} />
+      <ListItem
+        refresh={props.refresh}
+        recipes={props.recipes} />
     </GridList>
   </div>
 );
