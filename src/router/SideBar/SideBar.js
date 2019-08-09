@@ -8,6 +8,7 @@ import PersonIcon from '@material-ui/icons/Person'
 import RestaurantIcon from '@material-ui/icons/Restaurant'
 import ListIcon from '@material-ui/icons/List'
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser'
+import TouchAppIcon from '@material-ui/icons/TouchApp'
 
 
 
@@ -44,6 +45,7 @@ class SideBar extends React.Component {
           <SideBarItem icon={<PersonIcon />} to={'/my-profile'} label={'Mój profil'} />
           <SideBarItem icon={<RestaurantIcon />} to={'/my-diet'} label={'Moja dieta'} />
           <SideBarItem icon={<ListIcon />} to={'/recipes'} label={'Przepisy'} />
+          <SideBarItem icon={<TouchAppIcon />} to={'/add-recipes'} label={'Dodaj przepis'} />
           <SideBarItem icon={<VerifiedUserIcon />} to={'/diary'} label={'Dziennik postępów'} />
         </InnerDrawer>
       </Drawer>
