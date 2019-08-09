@@ -1,25 +1,17 @@
-import React from 'react'
+import React from 'react';
+import Router from './router/Router'
+import './index.css'
+import Navigation from './router/Navigation'
+import { MainWrapper } from './App.styled'
 
-import AppBar from './containers/app-bar'
-import View from './containers/view'
-import ListContainer from './containers/list-container'
-
-
-
-
-function App() {
-  return (
-    <div className="App">
-      <AppBar></AppBar>
-      <div>
-        <View />
-
-      </div>
-      <div>
+const App = (props) => (
+  <MainWrapper>
+    <Router>
+      <Navigation />
       <ListContainer />
-      </div>
-    </div>
-  )
-}
+
+    </Router>
+  </MainWrapper >
+)
 
 export default App
