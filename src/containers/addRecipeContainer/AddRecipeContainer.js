@@ -19,6 +19,7 @@ const styles = {
   },
   header: {
     margin: '0 auto',
+    padding:0,
     textAlign: 'center'
   }
 }
@@ -43,7 +44,6 @@ class AddRecipeContainer extends React.Component {
   onInputChangeHandler(input) {
 
     return (event) => {
-      console.log(event.target.value,)
       const selectValue = event.value 
       const valueToSave = selectValue || (event.target && event.target.value) || ''
       this.setState({
@@ -73,6 +73,7 @@ class AddRecipeContainer extends React.Component {
   }
   render() {
     const { recipeState={} } = this.state
+
     return (
       <Paper style={styles.paper}>
         <div className="addRecipeContainer">
@@ -91,7 +92,7 @@ class AddRecipeContainer extends React.Component {
             onInputChangeHandler={this.onInputChangeHandler('ingredients')}
           />
           <h5>Składniki</h5>
-        </div>value
+        </div>
         <Description
           description={recipeState.description}
           onInputChangeHandler={this.onInputChangeHandler('description')}
