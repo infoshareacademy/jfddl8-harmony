@@ -26,7 +26,6 @@ const styles = {
 }
 
 
-
 class AddRecipeContainer extends React.Component {
   state = {
     recipeState: {

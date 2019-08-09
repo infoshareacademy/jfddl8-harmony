@@ -38,7 +38,9 @@ export default function ControlledOpenSelect() {
 
   return (
     <form autoComplete="off">
-      <FormControl className={classes.formControl}>
+      <FormControl 
+      className={classes.formControl}
+      >
         <InputLabel htmlFor="demo-controlled-open-select">Rodzaj posiłku</InputLabel>
         <Select
           open={open}
