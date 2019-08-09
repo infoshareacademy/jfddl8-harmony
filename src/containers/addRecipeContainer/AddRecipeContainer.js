@@ -10,7 +10,7 @@ import Label from './label/Label'
 import Button from '../../components/button'
 import Paper from '@material-ui/core/Paper'
 
-import { addRecipeToFireBase } from './recipesService'
+import { addRecipeToFireBase } from '../../databaseService'
 
 const styles = {
   paper: {
@@ -38,8 +38,6 @@ class AddRecipeContainer extends React.Component {
     }
   }
 
-  // reset() {nextParam
-  //   this.senextParamtState(initialState)
 
   onInputChangeHandler(input) {
 
@@ -78,7 +76,7 @@ class AddRecipeContainer extends React.Component {
       <Paper style={styles.paper}>
         <div className="addRecipeContainer">
           <h1 style={styles.header}
-          >Dodaj swój przepis</h1>
+          >Dodaj swój przepis !</h1>
           <br />
           <TitleOfRecipe
             title={recipeState.title}
