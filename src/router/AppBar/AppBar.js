@@ -8,9 +8,9 @@ const AppBar = (props) => (
   <div>
     <AppBarStyled position="static" >
       <Toolbar >
-    <IconLogo>
-      <img src={LogoPic}/>
-    </IconLogo>
+        <IconLogo>
+          <img src={LogoPic} />
+        </IconLogo>
       </Toolbar>
     </AppBarStyled>
   </div>

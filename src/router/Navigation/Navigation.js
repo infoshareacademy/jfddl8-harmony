@@ -16,10 +16,11 @@ class Navigation extends React.Component {
 
   render() {
     return (
-        <SideBar
-          handlerOnClick={this.toggleSideBar}
-          isSideBarOpen={this.state.isSideBarOpen}
-          toggleSideBar={this.toggleSideBar}/>
+      <SideBar
+        handlerOnClick={this.toggleSideBar}
+        isSideBarOpen={this.state.isSideBarOpen}
+        toggleSideBar={this.toggleSideBar}
+      />
     )
   }
 }

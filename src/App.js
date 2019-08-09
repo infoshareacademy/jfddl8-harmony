@@ -7,9 +7,9 @@ import { MainWrapper } from './App.styled'
 const App = (props) => (
   <MainWrapper>
     <Router>
-    <Navigation/>
+      <Navigation />
 
-     
+
     </Router>
   </MainWrapper >
 )

@@ -4,9 +4,8 @@ import { Link } from 'react-router-dom'
 // import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
-import {ListItem} from './SideBar.styled'
+import { ListItem } from './SideBar.styled'
 
-import MenuIcon from '@material-ui/icons/Menu'
 const styles = {
   link: {
     textDecoration: 'none',
@@ -21,7 +20,7 @@ const SideBarItem = (props) => (
   >
     <ListItem button={true}>
       <ListItemIcon>
-        <MenuIcon />
+        {props.icon}
       </ListItemIcon>
 
       <ListItemText
