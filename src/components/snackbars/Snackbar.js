@@ -1,6 +1,6 @@
 import React from 'react'
 
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import clsx from 'clsx';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
@@ -14,8 +14,8 @@ import WarningIcon from '@material-ui/icons/Warning';
 import { makeStyles } from '@material-ui/core/styles';
 
 const variantIcon = {
-  success: CheckCircleIcon,
   warning: WarningIcon,
+  success: CheckCircleIcon,
   error: ErrorIcon,
   info: InfoIcon,
 };

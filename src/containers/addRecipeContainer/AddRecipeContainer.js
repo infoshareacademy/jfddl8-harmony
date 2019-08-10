@@ -8,7 +8,7 @@ import PhotoOfRecipe from './photo/PhotoOfRecipe'
 import Label from './label/Label'
 
 import Button from '../../components/button'
-import { warningSnackbar, errorSnackbar, successSnackbar} from '../../components/snackbars'
+import { warningSnackbar, errorSnackbar, successSnackbar } from '../../components/snackbars/Snackbar'
 import Paper from '@material-ui/core/Paper'
 
 import { addRecipeToFireBase } from '../../databaseService'
@@ -59,11 +59,11 @@ class AddRecipeContainer extends React.Component {
     const isURLRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
 
     if (!this.state.recipeState.title) {
-      alert('Wpisz tytuł przepisu')
+      alert('Dodaj tytuł')
       return
     }
     else if (!this.state.recipeState.nutritiveValue) {
-      alert('Wpisz wartość odżywczą')
+      alert('Dodaj wartość odzywczą')
       return
     }
     else if (!this.state.recipeState.photo) {
@@ -103,7 +103,7 @@ class AddRecipeContainer extends React.Component {
         <div className="addRecipeContainer">
           <h1 style={styles.header}
           >Dodaj swój przepis !</h1>
-           <h5>Wpisz tytuł przepisu:</h5>
+          <h5>Wpisz tytuł przepisu:</h5>
           <br />
           <TitleOfRecipe
             title={recipeState.title}
@@ -111,7 +111,7 @@ class AddRecipeContainer extends React.Component {
           />
         </div>
         <div>
-        <h5>Składniki:</h5>
+          <h5>Składniki:</h5>
           <Ingredients
             ingredients={recipeState.ingredients}
             onInputChangeHandler={this.onInputChangeHandler('ingredients')}
@@ -123,14 +123,14 @@ class AddRecipeContainer extends React.Component {
           onInputChangeHandler={this.onInputChangeHandler('description')}
         />
         <div>
-        <h5>Wartość energetyczna:</h5>
+          <h5>Wartość energetyczna:</h5>
           <NutritiveValue
             nutritiveValue={recipeState.nutritiveValue}
             onInputChangeHandler={this.onInputChangeHandler('nutritiveValue')}
           />
         </div>
         <div>
-        <h5>Dodaj link do zdjęcia:</h5>
+          <h5>Dodaj link do zdjęcia:</h5>
           <PhotoOfRecipe
             photo={recipeState.photo}
             onInputChangeHandler={this.onInputChangeHandler('photo')}
