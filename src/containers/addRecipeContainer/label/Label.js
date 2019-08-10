@@ -31,7 +31,6 @@ export default function ControlledOpenSelect({ handleChange, label }) {
     setOpen(true)
    
   }
-  console.log(label)
 
   return (
     <form autoComplete="off">
