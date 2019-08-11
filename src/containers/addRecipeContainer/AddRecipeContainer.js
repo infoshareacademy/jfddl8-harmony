@@ -8,7 +8,6 @@ import PhotoOfRecipe from './photo/PhotoOfRecipe'
 import Label from './label/Label'
 
 import Button from '../../components/button'
-import { warningSnackbar, errorSnackbar, successSnackbar } from '../../components/snackbars/Snackbar'
 import Paper from '@material-ui/core/Paper'
 
 import { addRecipeToFireBase } from '../../databaseService'
@@ -59,7 +58,7 @@ class AddRecipeContainer extends React.Component {
     const isURLRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
 
     if (!this.state.recipeState.title) {
-      warningSnackbar(this.state.recipeState.warningMessage)
+      alert('Dodaj tytuł')
       return
     }
     else if (!this.state.recipeState.nutritiveValue) {
