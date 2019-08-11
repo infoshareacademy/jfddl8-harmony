@@ -1,15 +1,16 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+// import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import MuiDialogTitle from '@material-ui/core/DialogTitle';
-import MuiDialogContent from '@material-ui/core/DialogContent';
-import MuiDialogActions from '@material-ui/core/DialogActions';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
+// import Dialog from '@material-ui/core/Dialog';
+import MuiDialog from '@material-ui/core/Dialog';
+// import MuiDialogContent from '@material-ui/core/DialogContent';
+// import MuiDialogActions from '@material-ui/core/DialogActions';
+// import IconButton from '@material-ui/core/IconButton';
+// import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 
 import { withRouter } from "react-router-dom"
+import { DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
 
 const styles = theme => ({
   root: {
@@ -24,52 +25,26 @@ const styles = theme => ({
   },
 });
 
-const DialogTitle = withStyles(styles)(props => {
-  const { children, classes, onClose } = props;
-  return (
-    <MuiDialogTitle disableTypography className={classes.root}>
-      <Typography variant="h6">{children}</Typography>
-      {onClose ? (
-        <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
-          <CloseIcon />
-        </IconButton>
-      ) : null}
-    </MuiDialogTitle>
-  );
-});
 
-const DialogContent = withStyles(theme => ({
-  root: {
-    padding: theme.spacing(2),
-  },
-}))(MuiDialogContent);
-
-const DialogActions = withStyles(theme => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(1),
-  },
-}))(MuiDialogActions);
-
-const CustomizedDialogs = ({match}) => {
-  const [open, setOpen] = React.useState(false);
-
-  // const handleClickOpen = () => {
-  //   setOpen(true);
+const CustomizedDialogs = (props) => {
+  // const handleClose = () => {
+  //   setOpen(false);
   // };
-  const handleClose = () => {
-    setOpen(false);
-  };
+
+
 
   return (
    
+    <MuiDialog
+    open={props.el.key === props.match.params.key}
+    onClose={() => { props.history.push('/items-list') }}
+    >
+
     <div>
-      <Dialog onClose={handleClose}  open={open}>
-        <DialogTitle 
-        onClose={handleClose}>
+        <DialogTitle>
           Modal title
         </DialogTitle>
-        <DialogContent dividers>
+        <DialogContent>
           <Typography gutterBottom>
             Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
             in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
@@ -85,12 +60,13 @@ const CustomizedDialogs = ({match}) => {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Save changes
+          <Button onClick={() => props.history.push('/concerts-list')} color="primary">
+            Chujdupacycki
           </Button>
         </DialogActions>
-      </Dialog>
     </div>
+
+    </MuiDialog>
   );
 }
 
