@@ -35,10 +35,10 @@ const initialState = {
     photo: '',
     isFavorite: false,
     errors: {
-      title: true,
-      nutritiveValue: true,
-      photo: true,
-      photoUrl: true
+      title: false,
+      nutritiveValue: false,
+      photo: false,
+      photoUrl: false
     }
   }
 }
