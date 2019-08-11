@@ -35,23 +35,23 @@ const initialState = {
     photo: '',
     isFavorite: false,
     errors: {
-      title:true,
-      nutritiveValue:true,
-      photo:true
+      title: false,
+      nutritiveValue: false,
+      photo: false
     }
   }
 }
 
 class AddRecipeContainer extends React.Component {
   state = initialState
-  
+
   messages = {
-    successMessage:'Przepis dodany!',
-    lackOfTitleMessage:'Dodaj tytuł',
-    lackOfNutritiveValueMessage:'Dodaj wartość odżywczą',
-    lackOfPhotoMessage:'Dodaj link do zdjęcia',
-    wrongUrlMessage:'Dodaj prawidłowy link do zdjęcia zawierający na początku protokół http:// lub https://',
-    errorMessage:'Wystąpił błąd. Spróbuj później'
+    successMessage: 'Przepis dodany!',
+    lackOfTitleMessage: 'Dodaj tytuł',
+    lackOfNutritiveValueMessage: 'Dodaj wartość odżywczą',
+    lackOfPhotoMessage: 'Dodaj link do zdjęcia',
+    wrongUrlMessage: 'Dodaj prawidłowy link do zdjęcia zawierający na początku protokół http:// lub https://',
+    errorMessage: 'Wystąpił błąd. Spróbuj później'
   }
 
   onInputChangeHandler(input) {
@@ -69,35 +69,37 @@ class AddRecipeContainer extends React.Component {
 
   onSendData = (event) => {
     event.preventDefault()
+    const validation = this.formValidation
 
+  }
+
+  formValidation = () => {
     const isURLRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
+    let title = false
+    let nutritiveValue = false
+    let photo = false
+    let photoUrl = false
+    if (this.state.recipeState.title) {
+      title = true
+    }
 
-    // if (!this.state.recipeState.title) {
-    //   warningSnackbar(this.state.recipeState.warningMessage)
-    //   return
-    // }
-    // else if (!this.state.recipeState.nutritiveValue) {
-    //   alert('Dodaj wartość odzywczą')
-    //   return
-    // }
-    // else if (!this.state.recipeState.photo) {
-    //   alert('Dodaj link do zdjęcia')
-    //   return
-    // }
-    // else if (!this.state.recipeState.photo) {
-    //   alert('Dodaj link do zdjęcia')
-    //   return
-    // }
-    // else if (this.state.recipeState.photo) {
-    //   if (isURLRegex.test(this.state.recipeState.photo)) {
-    //   }
-    //   else {
-    //     alert('dodaj prawidłowy link do zdjęcia zawierający na początku http:// lub https://')
-    //     return
-    //   }
-    // }
+    if (this.state.recipeState.nutritiveValue && this.state.recipeState.nutritiveValue.indexOf(' ') === -1) {
+      nutritiveValue = true
+      return
+    }
 
-
+    if (this.state.recipeState.photo) {
+      photo = true
+      return
+    }
+    else if (!this.state.recipeState.photo) {
+      photo = false
+      return
+    }
+    else if (isURLRegex.test(this.state.recipeState.photo)) {
+      photoUrl = false
+      return
+    }
     addRecipeToFireBase(this.state.recipeState)
       .then(() => {
         alert('przepis dodany!')
@@ -107,7 +109,6 @@ class AddRecipeContainer extends React.Component {
         alert('Wystąpił błąd. Proszę spróbować później')
       })
   }
-
 
   render() {
     const { recipeState = {} } = this.state
@@ -124,7 +125,7 @@ class AddRecipeContainer extends React.Component {
             onInputChangeHandler={this.onInputChangeHandler('title')}
           />
           {this.state.recipeState.errors.title &&
-          <span>{this.messages.lackOfTitleMessage}</span>}
+            <span className="warningMessage">{this.messages.lackOfTitleMessage}</span>}
         </div>
         <div>
           <h5>Składniki:</h5>
@@ -145,7 +146,7 @@ class AddRecipeContainer extends React.Component {
             onInputChangeHandler={this.onInputChangeHandler('nutritiveValue')}
           />
           {this.state.recipeState.errors.nutritiveValue &&
-          <span>{this.messages.lackOfNutritiveValueMessage}</span>}
+            <span className="warningMessage">{this.messages.lackOfNutritiveValueMessage}</span>}
         </div>
         <div>
           <h5>Dodaj link do zdjęcia:</h5>
@@ -154,7 +155,7 @@ class AddRecipeContainer extends React.Component {
             onInputChangeHandler={this.onInputChangeHandler('photo')}
           />
           {this.state.recipeState.errors.photo &&
-          <span>{this.messages.lackOfPhotoMessage}</span>}
+            <span className="warningMessage">{this.messages.lackOfPhotoMessage}</span>}
         </div>
         <div>
           <Label
