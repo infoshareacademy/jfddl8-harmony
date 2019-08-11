@@ -101,7 +101,7 @@ export default function CustomizedSnackbars() {
 
 }
 
-export const errorSnackbar = (props) => {
+export const ErrorSnackbar = (props) => {
   return (
     <MySnackbarContentWrapper
       variant="error"
@@ -110,7 +110,7 @@ export const errorSnackbar = (props) => {
   )
 }
 
-export const warningSnackbar = (props) => {
+export const WarningSnackbar = (props) => {
   return (
     <MySnackbarContentWrapper
       variant="warning"
@@ -118,7 +118,7 @@ export const warningSnackbar = (props) => {
     />
   )
 }
-export const successSnackbar = (props) => {
+export const SuccessSnackbar = (props) => {
   return (
     <MySnackbarContentWrapper
       variant="success"

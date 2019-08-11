@@ -10,6 +10,7 @@ import Label from './label/Label'
 import Button from '../../../components/button/Button'
 import Paper from '@material-ui/core/Paper'
 
+import { ErrorSnackbar, WarningSnackbar, SuccessSnackbar} from '../../../components/snackbars/Snackbar'
 import { addRecipeToFireBase } from '../../../databaseService'
 
 const styles = {
@@ -35,8 +36,17 @@ const initialState = {
     isFavorite: false,
   }
 }
+
 class AddRecipeContainer extends React.Component {
   state = initialState
+
+  messages = {
+    title : 'Dodaj tytuł przepisu',
+    nutritiveValue : 'Dodaj prawidłową wartość odżywczą',
+    photo : 'Dodaj lik do zdjęcia zawierajacy na początku protokół http:// lub https://',
+    success : 'Dodany przepis',
+    error : 'Wystąpił błąd. Spróbuj ponownie później.'
+  }
 
   onInputChangeHandler(input) {
     return (event) => {
@@ -80,8 +90,6 @@ class AddRecipeContainer extends React.Component {
         return
       }
     }
-
-
     addRecipeToFireBase(this.state.recipeState)
       .then(() => {
         alert('przepis dodany!')
@@ -91,11 +99,8 @@ class AddRecipeContainer extends React.Component {
         alert('Wystąpił błąd. Proszę spróbować później')
       })
   }
-
-
   render() {
     const { recipeState = {} } = this.state
-
     return (
       <Paper style={styles.paper}>
         <div className="addRecipeContainer">
