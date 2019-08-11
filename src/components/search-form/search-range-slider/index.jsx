@@ -8,7 +8,11 @@ import Slider from '@material-ui/core/Slider'
 const SearchRangeSlider = (props) => {
 
   return (
-    <div>
+    <div
+    style={{
+      alignSelf: "center",
+      paddingTop: 2 + '%'
+    }}>
       <Typography id="range-slider" gutterBottom>
         Kalorie
       </Typography>

@@ -5,51 +5,65 @@ import IconButton from "@material-ui/core/IconButton";
 import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import Favorite from "@material-ui/icons/Favorite";
 
+import { Link, withRouter } from "react-router-dom";
+import CustomizedDialogs from "../dialog-window";
 
-// import {Link} from 'react-router-dom'
 
 const ListItem = props => {
   const recipes = props.recipes;
-  const refresh = props.refresh
+  const refresh = props.refresh;
 
-
-  const isFavoriteChange = (key, isFavorite) =>{ 
-    fetch(`https://jfddl8-harmonylublin.firebaseio.com/recipes/${key}.json`,{
-      method: 'PATCH',
+  const isFavoriteChange = (key, isFavorite) => {
+    fetch(`https://jfddl8-harmonylublin.firebaseio.com/recipes/${key}.json`, {
+      method: "PATCH",
       body: JSON.stringify({
         isFavorite: !isFavorite
       })
-    })
-    .then(()=>refresh())
-  }
-
-  
+    }).then(() => refresh());
+  };
 
   return recipes.map(el => {
     return (
-      // <Link to={'cokowliek'} >
-      <GridListTile key={el.key} style={{ width: 33 + "%" }}>
-        <img
-          src={el.photo}
-          alt={el.photo}
-        />
-        <GridListTileBar
-          title={el.title}
-          subtitle={<span>{el.nutritiveValue} kcal</span>}
-          actionIcon={
-            <IconButton
-              onClick={() => {isFavoriteChange(el.key, el.isFavorite)}}
-            >
-             {
-               el.isFavorite ?  <Favorite color="error"/>   : <FavoriteBorder color="error"/>
-             }
-            </IconButton>
-          }
-        />
-      </GridListTile>
-      // </Link>
+      <Link
+        to={{
+          pathName: '/list-item',
+          search: `?sort=${el.key}`,
+        }}
+      >
+        <GridListTile
+          recipe={el}
+          key={el.key}
+          onClick={console.log('click')}
+          style={{
+            width: 25 + "vw",
+            height: 25 + "vh",
+            margin: 2 + "px",
+            border: 2 + "px solid black",
+            position: "center"
+          }}
+        >
+          <img src={el.photo} alt={el.photo} />
+          <GridListTileBar
+            title={el.title}
+            subtitle={<span>{el.nutritiveValue} kcal</span>}
+            actionIcon={
+              <IconButton
+                onClick={() => {
+                  isFavoriteChange(el.key, el.isFavorite);
+                }}
+              >
+                {el.isFavorite ? (
+                  <Favorite color="error" />
+                ) : (
+                  <FavoriteBorder color="error" />
+                )}
+              </IconButton>
+            }
+          />
+        </GridListTile>
+      </Link>
     );
   });
 };
 
-export default ListItem;
+export default withRouter(ListItem);

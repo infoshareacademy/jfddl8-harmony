@@ -1,74 +1,83 @@
-import React from "react"
-import ItemsList from "../../components/items-list"
-import SearchForm from "../../components/search-form"
+import React from "react";
+import ItemsList from "../../components/items-list";
+import SearchForm from "../../components/search-form";
 
 class ListContainer extends React.Component {
   state = {
     recipes: [],
-    label: '',
-    searchPhrase: '',
+    label: "",
+    searchPhrase: "",
     sliderValue: 1000,
+    isFavorite: false
   };
 
-  mapObjectToArray = (obj) => (
-    Object.entries(obj || {})
-      .map(([key, value]) => (
-        typeof value === 'object' ?
-          { ...value, key }
-          :
-          { key, value }
-      ))
-  )
+  mapObjectToArray = obj =>
+    Object.entries(obj || {}).map(([key, value]) =>
+      typeof value === "object" ? { ...value, key } : { key, value }
+    );
 
-  inputHandler = (event) => (
+  inputHandler = event =>
     this.setState({
       searchPhrase: event.target.value
-    })
-  )
+    });
 
-  labelHandler = (event) => (
+  labelHandler = event =>
     this.setState({
       label: event.target.value
-    })
-  )
+    });
 
-  sliderHandler = (event, value) => (
+  buttonHandler = event => {
+      console.log(this.state.isFavorite)
+      this.setState({
+        isFavorite: !this.state.isFavorite
+    })}
+
+  sliderHandler = (event, value) =>
     this.setState({
       sliderValue: value
-    })
-  )
+    });
 
   componentDidMount() {
-    this.loadElements()
+    this.loadElements();
   }
 
   loadElements = () => {
-    fetch('https://jfddl8-harmonylublin.firebaseio.com/recipes.json')
+    fetch("https://jfddl8-harmonylublin.firebaseio.com/recipes.json")
       .then(result => result.json())
-      .then((data) => (
+      .then(data =>
         this.setState({
           recipes: this.mapObjectToArray(data)
         })
-      ))
-  }
+      );
+  };
 
   render() {
-    const showedList = this.state.recipes.filter(({ title = '', label = '', nutritiveValue = 0 }) => {
-      
+    const showedList = this.state.recipes.filter(
+      ({ title = "", label = "", nutritiveValue = 0, isFavorite = false },i,arr) => {
+        const searchPhrase = this.state.searchPhrase.toLowerCase();
+        const includeTextFilter = title.toLowerCase().includes(searchPhrase);
 
-      const searchPhrase = this.state.searchPhrase.toLowerCase()
-      const includeTextFilter = title
-        .toLowerCase()
-        .includes(searchPhrase)
+        const selectedLabel = this.state.label;
+        const includeLabel = label.includes(selectedLabel);
 
-      const selectedLabel = this.state.label
-      const includeLabel = label.includes(selectedLabel)
+        const sliderValue = this.state.sliderValue;
+        const includeSliderValue = nutritiveValue <= sliderValue;
 
-      const sliderValue = this.state.sliderValue
-      const includeSliderValue = nutritiveValue <= sliderValue
+        const buttonClicked = this.state.isFavorite
 
-      return includeTextFilter && includeLabel && includeSliderValue
-    })
+        const fav = () => buttonClicked ? buttonClicked === isFavorite : buttonClicked === isFavorite&&buttonClicked !== isFavorite
+
+        
+        
+
+        return (
+          includeTextFilter &&
+          includeLabel &&
+          includeSliderValue&&
+          fav()
+        );
+      }
+    );
 
     return (
       <div>
@@ -79,15 +88,12 @@ class ListContainer extends React.Component {
           onInputChange={this.inputHandler}
           onSelectChange={this.labelHandler}
           onSliderChange={this.sliderHandler}
+          onButtonClick={this.buttonHandler}
         />
-        <ItemsList
-          recipes={showedList}
-          refresh={this.loadElements}
-        />
+        <ItemsList recipes={showedList} refresh={this.loadElements} />
       </div>
     );
   }
-
 }
 
 export default ListContainer;
