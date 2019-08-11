@@ -26,7 +26,7 @@ const Router = (props) => (
         <Route path={'/add-recipes'} component={AddRecipeContainer}/>
         <Route path={'/items-list'} component={ItemsList} />
         <Route path={'/list-item'} component={ListItem} />
-        <Route path={`/:key`} component={CustomizedDialogs} />
+        <Route path={`list-item/:key`} component={CustomizedDialogs} />
         <Route path={'/diary'} component={Diary} />
       </RouteWrapper>
     </RouterContainer>

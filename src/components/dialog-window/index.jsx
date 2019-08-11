@@ -9,6 +9,8 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 
+import { withRouter } from "react-router-dom"
+
 const styles = theme => ({
   root: {
     margin: 0,
@@ -52,9 +54,9 @@ const DialogActions = withStyles(theme => ({
 const CustomizedDialogs = ({match}) => {
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
   const handleClose = () => {
     setOpen(false);
   };
@@ -92,4 +94,4 @@ const CustomizedDialogs = ({match}) => {
   );
 }
 
-export default CustomizedDialogs
+export default withRouter(CustomizedDialogs)

@@ -27,12 +27,12 @@ class ListContainer extends React.Component {
       label: event.target.value
     });
 
-  buttonHandler = event => {
-    console.log(this.state.isFavorite);
+  favoriteButtonHandler = event => {
     this.setState({
-      isFavorite: !this.state.isFavorite
-    });
-  };
+      filterFavorite: !this.state.filterFavorite,
+      showFavorite: !this.state.showFavorite
+    })
+  }
 
   sliderHandler = (event, value) =>
     this.setState({
@@ -70,11 +70,11 @@ class ListContainer extends React.Component {
       const sliderValue = this.state.sliderValue;
       const includeSliderValue = nutritiveValue <= sliderValue;
 
-      const isFavorite =
+      const isItFavorite =
         !this.state.filterFavorite || isFavorite === this.state.showFavorite;
 
       return (
-        includeTextFilter && includeLabel && includeSliderValue && isFavorite
+        includeTextFilter && includeLabel && includeSliderValue && isItFavorite
       );
     });
 
@@ -87,7 +87,7 @@ class ListContainer extends React.Component {
           onInputChange={this.inputHandler}
           onSelectChange={this.labelHandler}
           onSliderChange={this.sliderHandler}
-          onButtonClick={this.buttonHandler}
+          onButtonClick={this.favoriteButtonHandler}
         />
         <ItemsList recipes={showedList} refresh={this.loadElements} />
       </div>

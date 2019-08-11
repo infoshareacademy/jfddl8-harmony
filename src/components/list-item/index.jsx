@@ -6,7 +6,7 @@ import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import Favorite from "@material-ui/icons/Favorite";
 
 import { Link, withRouter } from "react-router-dom";
-import CustomizedDialogs from "../dialog-window";
+// import CustomizedDialogs from "../dialog-window";
 
 
 const ListItem = props => {
@@ -33,7 +33,7 @@ const ListItem = props => {
         <GridListTile
           recipe={el}
           key={el.key}
-          onClick={console.log('click')}
+          onClick={()=>console.log('click')}
           style={{
             width: 25 + "vw",
             height: 25 + "vh",

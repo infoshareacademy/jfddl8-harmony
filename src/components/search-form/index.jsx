@@ -3,7 +3,7 @@ import React from "react";
 import SearchRangeSlider from "./search-range-slider";
 import SearchInput from "./search-input";
 import LabelSelect from "./label-select";
-import { Button } from "@material-ui/core";
+import { ButtonGroup, Button } from "@material-ui/core";
 
 const SearchForm = props => {
   return (
@@ -26,7 +26,23 @@ const SearchForm = props => {
         sliderValue={props.sliderValue}
         onSliderChange={props.onSliderChange}
       />
-      <Button
+      <ButtonGroup
+        style={{
+          height: 3 + "em",
+          alignSelf: "center"
+        }}
+        variant="contained"
+        size="small"
+        aria-label="small contained button group"
+      >
+        <Button onClick={props.onButtonClick}>Wszystkie przepisy</Button>
+        <Button 
+        onClick={props.onButtonClick}
+        color={'secondary'}
+        >Ulubione przepisy</Button>
+      </ButtonGroup>
+
+      {/* <Button
         style={{
           height: 3 + "em",
           alignSelf: "center"
@@ -34,10 +50,10 @@ const SearchForm = props => {
         size="small"
         variant="contained"
         color="secondary"
-        onClick={props.onButtonClick}
+        onClick={() => props.onButtonClick}
       >
         Favorites
-      </Button>
+      </Button> */}
     </div>
   );
 };
