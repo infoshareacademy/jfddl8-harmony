@@ -8,7 +8,8 @@ class ListContainer extends React.Component {
     label: "",
     searchPhrase: "",
     sliderValue: 1000,
-    isFavorite: false
+    showFavorite: false,
+    filterFavorite: false
   };
 
   mapObjectToArray = obj =>
@@ -27,10 +28,11 @@ class ListContainer extends React.Component {
     });
 
   buttonHandler = event => {
-      console.log(this.state.isFavorite)
-      this.setState({
-        isFavorite: !this.state.isFavorite
-    })}
+    console.log(this.state.isFavorite);
+    this.setState({
+      isFavorite: !this.state.isFavorite
+    });
+  };
 
   sliderHandler = (event, value) =>
     this.setState({
@@ -52,32 +54,29 @@ class ListContainer extends React.Component {
   };
 
   render() {
-    const showedList = this.state.recipes.filter(
-      ({ title = "", label = "", nutritiveValue = 0, isFavorite = false },i,arr) => {
-        const searchPhrase = this.state.searchPhrase.toLowerCase();
-        const includeTextFilter = title.toLowerCase().includes(searchPhrase);
+    const showedList = this.state.recipes.filter((recipe, i, arr) => {
+      const {
+        title = "",
+        label = "",
+        nutritiveValue = 0,
+        isFavorite = false
+      } = recipe;
+      const searchPhrase = this.state.searchPhrase.toLowerCase();
+      const includeTextFilter = title.toLowerCase().includes(searchPhrase);
 
-        const selectedLabel = this.state.label;
-        const includeLabel = label.includes(selectedLabel);
+      const selectedLabel = this.state.label;
+      const includeLabel = label.includes(selectedLabel);
 
-        const sliderValue = this.state.sliderValue;
-        const includeSliderValue = nutritiveValue <= sliderValue;
+      const sliderValue = this.state.sliderValue;
+      const includeSliderValue = nutritiveValue <= sliderValue;
 
-        const buttonClicked = this.state.isFavorite
+      const isFavorite =
+        !this.state.filterFavorite || isFavorite === this.state.showFavorite;
 
-        const fav = () => buttonClicked ? buttonClicked === isFavorite : buttonClicked === isFavorite&&buttonClicked !== isFavorite
-
-        
-        
-
-        return (
-          includeTextFilter &&
-          includeLabel &&
-          includeSliderValue&&
-          fav()
-        );
-      }
-    );
+      return (
+        includeTextFilter && includeLabel && includeSliderValue && isFavorite
+      );
+    });
 
     return (
       <div>
