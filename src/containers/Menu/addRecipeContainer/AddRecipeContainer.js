@@ -34,6 +34,12 @@ const initialState = {
     label: 'breakfast',
     photo: '',
     isFavorite: false,
+    errors: {
+      title: true,
+      nutritiveValue: true,
+      photo: true,
+      photoUrl: true
+    }
   }
 }
 
@@ -43,7 +49,7 @@ class AddRecipeContainer extends React.Component {
   messages = {
     title : 'Dodaj tytuł przepisu',
     nutritiveValue : 'Dodaj prawidłową wartość odżywczą',
-    photo : 'Dodaj lik do zdjęcia zawierajacy na początku protokół http:// lub https://',
+    photo : 'Dodaj link do zdjęcia zawierajacy na początku protokół http:// lub https://',
     success : 'Dodany przepis',
     error : 'Wystąpił błąd. Spróbuj ponownie później.'
   }
@@ -111,7 +117,8 @@ class AddRecipeContainer extends React.Component {
           <TitleOfRecipe
             title={recipeState.title}
             onInputChangeHandler={this.onInputChangeHandler('title')}
-          />
+            />
+            {this.state.recipeState.errors.title && <span> {this.messages.title} </span>}
         </div>
         <div>
           <h5>Składniki:</h5>
@@ -130,7 +137,8 @@ class AddRecipeContainer extends React.Component {
           <NutritiveValue
             nutritiveValue={recipeState.nutritiveValue}
             onInputChangeHandler={this.onInputChangeHandler('nutritiveValue')}
-          />
+            />
+            {this.state.recipeState.errors.nutritiveValue && <span> {this.messages.nutritiveValue} </span>}
         </div>
         <div>
           <h5>Dodaj link do zdjęcia:</h5>
@@ -138,6 +146,7 @@ class AddRecipeContainer extends React.Component {
             photo={recipeState.photo}
             onInputChangeHandler={this.onInputChangeHandler('photo')}
           />
+          {this.state.recipeState.errors.photo && <span> {this.messages.photo} </span>}
         </div>
         <div>
           <Label

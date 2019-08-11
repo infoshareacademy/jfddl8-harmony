@@ -114,7 +114,7 @@ export const WarningSnackbar = (props) => {
   return (
     <MySnackbarContentWrapper
       variant="warning"
-      warningMessage={props.warningMessage}
+      warningMessage={props.messages.tile}
     />
   )
 }
