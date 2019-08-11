@@ -33,12 +33,26 @@ const initialState = {
     nutritiveValue: '',
     label: 'breakfast',
     photo: '',
-    isFavorite: false
+    isFavorite: false,
+    errors: {
+      title:true,
+      nutritiveValue:true,
+      photo:true
+    }
   }
 }
 
 class AddRecipeContainer extends React.Component {
   state = initialState
+  
+  messages = {
+    successMessage:'Przepis dodany!',
+    lackOfTitleMessage:'Dodaj tytuł',
+    lackOfNutritiveValueMessage:'Dodaj wartość odżywczą',
+    lackOfPhotoMessage:'Dodaj link do zdjęcia',
+    wrongUrlMessage:'Dodaj prawidłowy link do zdjęcia zawierający na początku protokół http:// lub https://',
+    errorMessage:'Wystąpił błąd. Spróbuj później'
+  }
 
   onInputChangeHandler(input) {
     return (event) => {
@@ -58,35 +72,35 @@ class AddRecipeContainer extends React.Component {
 
     const isURLRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
 
-    if (!this.state.recipeState.title) {
-      alert('Dodaj tytuł')
-      return
-    }
-    else if (!this.state.recipeState.nutritiveValue) {
-      alert('Dodaj wartość odzywczą')
-      return
-    }
-    else if (!this.state.recipeState.photo) {
-      alert('Dodaj link do zdjęcia')
-      return
-    }
-    else if (!this.state.recipeState.photo) {
-      alert('Dodaj link do zdjęcia')
-      return
-    }
-    else if (this.state.recipeState.photo) {
-      if (isURLRegex.test(this.state.recipeState.photo)) {
-      }
-      else {
-        alert('dodaj prawidłowy link do zdjęcia zawierający na początku http:// lub https://')
-        return
-      }
-    }
+    // if (!this.state.recipeState.title) {
+    //   warningSnackbar(this.state.recipeState.warningMessage)
+    //   return
+    // }
+    // else if (!this.state.recipeState.nutritiveValue) {
+    //   alert('Dodaj wartość odzywczą')
+    //   return
+    // }
+    // else if (!this.state.recipeState.photo) {
+    //   alert('Dodaj link do zdjęcia')
+    //   return
+    // }
+    // else if (!this.state.recipeState.photo) {
+    //   alert('Dodaj link do zdjęcia')
+    //   return
+    // }
+    // else if (this.state.recipeState.photo) {
+    //   if (isURLRegex.test(this.state.recipeState.photo)) {
+    //   }
+    //   else {
+    //     alert('dodaj prawidłowy link do zdjęcia zawierający na początku http:// lub https://')
+    //     return
+    //   }
+    // }
 
 
     addRecipeToFireBase(this.state.recipeState)
       .then(() => {
-        alert('Przepis zapisany!')
+        alert('przepis dodany!')
         this.setState(initialState)
       })
       .catch(() => {
@@ -109,6 +123,8 @@ class AddRecipeContainer extends React.Component {
             title={recipeState.title}
             onInputChangeHandler={this.onInputChangeHandler('title')}
           />
+          {this.state.recipeState.errors.title &&
+          <span>{this.messages.lackOfTitleMessage}</span>}
         </div>
         <div>
           <h5>Składniki:</h5>
@@ -128,6 +144,8 @@ class AddRecipeContainer extends React.Component {
             nutritiveValue={recipeState.nutritiveValue}
             onInputChangeHandler={this.onInputChangeHandler('nutritiveValue')}
           />
+          {this.state.recipeState.errors.nutritiveValue &&
+          <span>{this.messages.lackOfNutritiveValueMessage}</span>}
         </div>
         <div>
           <h5>Dodaj link do zdjęcia:</h5>
@@ -135,6 +153,8 @@ class AddRecipeContainer extends React.Component {
             photo={recipeState.photo}
             onInputChangeHandler={this.onInputChangeHandler('photo')}
           />
+          {this.state.recipeState.errors.photo &&
+          <span>{this.messages.lackOfPhotoMessage}</span>}
         </div>
         <div>
           <Label
