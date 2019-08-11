@@ -7,10 +7,10 @@ import NutritiveValue from './nutritive-value/NutritiveValue'
 import PhotoOfRecipe from './photo/PhotoOfRecipe'
 import Label from './label/Label'
 
-import Button from '../../components/button'
+import Button from '../../../components/button/Button'
 import Paper from '@material-ui/core/Paper'
 
-import { addRecipeToFireBase } from '../../databaseService'
+import { addRecipeToFireBase } from '../../../databaseService'
 
 const styles = {
   paper: {
@@ -35,7 +35,6 @@ const initialState = {
     isFavorite: false,
   }
 }
-
 class AddRecipeContainer extends React.Component {
   state = initialState
 
