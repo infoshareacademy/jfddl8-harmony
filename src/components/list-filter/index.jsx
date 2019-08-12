@@ -1,6 +1,6 @@
 import React from "react";
-import ItemsList from "../items-list";
 import SearchForm from "../search-form";
+import PaginatedList from "../paginate-panel";
 
 class ListFilter extends React.Component {
   state = {
@@ -9,8 +9,8 @@ class ListFilter extends React.Component {
     searchPhrase: "",
     sliderValue: 1000,
     showFavorite: false,
-    filterFavorite: false
-    // pageLenght: 9
+    filterFavorite: false,
+    pageLenght: 9
   };
 
   mapObjectToArray = obj =>
@@ -79,6 +79,7 @@ class ListFilter extends React.Component {
       );
     });
 
+
     return (
       <div>
         <SearchForm
@@ -90,7 +91,8 @@ class ListFilter extends React.Component {
           onSliderChange={this.sliderHandler}
           onButtonClick={this.favoriteButtonHandler}
         />
-        <ItemsList recipes={showedList} refresh={this.loadElements} />
+        <PaginatedList recipes={showedList} refresh={this.loadElements} />
+        {/* <ItemsList recipes={showedList} refresh={this.loadElements} /> */}
       </div>
     );
   }
@@ -98,26 +100,8 @@ class ListFilter extends React.Component {
 
 export default ListFilter;
 
- // console.log(showedList)
-    // const devidedRecies = this.recipesDivide(this.showedList)
-    // console.log(devidedRecies)
-    // const recipesToShow = .recipesToShow;
-    // const paginationLength = showedList.recipesDivide().paginationLength;
-
-
-  // recipesDivide = (recpiesList) => {
-  //   let recipesToShow = [];
-  //   let arr = [];
-  //   recpiesList.forEach((el, index) => {
-  //     arr.push(el);
-  //     if (arr.length === recpiesList.state.pageLength || index === recpiesList.length - 1) {
-  //       recipesToShow.push(arr);
-  //       arr = [];
-  //     }
-  //   });
-// 
-  //   return {
-  //     recipesToShow,
-  //     paginationLength: Math.ceil(this.length / this.state.pageLength)
-  //   };
-  // };
+// console.log(showedList)
+// const devidedRecies = this.recipesDivide(this.showedList)
+// console.log(devidedRecies)
+// const recipesToShow = .recipesToShow;
+// const paginationLength = showedList.recipesDivide().paginationLength;
