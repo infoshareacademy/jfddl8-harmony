@@ -4,10 +4,10 @@ import IconButton from '@material-ui/core/IconButton'
 
 import MenuIcon from '@material-ui/icons/Menu'
 import HomeIcon from '@material-ui/icons/Home'
-import PersonIcon from '@material-ui/icons/Person'
-import RestaurantIcon from '@material-ui/icons/Restaurant'
+// import PersonIcon from '@material-ui/icons/Person'
+// import RestaurantIcon from '@material-ui/icons/Restaurant'
 import ListIcon from '@material-ui/icons/List'
-import VerifiedUserIcon from '@material-ui/icons/VerifiedUser'
+// import VerifiedUserIcon from '@material-ui/icons/VerifiedUser'
 import TouchAppIcon from '@material-ui/icons/TouchApp'
 
 
@@ -27,10 +27,9 @@ class SideBar extends React.Component {
     return (
       <Drawer
         variant="persistent"
-        open
+        open={true}
         onClose={this.props.toggleSideBar}
         isOpen={this.props.isSideBarOpen}
-
       >
         <InnerDrawer>
           <IconButton onClick={this.props.handlerOnClick}
@@ -41,12 +40,13 @@ class SideBar extends React.Component {
           >
             <MenuIcon />
           </IconButton>
+          {/* commented, because it's not ready to show, wip*/}
           <SideBarItem icon={<HomeIcon />} to={'/home'} label={'Home'} />
-          <SideBarItem icon={<PersonIcon />} to={'/my-profile'} label={'Mój profil'} />
-          <SideBarItem icon={<RestaurantIcon />} to={'/my-diet'} label={'Moja dieta'} />
+          {/* <SideBarItem icon={<PersonIcon />} to={'/my-profile'} label={'Mój profil'} /> */}
+          {/* <SideBarItem icon={<RestaurantIcon />} to={'/my-diet'} label={'Moja dieta'} /> */}
           <SideBarItem icon={<ListIcon />} to={'/recipes'} label={'Przepisy'} />
           <SideBarItem icon={<TouchAppIcon />} to={'/add-recipes'} label={'Dodaj przepis'} />
-          <SideBarItem icon={<VerifiedUserIcon />} to={'/diary'} label={'Dziennik postępów'} />
+          {/* <SideBarItem icon={<VerifiedUserIcon />} to={'/diary'} label={'Dziennik postępów'} /> */}
         </InnerDrawer>
       </Drawer>
     )
