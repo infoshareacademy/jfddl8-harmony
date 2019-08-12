@@ -1,9 +1,24 @@
+import React from 'react'
+
 import styled from 'styled-components'
 import ListItemMUI from '@material-ui/core/ListItem'
 
 import DrawerMUI from '@material-ui/core/Drawer'
 
-const Drawer = styled(DrawerMUI)`
+const CustomDrawer = (props) => {
+  const {
+    isOpen,
+    ...restOfProps
+  } = props
+
+  return (
+    <DrawerMUI
+      {...restOfProps}
+    />
+  )
+}
+
+const Drawer = styled(CustomDrawer)`
   && {
     position: sticky;
     bottom: 0;

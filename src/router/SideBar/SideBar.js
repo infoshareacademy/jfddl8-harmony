@@ -27,10 +27,9 @@ class SideBar extends React.Component {
     return (
       <Drawer
         variant="persistent"
-        open
+        open={true}
         onClose={this.props.toggleSideBar}
         isOpen={this.props.isSideBarOpen}
-
       >
         <InnerDrawer>
           <IconButton onClick={this.props.handlerOnClick}
