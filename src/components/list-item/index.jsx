@@ -6,7 +6,7 @@ import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import Favorite from "@material-ui/icons/Favorite";
 
 import { Link, withRouter } from "react-router-dom";
-// import CustomizedDialogs from "../dialog-window";
+import CustomizedDialogs from "../dialog-window";
 
 
 const ListItem = props => {
@@ -22,43 +22,50 @@ const ListItem = props => {
     }).then(() => refresh());
   };
 
-  return recipes.map(el => {
+  return recipes.map(recipe => {
     return (
-      <Link
-        to={ `/recipes/${el.key}`}
-      >
-        <GridListTile
-          recipe={el}
-          key={el.key}
-          style={{
-            width: 25 + "vw",
-            height: 25 + "vh",
-            margin: 2 + "px",
-            border: 2 + "px solid black",
-            position: "center"
-          }}
+      <div>
+        <CustomizedDialogs
+          open={recipe.key === props.match.params.recipeKey}
+          onClose={() => props.history.push('/recipes')}
+          recipe={recipe}
+        />
+        <Link
+          to={`/recipes/${recipe.key}`}
         >
-          <img src={el.photo} alt={el.photo} />
-          <GridListTileBar
-            title={el.title}
-            subtitle={<span>{el.nutritiveValue} kcal</span>}
-            actionIcon={
-              <IconButton
-                onClick={(e) => {
-                  e.preventDefault()
-                  isFavoriteChange(el.key, el.isFavorite);
-                }}
-              >
-                {el.isFavorite ? (
-                  <Favorite color="error" />
-                ) : (
-                  <FavoriteBorder color="error" />
-                )}
-              </IconButton>
-            }
-          />
-        </GridListTile>
-      </Link>
+          <GridListTile
+            recipe={recipe}
+            key={recipe.key}
+            style={{
+              width: 25 + "vw",
+              height: 25 + "vh",
+              margin: 2 + "px",
+              border: 2 + "px solid black",
+              position: "center"
+            }}
+          >
+            <img src={recipe.photo} alt={recipe.photo} />
+            <GridListTileBar
+              title={recipe.title}
+              subtitle={<span>{recipe.nutritiveValue} kcal</span>}
+              actionIcon={
+                <IconButton
+                  onClick={(e) => {
+                    e.preventDefault()
+                    isFavoriteChange(recipe.key, recipe.isFavorite);
+                  }}
+                >
+                  {recipe.isFavorite ? (
+                    <Favorite color="error" />
+                  ) : (
+                      <FavoriteBorder color="error" />
+                    )}
+                </IconButton>
+              }
+            />
+          </GridListTile>
+        </Link>
+      </div>
     );
   });
 };
