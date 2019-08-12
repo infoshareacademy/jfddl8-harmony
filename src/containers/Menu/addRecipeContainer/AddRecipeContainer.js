@@ -10,7 +10,7 @@ import Label from './label/Label'
 import Button from '../../../components/button/Button'
 import Paper from '@material-ui/core/Paper'
 
-///import { ErrorSnackbar, WarningSnackbar, SuccessSnackbar } from '../../../components/snackbars/Snackbar'
+
 import { addRecipeToFireBase } from '../../../databaseService'
 
 const styles = {
@@ -26,28 +26,23 @@ const styles = {
 }
 
 const initialState = {
-  recipeState: {
-    title: '',
-    ingredients: [],
-    description: '',
-    nutritiveValue: '',
-    label: 'breakfast',
-    photo: '',
-    isFavorite: false,
-    accept: false,
-    message: '',
-    errors: {
-      title: false,
-      nutritiveValue: false,
-      photo: false,
-      accept: false
-    }
+  title: '',
+  ingredients: [],
+  description: '',
+  nutritiveValue: '',
+  label: 'breakfast',
+  photo: '',
+  isFavorite: false,
+  message: '',
+  errors: {
+    isTitle: false,
+    isNutritiveValue: false,
+    isPhoto: false
   }
 }
 
 class AddRecipeContainer extends React.Component {
   state = initialState
-
   messages = {
     title: 'Dodaj tytuł przepisu',
     nutritiveValue: 'Dodaj prawidłową wartość odżywczą',
@@ -55,86 +50,55 @@ class AddRecipeContainer extends React.Component {
     success: 'Dodany przepis',
     error: 'Wystąpił błąd. Spróbuj ponownie później.'
   }
-
   onInputChangeHandler(input) {
     return (event) => {
       const selectValue = event.value
       const valueToSave = selectValue || (event.target && event.target.value) || ''
       this.setState({
-        recipeState: {
-          ...this.state.recipeState,
-          [input]: valueToSave
-        }
+        [input]: valueToSave
       })
     }
   }
 
   onSendData = (event) => {
     event.preventDefault()
-    const validation = this.formValidation()
-    if (validation.correct) {
-      this.setState({
-        recipeState: {
-          title: '',
-          ingredients: [],
-          description: '',
-          nutritiveValue: '',
-          label: 'breakfast',
-          photo: '',
-          message: 'Przepis jest zapisany!',
-          isFavorite: false,
-          errors: {
-            title: false,
-            nutritiveValue: false,
-            photo: false,
-          }
-        }
-      })
+
+    const errors = this.formValidation()
+    const { isTitle, isNutritiveValue, isPhoto } = errors
+    if (isTitle && isNutritiveValue && isPhoto) {
+      const stateToSave = { ...initialState }
+      stateToSave.message = 'Przepis jest zapisany!'
+      this.setState(stateToSave)
+
     } else {
-      this.setState({
-        title: !validation.title,
-        nutritiveValue: !validation.nutritiveValue,
-        photo: !validation.photo,
-      })
+
+      this.setState({ errors })
       return
     }
-    addRecipeToFireBase(this.state.recipeState)
+    addRecipeToFireBase(this.state
       .then(() => {
         this.setState(initialState)
       })
       .catch(() => {
         alert('Wystąpił błąd. Proszę spróbować później')
-      })
+      }))
   }
+
   formValidation = () => {
     const isURLRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
-    let title = false
-    let nutritiveValue = false
-    let photo = false
-    let correct = false
+    const isTitle = this.state.title
+    const isNutritiveValue = this.state.nutritiveValue
+    const isPhoto = isURLRegex.test(this.state.photo) &&
+      this.state.photo
 
-    if (this.state.recipeState.title) {
-      title = true
-    }
-    if (this.state.recipeState.nutritiveValue) {
-      nutritiveValue = true
-    }
-    if (isURLRegex.test(this.state.recipeState.photo) &&
-      this.state.recipeState.photo) {
-      photo = true
-    }
-    if (title && nutritiveValue && photo) {
-      correct = true
-    }
     return ({
-      correct,
-      title,
-      nutritiveValue,
-      photo,
+      isTitle,
+      isNutritiveValue,
+      isPhoto,
     })
   }
   render() {
-    const { recipeState = {} } = this.state
+    const { title, ingredients, description, nutritiveValue, photo, label, errors ={} } = this.state
     return (
       <Paper style={styles.paper}>
         <div className="addRecipeContainer">
@@ -143,42 +107,42 @@ class AddRecipeContainer extends React.Component {
           <h5>Wpisz tytuł przepisu:</h5>
           <br />
           <TitleOfRecipe
-            title={recipeState.title}
+            title={title}
             onInputChangeHandler={this.onInputChangeHandler('title')}
           />
-          {this.state.recipeState.errors.title && <span> {this.messages.title} </span>}
+          {errors.isTitle && <span> {this.messages.title} </span>}
         </div>
         <div>
           <h5>Składniki:</h5>
           <Ingredients
-            ingredients={recipeState.ingredients}
+            ingredients={ingredients}
             onInputChangeHandler={this.onInputChangeHandler('ingredients')}
           />
         </div>
         <h5>Przygotowanie:</h5>
         <Description
-          description={recipeState.description}
+          description={description}
           onInputChangeHandler={this.onInputChangeHandler('description')}
         />
         <div>
           <h5>Wartość energetyczna:</h5>
           <NutritiveValue
-            nutritiveValue={recipeState.nutritiveValue}
+            nutritiveValue={nutritiveValue}
             onInputChangeHandler={this.onInputChangeHandler('nutritiveValue')}
           />
-          {this.state.recipeState.errors.nutritiveValue && <span> {this.messages.nutritiveValue} </span>}
+          {errors.isNutritiveValue && <span> {this.messages.nutritiveValue} </span>}
         </div>
         <div>
           <h5>Dodaj link do zdjęcia:</h5>
           <PhotoOfRecipe
-            photo={recipeState.photo}
+            photo={photo}
             onInputChangeHandler={this.onInputChangeHandler('photo')}
           />
-          {this.state.recipeState.errors.photo && <span> {this.messages.photo} </span>}
+          {errors.isPhoto && <span> {this.messages.photo} </span>}
         </div>
         <div>
           <Label
-            label={recipeState.label}
+            label={label}
             handleChange={this.onInputChangeHandler('label')}
           />
         </div>
