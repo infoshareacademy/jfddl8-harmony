@@ -34,13 +34,13 @@ const CustomizedDialogs = (props) => {
 
 
   return (
-   
+
     <MuiDialog
-    open={props.el.key === props.match.params.key}
-    onClose={() => { props.history.push('/items-list') }}
+      open={props.el.key === props.match.params.key}
+      onClose={() => { props.history.push('/items-list') }}
     >
 
-    <div>
+      <div>
         <DialogTitle>
           Modal title
         </DialogTitle>
@@ -64,7 +64,7 @@ const CustomizedDialogs = (props) => {
             Chujdupacycki
           </Button>
         </DialogActions>
-    </div>
+      </div>
 
     </MuiDialog>
   );

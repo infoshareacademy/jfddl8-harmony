@@ -1,5 +1,5 @@
-import React from "react";
-import ListFilter from "../../components/list-filter";
+import React from "react"
+import ListFilter from "../../components/list-filter"
 
 
 class ListContainer extends React.Component {
@@ -10,7 +10,7 @@ class ListContainer extends React.Component {
       <div>
         <ListFilter />
       </div>
-    );
+    )
   }
 }
 

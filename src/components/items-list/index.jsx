@@ -5,14 +5,15 @@ import GridList from "@material-ui/core/GridList";
 
 const ItemsList = props => (
   <div>
-    <GridList 
+    <GridList
       style={{
         alignItems: "center",
         justifyContent: "center"
-        }}>
+      }}>
       <ListItem
         refresh={props.refresh}
-        recipes={props.recipes} />
+        recipes={props.recipes}
+      />
     </GridList>
   </div>
 );

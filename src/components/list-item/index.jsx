@@ -25,15 +25,11 @@ const ListItem = props => {
   return recipes.map(el => {
     return (
       <Link
-        to={{
-          pathName: '/list-item',
-          search: `?sort=${el.key}`,
-        }}
+        to={ `/recipes/${el.key}`}
       >
         <GridListTile
           recipe={el}
           key={el.key}
-          onClick={()=>console.log('click')}
           style={{
             width: 25 + "vw",
             height: 25 + "vh",
@@ -48,7 +44,8 @@ const ListItem = props => {
             subtitle={<span>{el.nutritiveValue} kcal</span>}
             actionIcon={
               <IconButton
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault()
                   isFavoriteChange(el.key, el.isFavorite);
                 }}
               >
