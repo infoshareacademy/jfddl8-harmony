@@ -1,6 +1,6 @@
 import React from "react";
 import SearchForm from "../search-form";
-import PaginatedList from "../paginate-panel";
+import PaginatedList from "../paginated-list";
 
 class ListFilter extends React.Component {
   state = {
@@ -55,6 +55,7 @@ class ListFilter extends React.Component {
   };
 
   render() {
+    
     const showedList = this.state.recipes.filter((recipe, i, arr) => {
       const {
         title = "",
@@ -79,7 +80,6 @@ class ListFilter extends React.Component {
       );
     });
 
-
     return (
       <div>
         <SearchForm
@@ -91,7 +91,7 @@ class ListFilter extends React.Component {
           onSliderChange={this.sliderHandler}
           onButtonClick={this.favoriteButtonHandler}
         />
-        <PaginatedList recipes={showedList} refresh={this.loadElements} />
+       { showedList.length > 0 ? <PaginatedList recipes={showedList} refresh={this.loadElements} /> : null}
         {/* <ItemsList recipes={showedList} refresh={this.loadElements} /> */}
       </div>
     );

@@ -28,7 +28,7 @@ const SearchForm = props => {
       />
       <ButtonGroup
         style={{
-          height: 3 + "em",
+          height: 2 + "em",
           alignSelf: "center"
         }}
         variant="contained"
