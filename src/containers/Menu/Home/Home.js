@@ -36,7 +36,8 @@ const styles = {
     },
     descr: {
       textAlign: 'center',
-      color: '#fff'
+      color: '#fff',
+      fontSize: '14px'
     },
     headline: {
       color: '#393e46',
