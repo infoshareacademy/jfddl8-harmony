@@ -7,117 +7,141 @@ import NutritiveValue from './nutritive-value/NutritiveValue'
 import PhotoOfRecipe from './photo/PhotoOfRecipe'
 import Label from './label/Label'
 
-import Button from '@material-ui/core/Button'
+import Button from '../../../components/button/Button'
 import Paper from '@material-ui/core/Paper'
 
-import { addRecipeToFireBase } from './recipesService'
+import { addRecipeToFireBase } from '../../../databaseService'
 
 const styles = {
   paper: {
     margin: 12,
-  },
-  button: {
-    marginTop: 50,
+    padding: 50
   },
   header: {
     margin: '0 auto',
+    padding: 0,
     textAlign: 'center'
   }
 }
 
-
-class AddRecipeContainer extends React.Component {
-  state = {
-    recipeState: {
-      title: '',
-      ingredients: [],
-      description: '',
-      nutritiveValue: '',
-      label: '',
-      photo: '',
-      isFavorite: false
-    }
+const initialState = {
+  recipeState: {
+    title: '',
+    ingredients: [],
+    description: '',
+    nutritiveValue: '',
+    label: 'breakfast',
+    photo: '',
+    isFavorite: false,
   }
-
-  // reset() {
-  //   this.setState(initialState)
-  // }
+}
+class AddRecipeContainer extends React.Component {
+  state = initialState
 
   onInputChangeHandler(input) {
-
     return (event) => {
-      const text = event.target.value
+      const selectValue = event.value
+      const valueToSave = selectValue || (event.target && event.target.value) || ''
       this.setState({
         recipeState: {
           ...this.state.recipeState,
-          [input]: text
+          [input]: valueToSave
         }
       })
-
     }
   }
 
   onSendData = (event) => {
     event.preventDefault()
-    addRecipeToFireBase(this.state.recipeState)
-    this.setState({
-      recipeState: {
-        title: '',
-        ingredients: '',
-        description: '',
-        nutritiveValue: '',
-        label: '',
-        photo: '',
-        isFavorite: false
+
+    const isURLRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
+
+    if (!this.state.recipeState.title) {
+      alert('Dodaj tytuł')
+      return
+    }
+    else if (!this.state.recipeState.nutritiveValue) {
+      alert('Dodaj wartość odzywczą')
+      return
+    }
+    else if (!this.state.recipeState.photo) {
+      alert('Dodaj link do zdjęcia')
+      return
+    }
+    else if (!this.state.recipeState.photo) {
+      alert('Dodaj link do zdjęcia')
+      return
+    }
+    else if (this.state.recipeState.photo) {
+      if (isURLRegex.test(this.state.recipeState.photo)) {
       }
-    })
+      else {
+        alert('dodaj prawidłowy link do zdjęcia zawierający na początku http:// lub https://')
+        return
+      }
+    }
+
+
+    addRecipeToFireBase(this.state.recipeState)
+      .then(() => {
+        alert('przepis dodany!')
+        this.setState(initialState)
+      })
+      .catch(() => {
+        alert('Wystąpił błąd. Proszę spróbować później')
+      })
   }
+
+
   render() {
+    const { recipeState = {} } = this.state
+
     return (
       <Paper style={styles.paper}>
         <div className="addRecipeContainer">
           <h1 style={styles.header}
-          >Dodaj swój przepis</h1>
+          >Dodaj swój przepis !</h1>
+          <h5>Wpisz tytuł przepisu:</h5>
           <br />
           <TitleOfRecipe
-            title={this.state.title}
+            title={recipeState.title}
             onInputChangeHandler={this.onInputChangeHandler('title')}
           />
-          <h5>Wpisz tytuł przepisu</h5>
         </div>
         <div>
+          <h5>Składniki:</h5>
           <Ingredients
-            ingredients={this.state.ingredients}
+            ingredients={recipeState.ingredients}
             onInputChangeHandler={this.onInputChangeHandler('ingredients')}
           />
-          <h5>Składniki</h5>
         </div>
+        <h5>Przygotowanie:</h5>
         <Description
-          description={this.state.description}
+          description={recipeState.description}
           onInputChangeHandler={this.onInputChangeHandler('description')}
         />
-        <h5>Przygotowanie</h5>
         <div>
+          <h5>Wartość energetyczna:</h5>
           <NutritiveValue
-            nutritiveValue={this.state.nutritiveValue}
+            nutritiveValue={recipeState.nutritiveValue}
             onInputChangeHandler={this.onInputChangeHandler('nutritiveValue')}
           />
-          <h5>Wartość energetyczna</h5>
         </div>
         <div>
+          <h5>Dodaj link do zdjęcia:</h5>
           <PhotoOfRecipe
-            photo={this.state.photo}
+            photo={recipeState.photo}
             onInputChangeHandler={this.onInputChangeHandler('photo')}
           />
-          <h5>Dodaj link do zdjęcia</h5>
         </div>
         <div>
           <Label
-            label={this.state.label}
-            onInputChangeHandler={this.onInputChangeHandler('label')} />
+            label={recipeState.label}
+            handleChange={this.onInputChangeHandler('label')}
+          />
         </div>
         <div>
-          <Button style={styles.button} variant='outlined' onClick={this.onSendData}>Zapisz</Button>
+          <Button onClick={this.onSendData}>ZAPISZ</Button>
         </div>
       </Paper>
     )
