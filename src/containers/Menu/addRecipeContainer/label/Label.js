@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -6,12 +6,11 @@ import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 
-const labels = ["breakfast", "dinner", "supper", "dessert", "snack"]
 
 const useStyles = makeStyles(theme => ({
   button: {
     display: 'block',
-    marginTop: theme.spacing(5),
+    marginTop: theme.spacing(20),
   },
   formControl: {
     margin: theme.spacing(2),
@@ -19,14 +18,10 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function ControlledOpenSelect() {
+export default function ControlledOpenSelect({ handleChange, label }) {
   const classes = useStyles()
-  const [labels, setLabel] = React.useState('')
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
 
-  function handleChange(event) {
-    setLabel(event.target.value)
-  }
 
   function handleClose() {
     setOpen(false)
@@ -34,6 +29,7 @@ export default function ControlledOpenSelect() {
 
   function handleOpen() {
     setOpen(true)
+   
   }
 
   return (
@@ -46,11 +42,8 @@ export default function ControlledOpenSelect() {
           open={open}
           onClose={handleClose}
           onOpen={handleOpen}
-          value={labels}
+          value={label}
           onChange={handleChange}
-          inputProps={{
-            name: 'label',
-          }}
         >
           <MenuItem value={'breakfast'}>śniadanie</MenuItem>
           <MenuItem value={'dinner'}>obiad</MenuItem>
