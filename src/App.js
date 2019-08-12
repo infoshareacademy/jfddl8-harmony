@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import Router from './router/Router'
 import './index.css'
 import Navigation from './router/Navigation'

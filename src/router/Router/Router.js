@@ -16,6 +16,7 @@ const Router = (props) => (
     <RouterContainer>
     {props.children}
       <RouteWrapper>
+        <Route path={'/'} extend />
         <Route path={'/home'} component={Home} />
         <Route path={'/my-profile'} component={MyProfile} />
         <Route path={'/my-diet'} component={MyDiet} />

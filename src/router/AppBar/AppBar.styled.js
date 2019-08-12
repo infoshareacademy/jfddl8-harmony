@@ -5,7 +5,7 @@ import AppBarMUI from '@material-ui/core/AppBar'
 
 export const AppBar = styled(AppBarMUI)`
     && {
-        height: 70px;
+        height: 10%;
         width: 100%;
         background-color: #393e46;
         color: #fff;

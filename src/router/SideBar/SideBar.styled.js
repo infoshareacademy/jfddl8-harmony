@@ -5,12 +5,14 @@ import DrawerMUI from '@material-ui/core/Drawer'
 
 const Drawer = styled(DrawerMUI)`
   && {
-    position: relative;
+    position: sticky;
+    bottom: 0;
     display: flex;
     height: 100%;
       width: ${ props => props.isOpen ? 260 : 60}px; 
      & >  div {
-        position: relative;
+      position: sticky;
+    bottom: 0;
         display: flex;
         flex-direction: column;
         height: 100%;
