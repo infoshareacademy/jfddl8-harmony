@@ -7,6 +7,7 @@
 
 Beta version coming this month!
 
+http://app.move-your-fit.jfddl8.is-academy.pl/
 
 #Harmony DevTeam: 
 Beata Rudzka, 
