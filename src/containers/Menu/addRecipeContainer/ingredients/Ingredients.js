@@ -4,7 +4,6 @@ import TextField from '@material-ui/core/TextField'
 
 const Ingredients = (props) => (
   <TextField
-    label="Wpisz składniki"
     rowsMax="20"
     rows="12"
     margin="normal"

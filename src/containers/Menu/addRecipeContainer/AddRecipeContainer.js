@@ -9,7 +9,9 @@ import Label from './label/Label'
 
 import Button from '../../../components/button/Button'
 import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
 
+import { SuccessSnackbar } from '../../../components/snackbars/Snackbar'
 
 import { addRecipeToFireBase } from '../../../databaseService'
 
@@ -37,7 +39,7 @@ const initialState = {
   errors: {
     isTitle: false,
     isNutritiveValue: false,
-    isPhoto: false
+    isPhoto: false,
   }
 }
 
@@ -45,111 +47,121 @@ class AddRecipeContainer extends React.Component {
   state = initialState
   messages = {
     title: 'Dodaj tytuł przepisu',
+    description: 'Opisz sposób wykonania dodawanego przepisu',
+    ingredients: 'Dodaj składniki',
     nutritiveValue: 'Dodaj prawidłową wartość odżywczą',
     photo: 'Dodaj link do zdjęcia zawierajacy na początku protokół http:// lub https://',
     success: 'Dodany przepis',
     error: 'Wystąpił błąd. Spróbuj ponownie później.'
   }
+
   onInputChangeHandler(input) {
     return (event) => {
-      const selectValue = event.value
-      const valueToSave = selectValue || (event.target && event.target.value) || ''
+      const valueToSave = event.value || (event.target && event.target.value) || ''
       this.setState({
         [input]: valueToSave
       })
     }
   }
+  componentDidUpdate(prevProps, prevState) {
 
+    console.log(prevProps, prevState)
+    const photoChanged = prevState.photo !== this.state.photo
+
+    if (photoChanged) {
+      this.formValidation()
+    }
+
+  }
   onSendData = (event) => {
     event.preventDefault()
 
-    const errors = this.formValidation()
-    const { isTitle, isNutritiveValue, isPhoto } = errors
-    if (isTitle && isNutritiveValue && isPhoto) {
+    const errors = this.state.errors
+    if (errors.isTitle && errors.isNutritiveValue && errors.isPhoto) {
       const stateToSave = { ...initialState }
       stateToSave.message = 'Przepis jest zapisany!'
       this.setState(stateToSave)
-
     } else {
-
       this.setState({ errors })
       return
     }
-    addRecipeToFireBase(this.state
-      .then(() => {
-        this.setState(initialState)
+    addRecipeToFireBase(this.state)
+      .then(() => this.setState(initialState))
+      .catch((error) => {
+        console.log('Wystąpił błąd. Proszę spróbować później', error)
       })
-      .catch(() => {
-        alert('Wystąpił błąd. Proszę spróbować później')
-      }))
   }
 
   formValidation = () => {
     const isURLRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
     const isTitle = this.state.title
     const isNutritiveValue = this.state.nutritiveValue
-    const isPhoto = isURLRegex.test(this.state.photo) &&
-      this.state.photo
-
-    return ({
+    const isPhoto = isURLRegex.test(this.state.photo)
+    const error = {
       isTitle,
       isNutritiveValue,
       isPhoto,
+    }
+    this.setState({
+      error
     })
   }
   render() {
-    const { title, ingredients, description, nutritiveValue, photo, label, errors ={} } = this.state
+    const { title, ingredients, description, nutritiveValue, photo, label, errors = {} } = this.state
     return (
-      <Paper style={styles.paper}>
-        <div className="addRecipeContainer">
-          <h1 style={styles.header}
-          >Dodaj swój przepis !</h1>
-          <h5>Wpisz tytuł przepisu:</h5>
-          <br />
-          <TitleOfRecipe
-            title={title}
-            onInputChangeHandler={this.onInputChangeHandler('title')}
+      <Typography>
+        <Paper style={styles.paper}>
+          <div className="addRecipeContainer">
+            <h1 style={styles.header}
+            >Dodaj swój przepis !</h1>
+            <h5>Wpisz tytuł przepisu:</h5>
+            <br />
+            <TitleOfRecipe
+              title={title}
+              onInputChangeHandler={this.onInputChangeHandler('title')}
+            />
+            {this.state.errors.isTitle && <span> {this.messages.title} </span>}
+          </div>
+          <div>
+            <h5>Składniki:</h5>
+            <Ingredients
+              ingredients={ingredients}
+              onInputChangeHandler={this.onInputChangeHandler('ingredients')}
+            />
+          </div>
+          <h5>Przygotowanie:</h5>
+          <Description
+            description={description}
+            onInputChangeHandler={this.onInputChangeHandler('description')}
           />
-          {errors.isTitle && <span> {this.messages.title} </span>}
-        </div>
-        <div>
-          <h5>Składniki:</h5>
-          <Ingredients
-            ingredients={ingredients}
-            onInputChangeHandler={this.onInputChangeHandler('ingredients')}
-          />
-        </div>
-        <h5>Przygotowanie:</h5>
-        <Description
-          description={description}
-          onInputChangeHandler={this.onInputChangeHandler('description')}
-        />
-        <div>
-          <h5>Wartość energetyczna:</h5>
-          <NutritiveValue
-            nutritiveValue={nutritiveValue}
-            onInputChangeHandler={this.onInputChangeHandler('nutritiveValue')}
-          />
-          {errors.isNutritiveValue && <span> {this.messages.nutritiveValue} </span>}
-        </div>
-        <div>
-          <h5>Dodaj link do zdjęcia:</h5>
-          <PhotoOfRecipe
-            photo={photo}
-            onInputChangeHandler={this.onInputChangeHandler('photo')}
-          />
-          {errors.isPhoto && <span> {this.messages.photo} </span>}
-        </div>
-        <div>
-          <Label
-            label={label}
-            handleChange={this.onInputChangeHandler('label')}
-          />
-        </div>
-        <div>
-          <Button onClick={this.onSendData}>ZAPISZ</Button>
-        </div>
-      </Paper>
+          <div>
+            <h5>Wartość energetyczna:</h5>
+            <NutritiveValue
+              nutritiveValue={nutritiveValue}
+              onInputChangeHandler={this.onInputChangeHandler('nutritiveValue')}
+            />
+            {errors.isNutritiveValue && <span> {this.messages.nutritiveValue} </span>}
+          </div>
+          <div>
+            <h5>Dodaj link do zdjęcia:</h5>
+            <PhotoOfRecipe
+              photo={photo}
+              onInputChangeHandler={this.onInputChangeHandler('photo')}
+            />
+            {errors.isPhoto && <Typography color="error"> {this.messages.photo} </Typography>}
+          </div>
+          <div>
+            <Label
+              label={label}
+              handleChange={this.onInputChangeHandler('label')}
+            />
+          </div>
+          <div>
+            <Button onClick={this.onSendData}>ZAPISZ</Button>
+          </div>
+          <SuccessSnackbar message={this.messages.success} onClose={() => { console.warn('tadam') }} />
+        </Paper >
+      </Typography>
     )
   }
 }

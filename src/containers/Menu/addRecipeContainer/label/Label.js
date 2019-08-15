@@ -5,6 +5,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
+import Typography from '@material-ui/core/Typography'
 
 
 const useStyles = makeStyles(theme => ({
@@ -29,30 +30,32 @@ export default function ControlledOpenSelect({ handleChange, label }) {
 
   function handleOpen() {
     setOpen(true)
-   
+
   }
 
   return (
-    <form autoComplete="off">
-      <FormControl 
-      className={classes.formControl}
-      >
-        <InputLabel htmlFor="demo-controlled-open-select">Rodzaj posiłku</InputLabel>
-        <Select
-          open={open}
-          onClose={handleClose}
-          onOpen={handleOpen}
-          value={label}
-          onChange={handleChange}
+    <Typography>
+      <form autoComplete="off">
+        <FormControl
+          className={classes.formControl}
         >
-          <MenuItem value={'breakfast'}>śniadanie</MenuItem>
-          <MenuItem value={'dinner'}>obiad</MenuItem>
-          <MenuItem value={'supper'}>kolacja</MenuItem>
-          <MenuItem value={'dessert'}>deser</MenuItem>
-          <MenuItem value={'snack'}>przekąska</MenuItem>
-        </Select>
-      </FormControl>
-    </form>
+          <InputLabel htmlFor="demo-controlled-open-select">Rodzaj posiłku</InputLabel>
+          <Select
+            open={open}
+            onClose={handleClose}
+            onOpen={handleOpen}
+            value={label}
+            onChange={handleChange}
+          >
+            <MenuItem value={'breakfast'}>śniadanie</MenuItem>
+            <MenuItem value={'dinner'}>obiad</MenuItem>
+            <MenuItem value={'supper'}>kolacja</MenuItem>
+            <MenuItem value={'dessert'}>deser</MenuItem>
+            <MenuItem value={'snack'}>przekąska</MenuItem>
+          </Select>
+        </FormControl>
+      </form>
+    </Typography>
   )
 }
 
