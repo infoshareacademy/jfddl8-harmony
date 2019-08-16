@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField'
 
 const TitleOfRecipe = (props) => (
   <TextField
-    required
+    name='Tytuł przepisu'
     margin="normal"
     value={props.title}
     fullWidth
