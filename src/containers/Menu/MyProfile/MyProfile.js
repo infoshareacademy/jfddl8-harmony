@@ -1,4 +1,6 @@
 import React from 'react'
+
+
 const MyProfile = (props) => (
     <div>
         MyProfile
