@@ -10,32 +10,32 @@ import Label from './label/Label'
 import Button from '../../../components/button/Button'
 import Paper from '@material-ui/core/Paper'
 
-import { SuccessSnackbar } from '../../../components/snackbars/Snackbar'
 
 import { addRecipeToFireBase } from '../../../databaseService'
 
-
-const styles = {
+const style = {
   paper: {
-    margin: 12,
-    padding: 50
+    margin: 20,
+    padding: 20
   },
-  header: {
-    margin: '0 auto',
-    padding: 0,
-    textAlign: 'center'
+  button: {
+    marginTop: 20
+  },
+  item: {
+    float: "center"
   }
 }
 
+
 const initialState = {
   title: '',
-  ingredients: [],
+  ingredients: '',
   description: '',
   nutritiveValue: '',
   label: 'breakfast',
   photo: '',
   isFavorite: false,
-  message: '',
+  isFormFilledCorrectly: false,
   errors: {
     isTitle: false,
     areIngredients: false,
@@ -111,17 +111,15 @@ class AddRecipeContainer extends React.Component {
       correctForm
     })
   }
-
-
   onSendData = (event) => {
     event.preventDefault()
     const validation = this.formValidation()
     if (validation.correctForm) {
       this.setState({
-        ...initialState
+        ...initialState,
+        isFormFilledCorrectly: true
       })
-      const stateToSave = { ...initialState }
-      stateToSave.message = 'Przepis jest zapisany!'
+
     } else {
       this.setState({
         errors: {
@@ -144,9 +142,9 @@ class AddRecipeContainer extends React.Component {
   render() {
     const { title, ingredients, description, nutritiveValue, photo, label, errors = {} } = this.state
     return (
-      <Paper style={styles.paper}>
+      <Paper style={style.paper}>
         <div className="addRecipeContainer">
-          <h1 style={styles.header}
+          <h1 style={style.header}
           >Dodaj swój przepis !</h1>
           <h5>Wpisz tytuł przepisu:</h5>
           <br />
@@ -169,7 +167,7 @@ class AddRecipeContainer extends React.Component {
           description={description}
           onInputChangeHandler={this.onInputChangeHandler('description')}
         />
-        {errors.isTitle && <span> {this.messages.title} </span>}
+        {errors.isDescription && <span> {this.messages.description} </span>}
         <div>
           <h5>Wartość energetyczna:</h5>
           <NutritiveValue
@@ -191,15 +189,12 @@ class AddRecipeContainer extends React.Component {
             label={label}
             handleChange={this.onInputChangeHandler('label')}
           />
-        </div>
-        <div>
           <Button onClick={this.onSendData}>ZAPISZ</Button>
           {errors.isTitle
             && errors.isDescription
             && errors.areIngredients
             && errors.isNutritiveValue
-            && errors.isURLCorrect
-            && <SuccessSnackbar>{this.messages.success}</SuccessSnackbar>}
+            && errors.isURLCorrect}
         </div>
       </Paper >
     )
