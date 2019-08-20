@@ -1,10 +1,12 @@
 import { createStore, combineReducers } from 'redux'
 
+import users from './state/users'
 
-const reducer = (state, action) => {
-  return state
-}
+const reducer = combineReducers({
+  users
+})
 
-const store = createStore(
-  reducer
-) 
+export const store = createStore(
+  reducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)
