@@ -4,7 +4,7 @@ import SideBar from '../SideBar'
 
 class Navigation extends React.Component {
   state = {
-    isSideBarOpen: true
+    isSideBarOpen: false
   }
 
   toggleSideBar = () => {
