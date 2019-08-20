@@ -1,6 +1,6 @@
 import React from "react";
-import SearchForm from "../search-form";
-import PaginatedList from "../paginated-list";
+import SearchForm from "../SearchForm";
+import PaginatedList from "../PaginatedList";
 
 class ListFilter extends React.Component {
   state = {
@@ -10,7 +10,7 @@ class ListFilter extends React.Component {
     sliderValue: 1000,
     showFavorite: false,
     filterFavorite: false,
-    pageLenght: 9
+    pageLength: 9
   };
 
   mapObjectToArray = obj =>

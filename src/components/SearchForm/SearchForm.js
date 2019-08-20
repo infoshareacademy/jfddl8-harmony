@@ -1,8 +1,8 @@
 import React from "react";
 
-import SearchRangeSlider from "./search-range-slider";
-import SearchInput from "./search-input";
-import LabelSelect from "./label-select";
+import SearchByRangeSlider from "./SearchByRangeSlider";
+import SearchInput from "./SearchInput";
+import LabelSelect from "./LabelSelect";
 import { ButtonGroup, Button } from "@material-ui/core";
 
 const SearchForm = props => {
@@ -22,7 +22,7 @@ const SearchForm = props => {
         selectValue={props.selectValue}
         onSelectChange={props.onSelectChange}
       />
-      <SearchRangeSlider
+      <SearchByRangeSlider
         sliderValue={props.sliderValue}
         onSliderChange={props.onSliderChange}
       />

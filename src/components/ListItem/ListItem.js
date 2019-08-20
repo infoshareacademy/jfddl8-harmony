@@ -6,7 +6,7 @@ import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import Favorite from "@material-ui/icons/Favorite";
 
 import { Link, withRouter } from "react-router-dom";
-import CustomizedDialogs from "../dialog-window";
+import CustomizedDialogs from '../DialogWindow';
 
 
 const ListItem = props => {

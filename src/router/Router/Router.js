@@ -8,7 +8,7 @@ import Home from '../../containers/Menu/Home'
 import AppBar from '../AppBar'
 import AddRecipeContainer from '../../containers/Menu/addRecipeContainer/AddRecipeContainer'
 import { RouteWrapper, RouterContainer } from './Router.styled'
-import ListContainer from '../../containers/list-container'
+import ListContainer from '../../containers/ListContainer'
 
 const Router = (props) => (
   <BrowserRouter>
