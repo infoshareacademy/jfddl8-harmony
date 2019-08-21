@@ -1,6 +1,7 @@
 import React from "react";
-import SearchForm from "../search-form";
-import PaginatedList from "../paginated-list";
+
+import SearchForm from "../SearchForm";
+import PaginatedList from "../PaginatedList";
 
 class ListFilter extends React.Component {
   state = {
@@ -10,7 +11,7 @@ class ListFilter extends React.Component {
     sliderValue: 1000,
     showFavorite: false,
     filterFavorite: false,
-    pageLenght: 9
+    pageLength: 9
   };
 
   mapObjectToArray = obj =>
@@ -51,7 +52,11 @@ class ListFilter extends React.Component {
         this.setState({
           recipes: this.mapObjectToArray(data)
         })
-      );
+      )
+      .catch(() => this.setState({
+        recipes: []
+      })
+      )
   };
 
   render() {
@@ -92,16 +97,9 @@ class ListFilter extends React.Component {
           onButtonClick={this.favoriteButtonHandler}
         />
        { showedList.length > 0 ? <PaginatedList recipes={showedList} refresh={this.loadElements} /> : null}
-        {/* <ItemsList recipes={showedList} refresh={this.loadElements} /> */}
       </div>
     );
   }
 }
 
 export default ListFilter;
-
-// console.log(showedList)
-// const devidedRecies = this.recipesDivide(this.showedList)
-// console.log(devidedRecies)
-// const recipesToShow = .recipesToShow;
-// const paginationLength = showedList.recipesDivide().paginationLength;

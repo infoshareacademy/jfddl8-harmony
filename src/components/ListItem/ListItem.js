@@ -4,14 +4,16 @@ import GridListTileBar from "@material-ui/core/GridListTileBar";
 import IconButton from "@material-ui/core/IconButton";
 import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import Favorite from "@material-ui/icons/Favorite";
+import PropTypes from 'prop-types'
 
 import { Link, withRouter } from "react-router-dom";
-import CustomizedDialogs from "../dialog-window";
+import CustomizedDialogs from '../DialogWindow';
 
 
 const ListItem = props => {
-  const recipes = props.recipes;
-  const refresh = props.refresh;
+
+  const { recipes, refresh } = props
+
 
   const isFavoriteChange = (key, isFavorite) => {
     fetch(`https://jfddl8-harmonylublin.firebaseio.com/recipes/${key}.json`, {
@@ -69,5 +71,15 @@ const ListItem = props => {
     );
   });
 };
+
+ListItem.propTypes = {
+  recipes: PropTypes.array,
+  refresh: PropTypes.func
+}
+
+ListItem.defaultProps = {
+  recipes: [],
+  refresh: () => {}
+}
 
 export default withRouter(ListItem);
