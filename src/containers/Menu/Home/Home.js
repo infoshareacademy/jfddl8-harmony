@@ -55,7 +55,7 @@ class Home extends Component {
       <Grid container justify="center">
         <Grid item xs={12} md={8} lg={8}>
           <Paper style={styles.paper}>
-            <img src={Banner} width="100%" height="100%"/>
+            <img src={Banner} width="100%" height="100%" />
           </Paper>
           <Grid container justify="center">
             <Grid item xs={12} md={12} lg={12}>
@@ -71,7 +71,7 @@ class Home extends Component {
                   przy sobie,
                   wybierasz listę ulubionych przepisów i sam tworzysz swój dzień jedzenia, masz możliwość dzielenia się własnymi przepisami,
                   zapisujesz jak przebiega realizacja Twojego planu i sprawdzasz postępy!
-                               Z nami osiągniesz sylwetkę z pierwszych stron gazet!</Typography>
+                  Z nami osiągniesz sylwetkę z pierwszych stron gazet!</Typography>
               </Paper>
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={6}>

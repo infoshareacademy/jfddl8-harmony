@@ -8,6 +8,7 @@ import InfoIcon from '@material-ui/icons/Info'
 import CloseIcon from '@material-ui/icons/Close'
 import { amber, green } from '@material-ui/core/colors'
 import IconButton from '@material-ui/core/IconButton'
+import Snackbar from '@material-ui/core/Snackbar'
 import SnackbarContent from '@material-ui/core/SnackbarContent'
 import WarningIcon from '@material-ui/icons/Warning'
 import { makeStyles } from '@material-ui/core/styles'
@@ -17,7 +18,7 @@ const variantIcon = {
   success: CheckCircleIcon,
   error: ErrorIcon,
   info: InfoIcon,
-};
+}
 
 const useStyles1 = makeStyles(theme => ({
   success: {
@@ -48,7 +49,7 @@ const useStyles1 = makeStyles(theme => ({
 function MySnackbarContentWrapper(props) {
   const classes = useStyles1();
   const { className, message, onClose, variant, ...other } = props;
-  const Icon = variantIcon[variant];
+  const Icon = variantIcon[variant]
 
   return (
     <SnackbarContent
@@ -75,20 +76,20 @@ MySnackbarContentWrapper.propTypes = {
   message: PropTypes.string,
   onClose: PropTypes.func,
   variant: PropTypes.oneOf(['error', 'info', 'success', 'warning']).isRequired,
-};
+}
 
 const useStyles2 = makeStyles(theme => ({
   margin: {
     margin: theme.spacing(1),
   },
-}));
+}))
 
 export default function CustomizedSnackbars() {
-  const classes = useStyles2();
+  const classes = useStyles2()
   const [open, setOpen] = React.useState(false)
 
   function handleClick() {
-    setOpen(true);
+    setOpen(true)
   }
 
   function handleClose(event, reason) {
@@ -96,33 +97,60 @@ export default function CustomizedSnackbars() {
       return;
     }
 
-    setOpen(false);
+    setOpen(false)
   }
 
 }
-
-export const errorSnackbar = (props) => {
+export const ErrorSnackbar = (props) => {
   return (
     <MySnackbarContentWrapper
       variant="error"
-      errorMessage={props.errorMessage}
+      errorMessage={props.messages.error}
     />
   )
 }
 
-export const warningSnackbar = (props) => {
+export const isTitleWarningSnackbar = (props) => {
   return (
     <MySnackbarContentWrapper
       variant="warning"
-      warningMessage={props.warningMessage}
+      warningMessage={props.messages.tile}
     />
   )
 }
-export const successSnackbar = (props) => {
+export const isNutritiveValueWarningSnackbar = (props) => {
   return (
     <MySnackbarContentWrapper
-      variant="success"
-      successMessage={props.successMessage}
+      variant="warning"
+      warningMessage={props.messages.nutritiveValue}
     />
+  )
+}
+export const isPhotoWarningSnackbar = (props) => {
+  return (
+    <MySnackbarContentWrapper
+      variant="warning"
+      warningMessage={props.messages.photo}
+    />
+  )
+}
+export const SuccessSnackbar = (props) => {
+  return (
+    <Snackbar
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'left',
+      }}
+      open={props.open}
+      autoHideDuration={6000}
+      onClose={props.onClose}
+    >
+      <MySnackbarContentWrapper
+        variant="success"
+        message={props.message}
+        onClose={props.onClose}
+        open={props.open}
+      />
+    </Snackbar>
   )
 }

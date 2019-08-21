@@ -29,13 +29,13 @@ export default function ControlledOpenSelect({ handleChange, label }) {
 
   function handleOpen() {
     setOpen(true)
-   
+
   }
 
   return (
     <form autoComplete="off">
-      <FormControl 
-      className={classes.formControl}
+      <FormControl
+        className={classes.formControl}
       >
         <InputLabel htmlFor="demo-controlled-open-select">Rodzaj posiłku</InputLabel>
         <Select
@@ -45,11 +45,11 @@ export default function ControlledOpenSelect({ handleChange, label }) {
           value={label}
           onChange={handleChange}
         >
-          <MenuItem value={'breakfast'}>śniadanie</MenuItem>
-          <MenuItem value={'dinner'}>obiad</MenuItem>
-          <MenuItem value={'supper'}>kolacja</MenuItem>
-          <MenuItem value={'dessert'}>deser</MenuItem>
-          <MenuItem value={'snack'}>przekąska</MenuItem>
+          <MenuItem value={'śniadanie'}>śniadanie</MenuItem>
+          <MenuItem value={'obiad'}>obiad</MenuItem>
+          <MenuItem value={'kolacja'}>kolacja</MenuItem>
+          <MenuItem value={'deser'}>deser</MenuItem>
+          <MenuItem value={'przekąska'}>przekąska</MenuItem>
         </Select>
       </FormControl>
     </form>

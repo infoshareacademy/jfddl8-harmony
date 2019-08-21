@@ -5,9 +5,8 @@ import TextField from '@material-ui/core/TextField'
 
 const TitleOfRecipe = (props) => (
   <TextField
-  required
+    name='Tytuł przepisu'
     margin="normal"
-    label="Tytuł przepisu"
     value={props.title}
     fullWidth
     onChange={props.onInputChangeHandler}
@@ -15,13 +14,13 @@ const TitleOfRecipe = (props) => (
 )
 
 TitleOfRecipe.propTypes = {
-  recipeState: PropTypes.object, 
+  recipeState: PropTypes.object,
   onInputChangeHandler: PropTypes.func
 }
 
 TitleOfRecipe.defaultProps = {
   recipeState: {},
-  onInputChangeHandler: () => {}
+  onInputChangeHandler: () => { }
 }
 
 
