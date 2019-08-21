@@ -1,4 +1,5 @@
 import React from "react";
+
 import SearchForm from "../SearchForm";
 import PaginatedList from "../PaginatedList";
 
@@ -51,7 +52,11 @@ class ListFilter extends React.Component {
         this.setState({
           recipes: this.mapObjectToArray(data)
         })
-      );
+      )
+      .catch(() => this.setState({
+        recipes: []
+      })
+      )
   };
 
   render() {
@@ -92,16 +97,9 @@ class ListFilter extends React.Component {
           onButtonClick={this.favoriteButtonHandler}
         />
        { showedList.length > 0 ? <PaginatedList recipes={showedList} refresh={this.loadElements} /> : null}
-        {/* <ItemsList recipes={showedList} refresh={this.loadElements} /> */}
       </div>
     );
   }
 }
 
 export default ListFilter;
-
-// console.log(showedList)
-// const devidedRecies = this.recipesDivide(this.showedList)
-// console.log(devidedRecies)
-// const recipesToShow = .recipesToShow;
-// const paginationLength = showedList.recipesDivide().paginationLength;
