@@ -4,6 +4,7 @@ import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import { BarChart, Bar, Line, XAxis, YAxis, PieChart, Pie, ResponsiveContainer, } from 'recharts'
 import Banner from '../../../img/baner.png'
+import { forEach} from 'lodash'
 
 
 const styles = {
@@ -49,7 +50,55 @@ const styles = {
 
 }
 
+
+
+const recipes = [
+  {
+    id: 'dsfasd',
+    label: 'lanch',
+    title: 'sfasd'
+  },
+  {
+    id: 'dsfasd',
+    label: 'lanch',
+    title: 'sfasd'
+  },
+  {
+    id: 'dsfasd',
+    label: 'lanch',
+    title: 'sfasd'
+  },
+  {
+    id: 'fsdafas',
+    label: 'breakfast',
+    title: 'fasd'
+  }
+]
+
+const returnLabelsCount = (recipes) => {
+
+  return recipes && recipes.reduce((counter, recipe, index) => {
+    const { label, title } = recipe;
+
+    counter[label] = counter[label] ? counter[label] + 1 : 1;
+    return counter
+  
+  }, {})
+
+}
+
 class Home extends Component {
+
+  componentDidMount() {
+    const chartData = []
+    const countData = returnLabelsCount(recipes)
+    forEach(countData, (value, name) => {
+console.warn(value, name)
+chartData.push({name, value})
+    })
+
+    console.warn(chartData)
+  }
   render() {
     return (
       <Grid container justify="center">
