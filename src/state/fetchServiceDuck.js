@@ -45,6 +45,6 @@ export default (url, name, mapData) => {
   }
 
   return {
-    reducer
+    reducer,
   }
 }
