@@ -7,6 +7,7 @@ import { MainWrapper } from './App.styled'
 import { store } from './store'
 import { Provider } from 'react-redux'
 
+
 const App = (props) => (
   <Provider store={store}>
     <MainWrapper>

@@ -11,7 +11,7 @@ import Button from '../../../components/button/Button'
 import Paper from '@material-ui/core/Paper'
 
 
-import { addRecipeToFireBase } from '../../../databaseService'
+import { addRecipeToFireBase } from '../../../services/databaseService'
 
 const style = {
   paper: {
