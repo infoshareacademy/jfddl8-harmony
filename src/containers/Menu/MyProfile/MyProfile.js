@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { Paper, Typography, TextField, Button } from '@material-ui/core'
-
+import { Paper, Typography, Button } from '@material-ui/core'
+import TextField from './TextField'
 
 const styles = {
     paper: {
@@ -24,16 +24,18 @@ const styles = {
         maxHeight: 300
     }
 }
-
-class FetchUsers extends React.Component {
-    state = {
-        user: {},
-        photo: null,
-        title: {
-            style: { fontSize: 40, color: 'blue' },
-            text: ''
-        }
+const initialState = {
+    name: '',
+    lastName: '',
+    email: '',
+    photo: null,
+    title: {
+        style: { fontSize: 40, color: 'blue' },
+        text: ''
     }
+}
+class FetchUsers extends React.Component {
+    state = initialState
 
     onPhotoChanged = (event) => {
         const file = document.querySelector('img').files[0]
@@ -47,17 +49,22 @@ class FetchUsers extends React.Component {
             reader.readAsDataURL(file)
         }
     }
-    onDataUserChanged = (event) => {
-        console.log('click')
+    onInputChangeHandler(property) {
+
+        return (event) => {
+            const newState = {}
+            newState[property] = event.target.value
+
+            this.setState(newState)
+        }
+
     }
 
     componentDidMount() {
         fetch('https://jfddl8-harmonylublin.firebaseio.com/users/id.json')
             .then(r => {
-                console.warn(r)
                 return r.json()
             }).then((user => {
-                console.warn('respond:', user)
                 this.setState({ user })
             }))
             .catch(() => this.setState({
@@ -78,32 +85,39 @@ class FetchUsers extends React.Component {
                     variant={'contained'}
                     color={'default'}
                 > DODAJ ZDJĘCIE </Button>
-                <div style={styles.imageContainer}>
+                <div
+                    style={styles.imageContainer}>
                     {this.state.image ?
                         <img style={styles.photo}
                             src={this.state.image}
                             alt='Profile img' /> : null}
                 </div>
                 <Typography>
-                    Imię: {this.state.user.name}
+                    Imię: {this.state.name}
                 </Typography>
-                <TextField>{}</TextField>
                 <Typography>
-                    Nazwisko: {this.state.user.lastName}
+                    Nazwisko: {this.state.lastName}
                 </Typography>
-                <TextField>{}</TextField>
                 <Typography>
-                    Email: {this.state.user.email}
+                    Email: {this.state.email}
                 </Typography>
-                <TextField>{}</TextField>
+                <TextField
+                    value={this.state.email}
+                    onChange={this.onInputChangeHandler('email')}
+                    style={styles.input}
+                    label={'zmień email'}
+                    fullWidth
+                    variant="outlined"
+                    type={'email'}
+                />
                 <Button
-                    onChange={this.onDataUserChanged}
+                    onClick={this.onSaveClickHandler}
                     style={styles.button}
                     variant={'contained'}
                     color={'default'}
                 > ZMIEŃ DANE OSOBOWE
                 </Button>
-            </Paper>
+            </Paper >
         )
     }
 }
