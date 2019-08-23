@@ -1,6 +1,6 @@
 import React from "react";
-import ItemsList from "../items-list";
-import PaginationPanel from "../pagination-panel";
+import ItemsList from "../ItemsList";
+import PaginationPanel from "../PaginationPanel";
 class PaginatedList extends React.Component {
   state = {
     pageLength: 9,

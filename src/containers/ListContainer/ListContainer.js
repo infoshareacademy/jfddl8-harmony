@@ -1,5 +1,5 @@
 import React from "react"
-import ListFilter from "../../components/list-filter"
+import ListFilter from "../../components/ListFilter"
 
 
 class ListContainer extends React.Component {
