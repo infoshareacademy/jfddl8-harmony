@@ -31,6 +31,7 @@ class FetchUsers extends React.Component {
             name: '',
             lastName: '',
             email: '',
+            newEmailError: false,
         },
         photo: null,
         title: {
@@ -39,6 +40,7 @@ class FetchUsers extends React.Component {
         }
     }
 
+    onEmailChangeHandler = (input) => (event) => this.setState({ [input]: event.target.value })
 
     componentDidMount() {
         fetch('https://jfddl8-harmonylublin.firebaseio.com/users/id.json')
@@ -54,7 +56,33 @@ class FetchUsers extends React.Component {
                 }
             }))
     }
+    onClick = () => {
+        this.setState({
+            user: {
+                name: '',
+                lastName: '',
+                email: '',
+                newEmailError: false,
+            },
+        })
+            .then(data => {
+                if (data.error) {
+                    return Promise.reject(data)
+                }
 
+                return data
+            })
+            .then(() => {
+                this.setState({
+                    email: ''
+                })
+                console.log('hasło zostało zmienione')
+            })
+            .catch(() => this.setState({
+                style: { fontSize: 40, color: 'red' },
+                text: 'Błędny email!'
+            }))
+    }
 
     render() {
         return (
@@ -64,6 +92,20 @@ class FetchUsers extends React.Component {
                 <Typography>
                     Email: {this.state.user.email}
                 </Typography>
+                <TextField
+                    value={this.state.user.email}
+                    onChange={this.onEmailChangeHandler('email')}
+                    fullWidth
+                    variant="outlined"
+                    helperText={this.state.newEmailError ? "Wprowadź prawidłowy email!" : ''}
+                    type={'email'}
+                    error={this.state.newEmailError}
+                />
+                <Button
+                    onClick={this.onClick}
+                    color={'primary'}>
+                    ZMIEŃ EMAIL
+                </Button>
             </Paper >
         )
     }
