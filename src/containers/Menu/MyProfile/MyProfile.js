@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { Paper, Typography, Button } from '@material-ui/core'
-import TextField from './TextField'
+import { Paper, Typography, Button, TextField } from '@material-ui/core'
+
 
 const styles = {
     paper: {
@@ -24,31 +24,41 @@ const styles = {
         maxHeight: 300
     }
 }
-const initialState = {
-    name: '',
-    lastName: '',
-    email: '',
-    photo: null,
-    title: {
-        style: { fontSize: 40, color: 'blue' },
-        text: ''
-    }
-}
+
 class FetchUsers extends React.Component {
-    state = initialState
-
-    onPhotoChanged = (event) => {
-        const file = document.querySelector('img').files[0]
-        const reader = new FileReader()
-
-        reader.addEventListener("load", function () {
-            file.src = reader.result
-        }, false)
-
-        if (file) {
-            reader.readAsDataURL(file)
+    state = {
+        name: '',
+        lastName: '',
+        email: '',
+        photo: null,
+        title: {
+            style: { fontSize: 40, color: 'blue' },
+            text: ''
         }
     }
+    onImageChange = (event) => {
+        let imageData = event.target.files[0]
+        let reader = new FileReader()
+        if (!imageData) {
+            return
+        }
+        reader.readAsDataURL(imageData)
+        if (imageData.name.endsWith('.jpg') || imageData.name.endsWith('.png')) {
+            if (imageData.size < 1048576) {
+                reader.onload = (upload) => {
+                    this.uploadUserImage({
+                        method: 'PATCH',
+                        body: JSON.stringify({ photo: upload.target.result })
+                    })
+                }
+            } else {
+                console.log('za duże zdjęcie')
+            }
+        } else {
+            console.log('niepoprawny format zdjęcia')
+        }
+    }
+
     onInputChangeHandler(property) {
 
         return (event) => {
@@ -65,7 +75,7 @@ class FetchUsers extends React.Component {
             .then(r => {
                 return r.json()
             }).then((user => {
-                this.setState({ user })
+                this.setState()
             }))
             .catch(() => this.setState({
                 title: {
@@ -78,26 +88,8 @@ class FetchUsers extends React.Component {
     render() {
         return (
             <Paper style={styles.paper}>
-                <h1>Profil użytkownika</h1>
-                <Button
-                    onChange={this.onPhotoChanged}
-                    style={styles.button}
-                    variant={'contained'}
-                    color={'default'}
-                > DODAJ ZDJĘCIE </Button>
-                <div
-                    style={styles.imageContainer}>
-                    {this.state.image ?
-                        <img style={styles.photo}
-                            src={this.state.image}
-                            alt='Profile img' /> : null}
-                </div>
-                <Typography>
-                    Imię: {this.state.name}
-                </Typography>
-                <Typography>
-                    Nazwisko: {this.state.lastName}
-                </Typography>
+                <Typography> <h1>Imię: {this.state.name}</h1></Typography>
+                <Typography> <h1>Nazwisko: {this.state.lastName}</h1></Typography>
                 <Typography>
                     Email: {this.state.email}
                 </Typography>
@@ -110,6 +102,19 @@ class FetchUsers extends React.Component {
                     variant="outlined"
                     type={'email'}
                 />
+                <Button
+                    onChange={this.onImageChange}
+                    style={styles.button}
+                    variant={'contained'}
+                    color={'default'}
+                > DODAJ ZDJĘCIE </Button>
+                <div
+                    style={styles.imageContainer}>
+                    {this.state.image ?
+                        <img style={styles.photo}
+                            src={this.state.image}
+                            alt='Profile img' /> : null}
+                </div>
                 <Button
                     onClick={this.onSaveClickHandler}
                     style={styles.button}
