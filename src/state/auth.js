@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken'
 
 import { errorAsyncActionCreator } from './errors'
 import { store } from '../store'
+import { addSnackbarActionCreator } from './snackbar';
 
 const REFRESH_TOKEN_URL = 'https://securetoken.googleapis.com/v1/token?key=AIzaSyCRt2szYV4mV5V9n2O55T7xcAxeXYlPTho'
 
@@ -43,7 +44,7 @@ export const logInAsyncActionCreator = (email, password) => (dispatch, getState)
       return data
     })
     .catch((data) => {
-      dispatch(errorAsyncActionCreator(data))
+      data.error.message === 'INVALID_EMAIL' ? dispatch(addSnackbarActionCreator('Błędny email', 'red')) : dispatch(addSnackbarActionCreator('Błędne hasło', 'red'))
     })
 }
 
@@ -68,6 +69,8 @@ export const signInAsyncActionCreator = (email, password) => (dispatch, getState
       return data
     })
     .then(data => {
+      localStorage.setItem('idToken', data.idToken)
+      localStorage.setItem('refreshToken', data.refreshToken)
       const user = jwt.decode(data.idToken)
       const key = user && user.user_id
       if (key) {
@@ -79,7 +82,7 @@ export const signInAsyncActionCreator = (email, password) => (dispatch, getState
       }
     })
     .catch((data) => {
-      dispatch(errorAsyncActionCreator(data))
+      data.error.message === 'EMAIL_EXISTS' ? dispatch(addSnackbarActionCreator('Email już istnieje w bazie', 'red')) : dispatch(addSnackbarActionCreator('Za słabe hasło', 'red'))
     })
 }
 
@@ -129,7 +132,7 @@ const refreshToken = () => {
         refresh_token: refreshToken
       })
     }
-  )
+   )
     .then(r => r.json())
     .then(data => {
       if (data.error) return Promise.reject(data)

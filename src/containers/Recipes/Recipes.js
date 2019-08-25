@@ -1,12 +1,14 @@
 import React from "react";
+import { connect } from 'react-redux'
+
 
 import SearchForm from "../../components/SearchForm";
 import PaginatedList from "../../components/PaginatedList";
-// import { checkIfUserIsLoggedInAsyncActionCreator } from "../../state/auth";
+import { loadElementsAsyncActionCreator } from "../../state/recipes";
+// import { refreshTokenAsyncActionCreator } from "../../state/auth";
 
 class Recipes extends React.Component {
   state = {
-    recipes: [],
     label: "",
     searchPhrase: "",
     sliderValue: 1000,
@@ -14,11 +16,6 @@ class Recipes extends React.Component {
     filterFavorite: false,
     pageLength: 9
   };
-
-  mapObjectToArray = obj =>
-    Object.entries(obj || {}).map(([key, value]) =>
-      typeof value === "object" ? { ...value, key } : { key, value }
-    );
 
   inputHandler = event =>
     this.setState({
@@ -43,26 +40,13 @@ class Recipes extends React.Component {
     });
 
   componentDidMount() {
-    this.loadElements();
+    this.props._loadElements()
   }
 
-  loadElements = () => {
-    fetch("https://jfddl8-harmonylublin.firebaseio.com/recipes.json")
-      .then(result => result.json())
-      .then(data =>
-        this.setState({
-          recipes: this.mapObjectToArray(data)
-        })
-      )
-      .catch(() => this.setState({
-        recipes: []
-      })
-      )
-  };
 
   render() {
     
-    const showedList = this.state.recipes.filter((recipe, i, arr) => {
+    const showedList = this.props._recipes.filter((recipe, i, arr) => {
       const {
         title = "",
         label = "",
@@ -97,10 +81,22 @@ class Recipes extends React.Component {
           onSliderChange={this.sliderHandler}
           onButtonClick={this.favoriteButtonHandler}
         />
-       { showedList.length > 0 ? <PaginatedList recipes={showedList} refresh={this.loadElements} /> : null}
+        {showedList.length > 0 ? <PaginatedList recipes={showedList} refresh={this.props._loadElements} /> : null}
       </div>
     );
   }
 }
 
-export default Recipes;
+const mapStateToProps = state =>({
+    _recipes: state.recipes.recipes || []
+}) 
+
+const mapDispatchToProps = dispatch => ({
+  _loadElements: () => dispatch(loadElementsAsyncActionCreator()),
+  // _check: () => dispatch(refreshTokenAsyncActionCreator())
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Recipes)

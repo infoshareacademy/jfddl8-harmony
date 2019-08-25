@@ -1,6 +1,15 @@
 import React from "react";
 import ItemsList from "../ItemsList";
 import PaginationPanel from "../PaginationPanel";
+
+const styles = {
+  div: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+}
 class PaginatedList extends React.Component {
   state = {
     pageLength: 9,
@@ -33,19 +42,13 @@ class PaginatedList extends React.Component {
     };
   };
 
-
-  // console.log(paginationLength)
-  // console.log(this.props.refersh)
-
   render() {
     const recipesDivided = (this.recipesDivide())
     const recipesToShow = recipesDivided.recipesToShow
     const paginationLength = recipesDivided.paginationLength
 
-
-    // console.log(recipesToShow)
     return (
-      <div>
+      <div style={styles.div}>
         <ItemsList refresh={this.props.refresh} recipes={recipesToShow[this.state.currentPage]} />
         <PaginationPanel paginationLength={paginationLength} currentPage={this.state.currentPage} changePage={this.changeRecipesPage}/>
       </div>

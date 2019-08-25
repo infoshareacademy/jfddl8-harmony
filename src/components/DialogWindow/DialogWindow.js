@@ -1,22 +1,15 @@
 import React from 'react';
+
 import Button from '@material-ui/core/Button';
 import MuiDialog from '@material-ui/core/Dialog';
 import Typography from '@material-ui/core/Typography';
-// import List from '@material-ui/core/List';
-// import ListItem from '@material-ui/core/ListItem';
-// import ListItemText from '@material-ui/core/ListItemText'
 
 import { DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
 
 const CustomizedDialogs = (props) => {
-  // const ingredients = props.recipe.ingredients
-  // const mappedIngredients = ingredients.map(ingredient =>(
-  //   <ListItem>
-  //   <ListItemText
-  //     primary={ingredient}
-  //   />
-  // </ListItem>
-  // ))
+
+  // const ingredients = props.recipe.ingredients || ''
+  // console.log(props.recipe.ingredients)
 
   return (
     <MuiDialog
@@ -30,10 +23,10 @@ const CustomizedDialogs = (props) => {
         <Typography gutterBottom>
             {props.recipe.ingredients}
           </Typography>
-          <Typography gutterBottom>
+          {/* <Typography gutterBottom> */}
             <h3>{props.recipe.label}</h3>
             {props.recipe.nutritiveValue}
-          </Typography>
+          {/* </Typography> */}
         <DialogContent>
           <img src={props.recipe.photo} alt={props.recipe.photo} />
           <Typography gutterBottom>
