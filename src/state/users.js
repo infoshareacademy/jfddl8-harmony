@@ -6,13 +6,9 @@ export const incActionCreator = () => ({
   type: ADD
 })
 
-const initialState = {
-  user: 0
-}
-
 
 const fetchRecipes = fetchServiceDuck(
-  'https://jfddl8-shredders.firebaseio.com/users/',
+  'https://jfddl8-harmonylublin.firebaseio.com/users/',
   'users'
 )
 

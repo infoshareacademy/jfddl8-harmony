@@ -46,6 +46,7 @@ class MyProfile extends React.Component {
             name: '',
             lastName: '',
             email: '',
+            user_id: '',
             newEmailError: false,
         },
         photo: null,
@@ -84,14 +85,14 @@ class MyProfile extends React.Component {
         }
     }
     uploadUserImage = (options) => {
-        const imageUrl = 'https://jfddl8-shredders.firebaseio.com/users/' + this.props._userId
+        const imageUrl = 'https://jfddl8-harmonylublin.firebaseio.com/users/' + this.props._userId
         fetchWithToken(imageUrl + '.json?', options)
             .then(() => this.props._getUser(imageUrl))
     }
 
 
     componentDidMount() {
-        fetch('https://jfddl8-harmonylublin.firebaseio.com/users/id.json')
+        fetch('https://jfddl8-harmonylublin.firebaseio.com/users/' + 'user_id' + '.json')
             .then(r => {
                 return r.json()
             }).then((user => {
@@ -106,7 +107,7 @@ class MyProfile extends React.Component {
     }
 
     onClickHandler = () => {
-        fetch("https://jfddl8-harmonylublin.firebaseio.com/users/id.json", {
+        fetch("https://jfddl8-harmonylublin.firebaseio.com/users/" + 'user_id' + '.json', {
             method: "PATCH",
             body: JSON.stringify({ email: this.state.user.email })
         })
@@ -134,10 +135,10 @@ class MyProfile extends React.Component {
                         <AccountCircle style={{ width: 200, height: 200 }} />
                     }
                 </div>
-                <Typography> <h1>Imię: {this.state.user.name}</h1></Typography>
-                <Typography> <h1>Nazwisko: {this.state.user.lastName}</h1></Typography>
+                <Typography> <h1> {this.state.user.name}</h1></Typography>
+                <Typography> <h1> {this.state.user.lastName}</h1></Typography>
                 <Typography>
-                    Email: {this.state.user.email}
+                    {this.state.user.email}
                 </Typography>
                 <TextField
                     value={this.state.user.email}
