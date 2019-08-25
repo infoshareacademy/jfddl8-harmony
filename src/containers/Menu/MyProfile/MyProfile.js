@@ -12,8 +12,10 @@ import UploadButton from '../../../components/uploadButton/uploadButton'
 
 const styles = {
     paper: {
-        margin: 20,
-        padding: 30
+        margin: '0 auto',
+        padding: 30,
+        maxWidth: 500,
+        textAlign: 'center'
     },
     input: {
         margin: 5
@@ -29,6 +31,12 @@ const styles = {
     photo: {
         maxWidth: 300,
         maxHeight: 300
+    },
+    div: {
+        position: 'absolute',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 }
 
@@ -118,7 +126,7 @@ class MyProfile extends React.Component {
 
     render() {
         return (
-            <Paper style={{ padding: '20px' }}>
+            <Paper style={styles.paper}>
                 <div style={styles.photoContainer}>
                     {this.props._user && this.props._user.photo ?
                         <img style={styles.photo} src={this.props._user.photo} alt='Profile img' />
