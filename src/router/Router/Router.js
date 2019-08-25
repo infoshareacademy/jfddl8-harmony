@@ -8,7 +8,7 @@ import Diary from '../../containers/Menu/Diary'
 import AppBar from '../AppBar'
 import AddRecipeContainer from '../../containers/Menu/addRecipeContainer/AddRecipeContainer'
 import { RouteWrapper, RouterContainer } from './Router.styled'
-import ListContainer from '../../containers/ListContainer'
+import Recipes from '../../containers/Recipes'
 
 const Router = (props) => (
   <BrowserRouter>
@@ -20,7 +20,7 @@ const Router = (props) => (
         <Route path={'/home'} component={Home} />
         <Route path={'/my-profile'} component={MyProfile} />
         <Route path={'/my-diet'} component={MyDiet} />
-        <Route path={'/recipes/:recipeKey?'} component={ListContainer} />
+        <Route path={'/recipes/:recipeKey?'} component={Recipes} />
         <Route path={'/add-recipes'} component={AddRecipeContainer} />
         <Route path={'/diary'} component={Diary} />
       </RouteWrapper>
