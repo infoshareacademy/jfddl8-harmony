@@ -8,7 +8,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle'
 import { addSnackbarActionCreator } from '../../../state/snackbars'
 
 import fetchService from '../../../state/fetchServiceDuck'
-
+import UploadButton from '../../../components/uploadButton/uploadButton'
 
 const styles = {
     paper: {
@@ -145,11 +145,11 @@ class MyProfile extends React.Component {
                     color={'default'}>
                     ZMIEŃ EMAIL
                 </Button>
-                <Button
+                <UploadButton
                     onClick={this.onImageChange}
                 >
                     NOWE ZDJĘCIE UŻYTKOWNIKA
-                </Button>
+                </UploadButton>
             </Paper >
         )
     }
