@@ -1,9 +1,10 @@
 import React from "react";
 
-import SearchForm from "../SearchForm";
-import PaginatedList from "../PaginatedList";
+import SearchForm from "../../components/SearchForm";
+import PaginatedList from "../../components/PaginatedList";
+// import { checkIfUserIsLoggedInAsyncActionCreator } from "../../state/auth";
 
-class ListFilter extends React.Component {
+class Recipes extends React.Component {
   state = {
     recipes: [],
     label: "",
@@ -102,4 +103,4 @@ class ListFilter extends React.Component {
   }
 }
 
-export default ListFilter;
+export default Recipes;
