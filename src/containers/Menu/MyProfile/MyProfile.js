@@ -40,7 +40,11 @@ class FetchUsers extends React.Component {
         }
     }
 
-    onEmailChangeHandler = (input) => (event) => this.setState({ [input]: event.target.value })
+    onEmailChangeHandler = input => event => {
+        const newUser = { ...this.state.user }
+        newUser[input] = event.target.value
+        this.setState({ user: newUser })
+    }
 
     componentDidMount() {
         fetch('https://jfddl8-harmonylublin.firebaseio.com/users/id.json')
@@ -56,37 +60,29 @@ class FetchUsers extends React.Component {
                 }
             }))
     }
-    onClick = () => {
-        this.setState({
-            user: {
-                name: '',
-                lastName: '',
-                email: '',
-                newEmailError: false,
-            },
-        })
-            .then(data => {
-                if (data.error) {
-                    return Promise.reject(data)
-                }
 
-                return data
-            })
-            .then(() => {
-                this.setState({
-                    email: ''
-                })
-                console.log('hasło zostało zmienione')
-            })
-            .catch(() => this.setState({
-                style: { fontSize: 40, color: 'red' },
-                text: 'Błędny email!'
+    onClickHandler = () => {
+        fetch("https://jfddl8-harmonylublin.firebaseio.com/users/id.json", {
+            method: "PATCH",
+            body: JSON.stringify({ email: this.state.user.email })
+        })
+            .then(() => this.setState({
+                title: {
+                    style: { fontSize: 40, color: 'green' },
+                    text: 'Masz nowy email'
+                }
+            }))
+            .catch(error => this.setState({
+                title: {
+                    style: { fontSize: 40, color: 'red' },
+                    text: 'Wystąpił błąd na stronie. Spróbuj później'
+                }
             }))
     }
 
     render() {
         return (
-            <Paper style={styles.paper}>
+            <Paper style={{ padding: '20px' }}>
                 <Typography> <h1>Imię: {this.state.user.name}</h1></Typography>
                 <Typography> <h1>Nazwisko: {this.state.user.lastName}</h1></Typography>
                 <Typography>
@@ -102,7 +98,7 @@ class FetchUsers extends React.Component {
                     error={this.state.newEmailError}
                 />
                 <Button
-                    onClick={this.onClick}
+                    onClick={this.onClickHandler}
                     color={'primary'}>
                     ZMIEŃ EMAIL
                 </Button>
