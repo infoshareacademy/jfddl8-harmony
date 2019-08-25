@@ -146,7 +146,7 @@ class MyProfile extends React.Component {
                     ZMIEŃ EMAIL
                 </Button>
                 <UploadButton
-                    onClick={this.onImageChange}
+                    onImageChange={this.onImageChange}
                 >
                     NOWE ZDJĘCIE UŻYTKOWNIKA
                 </UploadButton>
