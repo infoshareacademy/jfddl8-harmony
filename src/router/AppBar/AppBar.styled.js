@@ -32,11 +32,3 @@ export const FacebookShareButtonStyled = styled(FacebookShareButton)`
 position: absolute;
 right: 20px;
 `
-
-
-
-
-
-
-
-

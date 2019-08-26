@@ -8,7 +8,6 @@ class Navigation extends React.Component {
   }
 
   toggleSideBar = () => {
-    console.warn('on Click')
     this.setState({
       isSideBarOpen: !this.state.isSideBarOpen
     })

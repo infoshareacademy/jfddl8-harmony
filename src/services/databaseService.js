@@ -23,7 +23,7 @@ export const addRecipeToFireBase = (newRecipe) => {
 }
 
 export const getAllRecipesFromFirebase = () => {
-  return fetch(URL)
+  return fetch(URL + '.json')
     .then(r => r.json())
     .then(data => {
       const recipes = mapObjectToArray(data)
