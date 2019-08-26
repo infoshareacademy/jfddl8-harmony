@@ -116,9 +116,6 @@ class Home extends Component {
   componentDidMount() {
     this.loadElements()
 
-
-    // this.setState({recipes:})
-
   }
 
   render() {
