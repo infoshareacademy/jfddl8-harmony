@@ -50,30 +50,6 @@ const styles = {
 
 }
 
-
-const recipes = [
-  {
-    id: 'dsfasd',
-    label: 'lanch',
-    title: 'sfasd'
-  },
-  {
-    id: 'dsfasd',
-    label: 'lanch',
-    title: 'sfasd'
-  },
-  {
-    id: 'dsfasd',
-    label: 'lanch',
-    title: 'sfasd'
-  },
-  {
-    id: 'fsdafas',
-    label: 'breakfast',
-    title: 'fasd'
-  }
-]
-
 const returnLabelsCount = (recipes) => {
 
   return recipes && recipes.reduce((counter, recipe) => {
@@ -146,7 +122,7 @@ class Home extends Component {
   }
 
   render() {
-    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+    const COLORS = ['#eb4034', '#e37a34', '#ffc869', '#383736', '#aba7a4'];
     return (
       <Grid container justify="center">
         <Grid item xs={12} md={8} lg={8}>
@@ -192,7 +168,7 @@ class Home extends Component {
                       outerRadius={60}
                       fill="#393e46" label>
                       {
-                        data.map((entry, index) => {
+                        this.state.chartData.map((entry, index) => {
                           console.warn(entry)
                           return <Cell key={`cell-${index}`} fill={COLORS[index]} />
                         })
@@ -210,14 +186,6 @@ class Home extends Component {
     )
   }
 }
-
-const data = [
-  { category: 'Śniadania', uv: 5 },
-  { category: 'Obiady', uv: 4 },
-  { category: 'Kolacje', uv: 7 },
-  { category: 'Desery', uv: 9 }
-
-]
 
 const dataUsers = [
   { name: 'Kwiecień', pv: 100 },
