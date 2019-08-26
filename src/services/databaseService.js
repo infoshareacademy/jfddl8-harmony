@@ -1,6 +1,6 @@
 import { mapObjectToArray } from './mapObjectToArray'
 
-const URL = 'https://jfddl8-harmonylublin.firebaseio.com/recipes'
+const URL = 'https://jfddl8-harmonylublin.firebaseio.com/recipes.json'
 
 
 export const deleteRecipe = (recipeKey) => {

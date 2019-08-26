@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
-import { BarChart, Bar, Line, XAxis, YAxis, PieChart, Pie, ResponsiveContainer, } from 'recharts'
+import { BarChart, Bar, Line, XAxis, YAxis, PieChart, Pie, ResponsiveContainer, Legend, Cell } from 'recharts'
 import Banner from '../../../img/baner.png'
+import { forEach } from 'lodash'
 
 
 const styles = {
@@ -49,13 +50,81 @@ const styles = {
 
 }
 
+const returnLabelsCount = (recipes) => {
+
+  return recipes && recipes.reduce((counter, recipe) => {
+    const { label } = recipe;
+
+    counter[label] = counter[label] ? counter[label] + 1 : 1;
+    return counter
+
+  }, {})
+
+}
+
 class Home extends Component {
+  state = {
+    chartData: [],
+    recipes: []
+  }
+
+  mapObjectToArray = obj =>
+    Object.entries(obj || {}).map(([key, value]) =>
+      typeof value === "object" ? { ...value, key } : { key, value }
+    );
+
+
+  loadElements = () => {
+    fetch("https://jfddl8-harmonylublin.firebaseio.com/recipes.json")
+      .then(result => result.json())
+      .then(data => {
+        this.setState({
+          recipes: this.mapObjectToArray(data)
+        })
+      }
+      )
+      .catch((error) => {
+        this.setState({
+          recipes: []
+        })
+      }
+      )
+  };
+
+
+  componentDidUpdate(prevProps, prevState) {
+
+    if (prevState.recipes !== this.state.recipes) {
+      console.warn(this.state.recipes)
+      this.countCategory()
+    }
+  }
+
+  countCategory() {
+    console.warn(this.state.recipes)
+    const chartData = []
+    const countData = returnLabelsCount(this.state.recipes)
+    forEach(countData, (value, name) => {
+      console.warn(value, name)
+      chartData.push({ name, value })
+    })
+
+    console.warn(chartData)
+    this.setState({ chartData })
+  }
+
+  componentDidMount() {
+    this.loadElements()
+
+  }
+
   render() {
+    const COLORS = ['#eb4034', '#e37a34', '#e6b000', '#383736', '#aba7a4'];
     return (
       <Grid container justify="center">
         <Grid item xs={12} md={8} lg={8}>
           <Paper style={styles.paper}>
-            <img src={Banner} width="100%" height="100%" />
+            <img src={Banner} width="100%" height="100%" alt="" />
           </Paper>
           <Grid container justify="center">
             <Grid item xs={12} md={12} lg={12}>
@@ -78,26 +147,32 @@ class Home extends Component {
               <Paper style={styles.stats}>
                 <Typography type="headline" component="h3" style={styles.headline}> Odwiedzający </Typography>
                 <ResponsiveContainer width={'100%'} height={240}>
-                  <BarChart data={data} style={styles.chart}>
-                    <Line type="monotone" dataKey="uv" stroke="#222831" />
+                  <BarChart data={dataUsers} style={styles.chart}>
+                    <Line type="monotone" dataKey="pv" stroke="#222831" />
                     <XAxis dataKey="name" stroke="#222831" />
                     <YAxis />
                     <Bar dataKey="pv" fill="#d65a31" />
-                    <Bar dataKey="uv" fill="#393e46" />
                   </BarChart>
                 </ResponsiveContainer>
               </Paper>
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={6}>
               <Paper style={styles.stats}>
-                <Typography type="headline" component="h3" style={styles.headline}> Użytkownicy </Typography>
+                <Typography type="headline" component="h3" style={styles.headline}> Kategorie </Typography>
                 <ResponsiveContainer width={'100%'} height={240}>
                   <PieChart style={styles.chart}>
-                    <Pie data={dataCustomers} dataKey="uv" nameKey="name" cx="50%" cy="50%" outerRadius={30}
-                      fill="#d65a31" />
-                    <Pie data={data} dataKey="uv" nameKey="name" cx="50%" cy="50%" innerRadius={40}
+                    <Pie data={this.state.chartData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={40}
                       outerRadius={60}
-                      fill="#393e46" label />
+                      fill="#393e46" label>
+                      {
+                        this.state.chartData.map((entry, index) => {
+                          console.warn(entry)
+                          return <Cell key={`cell-${index}`} fill={COLORS[index]} />
+                        })
+                      }
+                    </Pie>
+
+                    <Legend />
                   </PieChart>
                 </ResponsiveContainer>
               </Paper>
@@ -109,19 +184,11 @@ class Home extends Component {
   }
 }
 
-const data = [
-  { name: 'Kwiecień', uv: 1000, pv: 1000, amt: 1000 },
-  { name: 'Maj', uv: 1000, pv: 1500, amt: 1000 },
-  { name: 'Czerwiec', uv: 1500, pv: 1000, amt: 1500 },
-  { name: 'Lipiec', uv: 1500, pv: 1500, amt: 1000 },
-  { name: 'Sierpień', uv: 1500, pv: 1500, amt: 1000 },
-
-]
-const dataCustomers = [
-  { name: 'Maj', uv: 2000, pv: 4300, amt: 4400 },
-  { name: 'Czerwiec', uv: 1000, pv: 3390, amt: 2500 },
-  { name: 'Lipiec', uv: 2181, pv: 1800, amt: 5290 },
-  { name: 'Sierpień', uv: 4000, pv: 2000, amt: 2000 },
+const dataUsers = [
+  { name: 'Kwiecień', pv: 100 },
+  { name: 'Maj', pv: 140 },
+  { name: 'Czerwiec', pv: 160 },
+  { name: 'Lipiec', pv: 200 }
 
 ]
 
