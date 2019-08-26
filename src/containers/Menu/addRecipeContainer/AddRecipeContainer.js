@@ -15,8 +15,10 @@ import { addRecipeToFireBase } from '../../../services/databaseService'
 
 const style = {
   paper: {
-    margin: 20,
-    padding: 20
+    margin: '0 auto',
+    padding: 30,
+    maxWidth: 500,
+    textAlign: 'center'
   },
   button: {
     marginTop: 20
