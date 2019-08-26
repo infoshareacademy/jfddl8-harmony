@@ -43,8 +43,8 @@ const styles = {
 class MyProfile extends React.Component {
     state = {
         user: {
-            name: '',
-            lastName: '',
+            // name: '',
+            // lastName: '',
             email: '',
             user_id: '',
             newEmailError: false,
@@ -135,8 +135,8 @@ class MyProfile extends React.Component {
                         <AccountCircle style={{ width: 200, height: 200 }} />
                     }
                 </div>
-                <Typography> <h1> {this.state.user.name}</h1></Typography>
-                <Typography> <h1> {this.state.user.lastName}</h1></Typography>
+                {/* <Typography> <h1> {this.state.user.name}</h1></Typography>
+                <Typography> <h1> {this.state.user.lastName}</h1></Typography> */}
                 <Typography>
                     {this.state.user.email}
                 </Typography>
@@ -145,9 +145,9 @@ class MyProfile extends React.Component {
                     onChange={this.onEmailChangeHandler('email')}
                     fullWidth
                     variant="outlined"
-                    helperText={this.state.newEmailError ? "Wprowadź prawidłowy email!" : ''}
+                    helperText={this.state.user.newEmailError ? "Wprowadź prawidłowy email!" : ''}
                     type={'email'}
-                    error={this.state.newEmailError}
+                    error={this.state.user.newEmailError}
                 />
                 <Button
                     onClick={this.onClickHandler}
