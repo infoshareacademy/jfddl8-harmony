@@ -4,7 +4,7 @@ import { fetchs } from '../../../state/users'
 import { connect } from 'react-redux'
 import { Paper, Typography, Button, TextField } from '@material-ui/core'
 import AccountCircle from '@material-ui/icons/AccountCircle'
-
+import jwt from 'jsonwebtoken'
 import { addSnackbarActionCreator } from '../../../state/snackbars'
 
 import fetchService from '../../../state/fetchServiceDuck'
@@ -40,22 +40,23 @@ const styles = {
     }
 }
 
+const getUserId = () => {
+    let userToken = localStorage.getItem('idToken')
+    let decoded = jwt.decode(userToken)
+    return decoded.user_id
+}
 class MyProfile extends React.Component {
     state = {
         user: {
-            // name: '',
-            // lastName: '',
             email: '',
-            user_id: '',
             newEmailError: false,
+            photo: null,
         },
-        photo: null,
         title: {
             style: { fontSize: 40, color: 'blue' },
             text: ''
         }
     }
-
     onEmailChangeHandler = input => event => {
         const newUser = { ...this.state.user }
         newUser[input] = event.target.value
@@ -63,19 +64,24 @@ class MyProfile extends React.Component {
     }
 
     onImageChange = (event) => {
+        // event.preventDefault()
         let imageData = event.target.files[0]
         let reader = new FileReader()
         if (!imageData) {
             return
         }
         reader.readAsDataURL(imageData)
+        console.log(reader)
         if (imageData.name.endsWith('.jpg') || imageData.name.endsWith('.png')) {
             if (imageData.size < 1048576) {
                 reader.onload = (upload) => {
+                    const photoUrl = upload.target.result
+                    console.log(photoUrl)
                     this.uploadUserImage({
                         method: 'PATCH',
-                        body: JSON.stringify({ photo: upload.target.result })
+                        body: JSON.stringify({ photo: photoUrl })
                     })
+
                 }
             } else {
                 this.props._addSnack('Zbyt duży rozmiar zdjęcia! Maksymalnie 512 KB!', 'red')
@@ -85,18 +91,20 @@ class MyProfile extends React.Component {
         }
     }
     uploadUserImage = (options) => {
-        const imageUrl = 'https://jfddl8-harmonylublin.firebaseio.com/users/' + this.props._userId
+        const imageUrl = 'https://jfddl8-harmonylublin.firebaseio.com/users/' + this.props.userId
         fetchWithToken(imageUrl + '.json?', options)
             .then(() => this.props._getUser(imageUrl))
+            .then(() => {
+                this.refreshUser()
+            })
     }
 
-
-    componentDidMount() {
-        fetch('https://jfddl8-harmonylublin.firebaseio.com/users/' + 'user_id' + '.json')
+    refreshUser() {
+        fetch('https://jfddl8-harmonylublin.firebaseio.com/users/' + this.props.userId + '.json')
             .then(r => {
                 return r.json()
             }).then((user => {
-                this.setState({ user })
+                this.setState({ user: user || {} })
             }))
             .catch(() => this.setState({
                 title: {
@@ -106,8 +114,12 @@ class MyProfile extends React.Component {
             }))
     }
 
+    componentDidMount() {
+        this.refreshUser()
+    }
+
     onClickHandler = () => {
-        fetch("https://jfddl8-harmonylublin.firebaseio.com/users/" + 'user_id' + '.json', {
+        fetch("https://jfddl8-harmonylublin.firebaseio.com/users/" + this.props.userId + '.json', {
             method: "PATCH",
             body: JSON.stringify({ email: this.state.user.email })
         })
@@ -129,14 +141,12 @@ class MyProfile extends React.Component {
         return (
             <Paper style={styles.paper}>
                 <div style={styles.photoContainer}>
-                    {this.props._user && this.props._user.photo ?
-                        <img style={styles.photo} src={this.props._user.photo} alt='Profile img' />
+                    {this.state.user && this.state.user.photo ?
+                        <img style={styles.photo} src={this.state.user.photo} alt='Profile img' />
                         :
                         <AccountCircle style={{ width: 200, height: 200 }} />
                     }
                 </div>
-                {/* <Typography> <h1> {this.state.user.name}</h1></Typography>
-                <Typography> <h1> {this.state.user.lastName}</h1></Typography> */}
                 <Typography>
                     {this.state.user.email}
                 </Typography>
@@ -165,9 +175,13 @@ class MyProfile extends React.Component {
 }
 const fetchWithToken = fetchService('', 'auth').fetchWithToken
 
-const mapStateToProps = state => ({
-    _user: state.user
-})
+const mapStateToProps = state => {
+    const userId = getUserId()
+    return ({
+        _user: state.user,
+        userId
+    })
+}
 
 const mapDispatchToProps = dispatch => ({
     _addSnack: (text, color) => dispatch(addSnackbarActionCreator(text, color)),

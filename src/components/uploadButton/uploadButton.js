@@ -21,6 +21,7 @@ const styles = {
 }
 
 const UploadButton = props => {
+  console.log(props)
   return (
     <div>
       <div>
