@@ -12,12 +12,13 @@ import Paper from '@material-ui/core/Paper'
 
 
 import { addRecipeToFireBase } from '../../../services/databaseService'
+import { Typography } from '@material-ui/core';
 
 const style = {
   paper: {
     margin: '0 auto',
     padding: 30,
-    maxWidth: 500,
+    maxWidth: 600,
     textAlign: 'center'
   },
   button: {
@@ -146,9 +147,9 @@ class AddRecipeContainer extends React.Component {
     return (
       <Paper style={style.paper}>
         <div className="addRecipeContainer">
-          <h1 style={style.header}
-          >Dodaj swój przepis !</h1>
-          <h5>Wpisz tytuł przepisu:</h5>
+          <Typography variant="h3">
+            Dodaj swój przepis !</Typography>
+          <Typography variant='subtitle1'>Wpisz tytuł przepisu:</Typography>
           <br />
           <TitleOfRecipe
             title={title}
@@ -157,21 +158,21 @@ class AddRecipeContainer extends React.Component {
           {errors.isTitle && <span> {this.messages.title} </span>}
         </div>
         <div>
-          <h5>Składniki:</h5>
+          <Typography variant='subtitle1'>Składniki:</Typography>
           <Ingredients
             ingredients={ingredients}
             onInputChangeHandler={this.onInputChangeHandler('ingredients')}
           />
           {errors.areIngredients && <span> {this.messages.ingredients} </span>}
         </div>
-        <h5>Przygotowanie:</h5>
+        <Typography variant='subtitle1'>Przygotowanie:</Typography>
         <Description
           description={description}
           onInputChangeHandler={this.onInputChangeHandler('description')}
         />
         {errors.isDescription && <span> {this.messages.description} </span>}
         <div>
-          <h5>Wartość energetyczna:</h5>
+          <Typography variant='subtitle1'>Wartość energetyczna:</Typography>
           <NutritiveValue
             nutritiveValue={nutritiveValue}
             onInputChangeHandler={this.onInputChangeHandler('nutritiveValue')}
@@ -179,7 +180,7 @@ class AddRecipeContainer extends React.Component {
           {errors.isNutritiveValue && <span> {this.messages.nutritiveValue} </span>}
         </div>
         <div>
-          <h5>Dodaj link do zdjęcia:</h5>
+          <Typography variant='subtitle1'>Dodaj link do zdjęcia:</Typography>
           <PhotoOfRecipe
             photo={photo}
             onInputChangeHandler={this.onInputChangeHandler('photo')}
