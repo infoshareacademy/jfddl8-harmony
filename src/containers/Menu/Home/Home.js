@@ -122,7 +122,7 @@ class Home extends Component {
   }
 
   render() {
-    const COLORS = ['#eb4034', '#e37a34', '#ffc869', '#383736', '#aba7a4'];
+    const COLORS = ['#eb4034', '#e37a34', '#e6b000', '#383736', '#aba7a4'];
     return (
       <Grid container justify="center">
         <Grid item xs={12} md={8} lg={8}>

@@ -23,9 +23,9 @@ const Drawer = styled(CustomDrawer)`
     position: sticky;
     bottom: 0;
     display: flex;
-    height: 100%;
     width: ${ props => props.isOpen ? 260 : 60}px; 
-     & >  div {
+    & >  div {
+      overflow: hidden;
       position: sticky;
       bottom: 0;
         display: flex;
