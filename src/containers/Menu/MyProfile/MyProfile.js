@@ -64,19 +64,16 @@ class MyProfile extends React.Component {
     }
 
     onImageChange = (event) => {
-        // event.preventDefault()
         let imageData = event.target.files[0]
         let reader = new FileReader()
         if (!imageData) {
             return
         }
         reader.readAsDataURL(imageData)
-        console.log(reader)
         if (imageData.name.endsWith('.jpg') || imageData.name.endsWith('.png')) {
             if (imageData.size < 1048576) {
                 reader.onload = (upload) => {
                     const photoUrl = upload.target.result
-                    console.log(photoUrl)
                     this.uploadUserImage({
                         method: 'PATCH',
                         body: JSON.stringify({ photo: photoUrl })
