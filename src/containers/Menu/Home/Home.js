@@ -95,21 +95,17 @@ class Home extends Component {
   componentDidUpdate(prevProps, prevState) {
 
     if (prevState.recipes !== this.state.recipes) {
-      console.warn(this.state.recipes)
       this.countCategory()
     }
   }
 
   countCategory() {
-    console.warn(this.state.recipes)
     const chartData = []
     const countData = returnLabelsCount(this.state.recipes)
     forEach(countData, (value, name) => {
-      console.warn(value, name)
       chartData.push({ name, value })
     })
 
-    console.warn(chartData)
     this.setState({ chartData })
   }
 
@@ -166,7 +162,6 @@ class Home extends Component {
                       fill="#393e46" label>
                       {
                         this.state.chartData.map((entry, index) => {
-                          console.warn(entry)
                           return <Cell key={`cell-${index}`} fill={COLORS[index]} />
                         })
                       }
