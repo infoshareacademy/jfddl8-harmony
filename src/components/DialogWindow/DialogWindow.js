@@ -1,23 +1,22 @@
 import React from 'react';
+
 import Button from '@material-ui/core/Button';
 import MuiDialog from '@material-ui/core/Dialog';
 import Typography from '@material-ui/core/Typography';
-// import List from '@material-ui/core/List';
-// import ListItem from '@material-ui/core/ListItem';
-// import ListItemText from '@material-ui/core/ListItemText'
 
 import { DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
 
-const CustomizedDialogs = (props) => {
-  // const ingredients = props.recipe.ingredients
-  // const mappedIngredients = ingredients.map(ingredient =>(
-  //   <ListItem>
-  //   <ListItemText
-  //     primary={ingredient}
-  //   />
-  // </ListItem>
-  // ))
+const styles = {
+  
+  img: {
+    maxWidth: '25em',
+    maxHeigth: '20em'
+  }
+}
 
+const CustomizedDialogs = (props) => {
+
+ 
   return (
     <MuiDialog
       open={props.open}
@@ -27,16 +26,19 @@ const CustomizedDialogs = (props) => {
         <DialogTitle>
           {props.recipe.title}
         </DialogTitle>
-        <Typography gutterBottom>
-            {props.recipe.ingredients}
+          <img style={styles.img} src={props.recipe.photo} alt={props.recipe.photo} />
+        <Typography>
+          <b>Składniki: </b>
+          <br/>
+          {props.recipe.ingredients}
           </Typography>
-          <Typography gutterBottom>
-            <h3>{props.recipe.label}</h3>
+          {/* <Typography gutterBottom> */}
             {props.recipe.nutritiveValue}
-          </Typography>
+          {/* </Typography> */}
         <DialogContent>
-          <img src={props.recipe.photo} alt={props.recipe.photo} />
-          <Typography gutterBottom>
+          <Typography>
+            <b>Sposób przygotowania:</b>
+            <br />
             {props.recipe.description}
           </Typography>
         </DialogContent>

@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 import LogInWindow from '../../components/LogInWindow'
 import SignUpWindow from '../../components/SignUpWindow'
 
-import { logInAsyncActionCreator, signInAsyncActionCreator, checkIfUserIsLoggedInAsyncActionCreator } from '../../state/auth'
+import { logInAsyncActionCreator, signInAsyncActionCreator, checkIfUserIsLoggedInAsyncActionCreator,resetPasswordAsyncActionCreator } from '../../state/auth'
+import RetrievePasswordWindow from '../../components/RetrievePasswordWindow/RetrievePasswordWindow';
 
 
 
@@ -15,15 +16,18 @@ class Auth extends React.Component {
 		password2: '',
 		emailToLogIn: '',
 		passwordToLogIn: '',
-    isSignUp: false
+		emailToReset: '',
+		isSignUp: false,
+		isRetrievePassword: false,
 	}
 
 	onEmailChanged = (event) => this.setState({ email: event.target.value })
 	onPasswordChanged = (event) => this.setState({ password: event.target.value })
-	onPasswordChanged2 = (event) => this.setState({ password2: event.target.value })
+	// onPasswordChanged2 = (event) => this.setState({})
 
 	onEmailToLogInChanged = (event) => this.setState({ emailToLogIn: event.target.value })
 	onPasswordToLogInChanged = (event) => this.setState({ passwordToLogIn: event.target.value })
+	onEmailToResetChanged = (event) => this.setState({ emailToReset: event.target.value })
 
 	onLogInClick = () => this.props._logIn(this.state.emailToLogIn, this.state.passwordToLogIn)
 
@@ -33,6 +37,11 @@ class Auth extends React.Component {
     isSignUp: !this.state.isSignUp
   })
 
+	onResetClick = () => this.props._reset(this.state.emailToReset)
+
+	onResetWindowClick = () => this.setState({
+    isRetrievePassword: !this.state.isRetrievePassword
+  })
 
 	render() {
 
@@ -57,8 +66,16 @@ class Auth extends React.Component {
             onBackClick={this.onSignInClick}
             />
 
-            :
+						: this.state.isRetrievePassword ? 
+						
+						<RetrievePasswordWindow 
+						emailToReset={this.state.emailToReset}
+						onEmailToResetChanged={this.onEmailToResetChanged}
 
+						onResetClick={this.onResetClick}
+						onResetWindowClick={this.onResetWindowClick}
+						/>
+						:
 						<LogInWindow
 							emailToLogIn={this.state.emailToLogIn}
 							passwordToLogIn={this.state.passwordToLogIn}
@@ -68,6 +85,7 @@ class Auth extends React.Component {
               
               onSignInClick={this.onSignInClick}
 							onLogInClick={this.onLogInClick}
+							onResetWindowClick={this.onResetWindowClick}
 						/>
 				}
 			</div>
@@ -82,7 +100,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 	_logIn: (email, password) => dispatch(logInAsyncActionCreator(email, password)),
   _signIn: (email, password) => dispatch(signInAsyncActionCreator(email, password)),
-  _check: () => dispatch(checkIfUserIsLoggedInAsyncActionCreator())
+	_check: () => dispatch(checkIfUserIsLoggedInAsyncActionCreator()),
+	_reset: (email) => dispatch(resetPasswordAsyncActionCreator(email))
 })
 
 

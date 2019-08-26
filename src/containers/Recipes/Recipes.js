@@ -1,12 +1,14 @@
 import React from "react";
+import { connect } from 'react-redux'
+
 
 import SearchForm from "../../components/SearchForm";
 import PaginatedList from "../../components/PaginatedList";
-// import { checkIfUserIsLoggedInAsyncActionCreator } from "../../state/auth";
+import { loadElementsAsyncActionCreator } from "../../state/recipes";
+import { mapObjectToArray } from "../../services/mapObjectToArray";
 
 class Recipes extends React.Component {
   state = {
-    recipes: [],
     label: "",
     searchPhrase: "",
     sliderValue: 1000,
@@ -14,11 +16,6 @@ class Recipes extends React.Component {
     filterFavorite: false,
     pageLength: 9
   };
-
-  mapObjectToArray = obj =>
-    Object.entries(obj || {}).map(([key, value]) =>
-      typeof value === "object" ? { ...value, key } : { key, value }
-    );
 
   inputHandler = event =>
     this.setState({
@@ -42,27 +39,30 @@ class Recipes extends React.Component {
       sliderValue: value
     });
 
-  componentDidMount() {
-    this.loadElements();
+  interval = null
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
   }
 
-  loadElements = () => {
-    fetch("https://jfddl8-harmonylublin.firebaseio.com/recipes.json")
-      .then(result => result.json())
-      .then(data =>
-        this.setState({
-          recipes: this.mapObjectToArray(data)
-        })
-      )
-      .catch(() => this.setState({
-        recipes: []
+  liveUpdate = () => {
+    fetch('https://jfddl8-harmonylublin.firebaseio.com/recipes.json?auth=' + localStorage.getItem('idToken'))
+      .then(r => r.json())
+      .then(data => {
+        const mappedData = mapObjectToArray(data)
+        if (mappedData.length !== this.props._recipes.length || this.props._recipes[this.props._recipes.length - 1].key !== mappedData[mappedData.length - 1].key)
+          this.props._loadElements()
       })
-      )
-  };
+  }
+
+  componentDidMount() {
+    this.props._loadElements()
+    this.interval = setInterval(this.liveUpdate, 10000)
+  }
+
 
   render() {
-    
-    const showedList = this.state.recipes.filter((recipe, i, arr) => {
+    const showedList = this.props._recipes.filter((recipe, i, arr) => {
       const {
         title = "",
         label = "",
@@ -97,10 +97,22 @@ class Recipes extends React.Component {
           onSliderChange={this.sliderHandler}
           onButtonClick={this.favoriteButtonHandler}
         />
-       { showedList.length > 0 ? <PaginatedList recipes={showedList} refresh={this.loadElements} /> : null}
+        {showedList.length > 0 ? <PaginatedList recipes={showedList} refresh={this.props._loadElements} /> : null}
       </div>
     );
   }
 }
 
-export default Recipes;
+const mapStateToProps = state => ({
+  _recipes: state.recipes.recipes || []
+})
+
+const mapDispatchToProps = dispatch => ({
+  _loadElements: () => dispatch(loadElementsAsyncActionCreator()),
+  // _check: () => dispatch(refreshTokenAsyncActionCreator())
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Recipes)

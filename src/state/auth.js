@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken'
 
 import { errorAsyncActionCreator } from './errors'
 import { store } from '../store'
+import { addSnackbarActionCreator } from './snackbar';
 
 const REFRESH_TOKEN_URL = 'https://securetoken.googleapis.com/v1/token?key=AIzaSyCRt2szYV4mV5V9n2O55T7xcAxeXYlPTho'
 
@@ -11,11 +12,26 @@ const SIGN_UP_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?k
 
 const SAVE_USER_URL = 'https://jfddl8-harmonylublin.firebaseio.com/users/'
 
+const RESET_PASSWORD_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyCRt2szYV4mV5V9n2O55T7xcAxeXYlPTho'
+
 const LOGGED_IN = 'auth/LOGGED_IN'
 const LOGGED_OUT = 'auth/LOGGED_OUT'
 const SIGNED_IN = 'auth/SIGNED_IN'
 
+export const resetPasswordAsyncActionCreator = (email) => (dispatch, getState) => {
+  return fetch(
+    RESET_PASSWORD_URL,
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        email,
+        requestType: "PASSWORD_RESET"
+      })
+    }
+  ).then(r => r.json())
+    .then(dispatch(addSnackbarActionCreator('Sprawdź skrzynkę mailową', 'green')))
 
+}
 export const logInAsyncActionCreator = (email, password) => (dispatch, getState) => {
   return fetch(
     SIGN_IN_URL,
@@ -43,7 +59,7 @@ export const logInAsyncActionCreator = (email, password) => (dispatch, getState)
       return data
     })
     .catch((data) => {
-      dispatch(errorAsyncActionCreator(data))
+      data.error.message === 'INVALID_EMAIL' ? dispatch(addSnackbarActionCreator('Błędny email', 'red')) : dispatch(addSnackbarActionCreator('Błędne hasło', 'red'))
     })
 }
 
@@ -68,6 +84,8 @@ export const signInAsyncActionCreator = (email, password) => (dispatch, getState
       return data
     })
     .then(data => {
+      localStorage.setItem('idToken', data.idToken)
+      localStorage.setItem('refreshToken', data.refreshToken)
       const user = jwt.decode(data.idToken)
       const key = user && user.user_id
       if (key) {
@@ -79,7 +97,7 @@ export const signInAsyncActionCreator = (email, password) => (dispatch, getState
       }
     })
     .catch((data) => {
-      dispatch(errorAsyncActionCreator(data))
+      data.error.message === 'EMAIL_EXISTS' ? dispatch(addSnackbarActionCreator('Email już istnieje w bazie', 'red')) : dispatch(addSnackbarActionCreator('Za słabe hasło', 'red'))
     })
 }
 
@@ -129,7 +147,7 @@ const refreshToken = () => {
         refresh_token: refreshToken
       })
     }
-  )
+   )
     .then(r => r.json())
     .then(data => {
       if (data.error) return Promise.reject(data)

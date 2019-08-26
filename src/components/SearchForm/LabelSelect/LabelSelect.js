@@ -6,6 +6,7 @@ import FormControl from '@material-ui/core/FormControl'
 import NativeSelect from '@material-ui/core/NativeSelect'
 
 const LabelSelect = (props) => (
+  <React.Fragment>
   <FormControl>
     <InputLabel>Kategoria posiłku</InputLabel>
     <NativeSelect
@@ -21,6 +22,7 @@ const LabelSelect = (props) => (
     </NativeSelect>
     <FormHelperText>Jaki posiłek Cię interesuje?</FormHelperText>
   </FormControl>
+  </React.Fragment>
 )
 
 export default LabelSelect
