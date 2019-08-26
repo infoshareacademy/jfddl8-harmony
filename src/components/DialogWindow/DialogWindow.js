@@ -6,11 +6,17 @@ import Typography from '@material-ui/core/Typography';
 
 import { DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
 
+const styles = {
+  
+  img: {
+    maxWidth: '25em',
+    maxHeigth: '20em'
+  }
+}
+
 const CustomizedDialogs = (props) => {
 
-  // const ingredients = props.recipe.ingredients || ''
-  // console.log(props.recipe.ingredients)
-
+ 
   return (
     <MuiDialog
       open={props.open}
@@ -20,16 +26,19 @@ const CustomizedDialogs = (props) => {
         <DialogTitle>
           {props.recipe.title}
         </DialogTitle>
-        <Typography gutterBottom>
-            {props.recipe.ingredients}
+          <img style={styles.img} src={props.recipe.photo} alt={props.recipe.photo} />
+        <Typography>
+          <b>Składniki: </b>
+          <br/>
+          {props.recipe.ingredients}
           </Typography>
           {/* <Typography gutterBottom> */}
-            <h3>{props.recipe.label}</h3>
             {props.recipe.nutritiveValue}
           {/* </Typography> */}
         <DialogContent>
-          <img src={props.recipe.photo} alt={props.recipe.photo} />
-          <Typography gutterBottom>
+          <Typography>
+            <b>Sposób przygotowania:</b>
+            <br />
             {props.recipe.description}
           </Typography>
         </DialogContent>

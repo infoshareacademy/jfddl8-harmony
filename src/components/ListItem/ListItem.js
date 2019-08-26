@@ -26,7 +26,7 @@ const ListItem = props => {
 
   return recipes.map(recipe => {
     return (
-      <div>
+      <div key={recipe.key}>
         <CustomizedDialogs
           open={recipe.key === props.match.params.recipeKey}
           onClose={() => props.history.push('/recipes')}
@@ -69,7 +69,9 @@ const ListItem = props => {
         </Link>
       </div>
     );
+
   });
+
 };
 
 ListItem.propTypes = {

@@ -1,5 +1,4 @@
 import { mapObjectToArray } from '../services/mapObjectToArray';
-import { errorAsyncActionCreator } from './errors'
 
 
 const RECIPES_URL = 'https://jfddl8-harmonylublin.firebaseio.com/recipes.json'
@@ -20,9 +19,9 @@ export const loadElementsAsyncActionCreator = () => (dispatch, getState) => {
     .then(data =>
       dispatch(loadElementsActionCreator(data))
     )
-    .catch((data) => {
-      dispatch(errorAsyncActionCreator(data))
-    })
+    // .catch((data) => {
+    //   dispatch(errorAsyncActionCreator(data))
+    // })
 }
 
 const loadElementsActionCreator = (data) => ({

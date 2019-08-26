@@ -12,11 +12,26 @@ const SIGN_UP_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?k
 
 const SAVE_USER_URL = 'https://jfddl8-harmonylublin.firebaseio.com/users/'
 
+const RESET_PASSWORD_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyCRt2szYV4mV5V9n2O55T7xcAxeXYlPTho'
+
 const LOGGED_IN = 'auth/LOGGED_IN'
 const LOGGED_OUT = 'auth/LOGGED_OUT'
 const SIGNED_IN = 'auth/SIGNED_IN'
 
+export const resetPasswordAsyncActionCreator = (email) => (dispatch, getState) => {
+  return fetch(
+    RESET_PASSWORD_URL,
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        email,
+        requestType: "PASSWORD_RESET"
+      })
+    }
+  ).then(r => r.json())
+    .then(dispatch(addSnackbarActionCreator('Sprawdź skrzynkę mailową', 'green')))
 
+}
 export const logInAsyncActionCreator = (email, password) => (dispatch, getState) => {
   return fetch(
     SIGN_IN_URL,

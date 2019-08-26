@@ -47,28 +47,28 @@ const SignUpWindow = props => {
       </Typography>
         <TextField
           label="email"
-          placeholder="email"
+          placeholder="Wpisz poprawny email"
           margin="normal"
           fullWidth={true}
           value={props.email}
           onChange={props.onEmailChanged}
         />
         <TextField
-          label="Haslo1"
-          placeholder="Haslo1"
+          label="Hasło"
+          placeholder="Minimum 8 znaków."
           margin="normal"
           fullWidth={true}
           value={props.password}
           onChange={props.onPasswordChanged}
         />
-        <TextField
+        {/* <TextField
           label="Haslo2"
           placeholder="Haslo2"
           margin="normal"
           fullWidth={true}
           value={props.password2}
           onChange={props.onPasswordChanged2}
-        />
+        /> */}
         <Button
           style={styles.button}
           variant={'contained'}

@@ -34,7 +34,7 @@ const styles = {
   }
 }
 
-const LogInWindow = props => {
+const RetrievePasswordWindow = props => {
 
   return (
 
@@ -43,37 +43,21 @@ const LogInWindow = props => {
       <Paper style={styles.paper}>
         <img style={styles.img} src={LogoPic} alt={LogoPic} />
         <Typography>
-          <b>Please log in:</b>
+          <b>Reset Password:</b>
         </Typography>
         <TextField
           label={'E-mail'}
           fullWidth={true}
-          value={props.emailToLogIn}
-          onChange={props.onEmailToLogInChanged}
-        />
-        <TextField
-          label={'Password'}
-          type={'password'}
-          fullWidth={true}
-          value={props.passwordToLogIn}
-          onChange={props.onPasswordToLogInChanged}
+          value={props.emailToReset}
+          onChange={props.onEmailToResetChanged}
         />
         <Button
           style={styles.button}
           variant={'contained'}
           color={'primary'}
-          onClick={props.onLogInClick}
+          onClick={props.onResetClick}
         >
-          Zaloguj się.
-        </Button>
-        <br />
-        <Button
-          style={styles.button}
-          variant={'contained'}
-          color={'primary'}
-          onClick={props.onSignInClick}
-        >
-          Zarejestruj się.
+          Resetuj hasło.
         </Button>
         <br />
         <Button
@@ -82,17 +66,14 @@ const LogInWindow = props => {
           color={'primary'}
           onClick={props.onResetWindowClick}
         >
-          Przypomnij hasło.
+          Wróć.
         </Button>
-        
       </Paper>
-
 
     </div>
 
   )
-
 }
 
 
-export default LogInWindow
+export default RetrievePasswordWindow

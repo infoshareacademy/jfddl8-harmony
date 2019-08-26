@@ -4,7 +4,7 @@ import PaginationPanel from "../PaginationPanel";
 
 const styles = {
   div: {
-    display: 'flex',
+    display: 'block',
     flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'center'
@@ -22,14 +22,14 @@ class PaginatedList extends React.Component {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  recipesDivide = () => {
+  recipesDivide = (recipes) => {
     let recipesToShow = [];
     let arr = [];
-    this.props.recipes.forEach((el, index) => {
+    recipes.forEach((el, index) => {
       arr.push(el);
       if (
         arr.length === this.state.pageLength ||
-        index === this.props.recipes.length - 1
+        index === recipes.length - 1
       ) {
         recipesToShow.push(arr);
         arr = [];
@@ -43,14 +43,15 @@ class PaginatedList extends React.Component {
   };
 
   render() {
-    const recipesDivided = (this.recipesDivide())
+    const recipesDivided = (this.recipesDivide(this.props.recipes))
     const recipesToShow = recipesDivided.recipesToShow
     const paginationLength = recipesDivided.paginationLength
+    const currentPage = paginationLength - 1 < this.state.currentPage ? 0 : this.state.currentPage
 
     return (
       <div style={styles.div}>
-        <ItemsList refresh={this.props.refresh} recipes={recipesToShow[this.state.currentPage]} />
-        <PaginationPanel paginationLength={paginationLength} currentPage={this.state.currentPage} changePage={this.changeRecipesPage}/>
+        <ItemsList refresh={this.props.refresh} recipes={recipesToShow[currentPage]} />
+        <PaginationPanel paginationLength={paginationLength} currentPage={currentPage} changePage={this.changeRecipesPage}/>
       </div>
     );
   }

@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import SearchForm from "../../components/SearchForm";
 import PaginatedList from "../../components/PaginatedList";
 import { loadElementsAsyncActionCreator } from "../../state/recipes";
-// import { refreshTokenAsyncActionCreator } from "../../state/auth";
+import { mapObjectToArray } from "../../services/mapObjectToArray";
 
 class Recipes extends React.Component {
   state = {
@@ -39,13 +39,29 @@ class Recipes extends React.Component {
       sliderValue: value
     });
 
+  interval = null
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
+  }
+
+  liveUpdate = () => {
+    fetch('https://jfddl8-harmonylublin.firebaseio.com/recipes.json?auth=' + localStorage.getItem('idToken'))
+      .then(r => r.json())
+      .then(data => {
+        const mappedData = mapObjectToArray(data)
+        if (mappedData.length !== this.props._recipes.length || this.props._recipes[this.props._recipes.length - 1].key !== mappedData[mappedData.length - 1].key)
+          this.props._loadElements()
+      })
+  }
+
   componentDidMount() {
     this.props._loadElements()
+    this.interval = setInterval(this.liveUpdate, 10000)
   }
 
 
   render() {
-    
     const showedList = this.props._recipes.filter((recipe, i, arr) => {
       const {
         title = "",
@@ -87,9 +103,9 @@ class Recipes extends React.Component {
   }
 }
 
-const mapStateToProps = state =>({
-    _recipes: state.recipes.recipes || []
-}) 
+const mapStateToProps = state => ({
+  _recipes: state.recipes.recipes || []
+})
 
 const mapDispatchToProps = dispatch => ({
   _loadElements: () => dispatch(loadElementsAsyncActionCreator()),
